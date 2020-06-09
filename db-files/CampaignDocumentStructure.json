@@ -7,13 +7,13 @@
 	{
 	"FieldName": "Name1",
 	"ValueType": "MultiSelect",
-	"Values": ['Value1', 'Value2', 'Value3']
+	"Values": ["Value1", "Value2", "Value3"]
 	},
 "CustomeValue2":
 	{
 	"FieldName": "Name2",
 	"ValueType": "Radio",
-	"Values": ['Value11', 'Value22']
+	"Values": ["Value11", "Value22"]
 	},
 "CustomValue3":
 	{
@@ -24,15 +24,15 @@
 "CustomValue4":
 	{
 	"FieldName": "Name4",
-	"ValueType": "Date".
+	"ValueType": "Date",
 	"Value": "new Date()"
 	},
 "CustomValue5":
 	{
 	"FieldName": "Name5",
-	"ValueType": "SingleSelect".
+	"ValueType": "SingleSelect",
 	"Value": "Value5"
-	}
+	},
 "Workflow":
 	{
 	"CurrentStatus": ["NextStatus1", "NextStatus2"],
