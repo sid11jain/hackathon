@@ -1,0 +1,119 @@
+-- Start mongo DB (run mongo.exe)
+-- run command: 'show dbs' (this will show all dbs available)
+-- run command: 'use ihs' (this will create db ihs and now we are pointing to this DB)
+-- run commands below to insert collection Campaign and User and documents. Copy paste 1 command and press enter untill all are executed. I was unable to work with whole file. Will re-look.
+
+-- Once commands are run:
+-- To check collections , run command: 'show collections'
+-- To check for documents in Campaign: 'db.Campaign.find()'
+-- To check for documents in User: 'db.User.find()'
+-- To check index on collection Campaign: 'db.Campaign.getIndexes()'
+-- To drop collection Campaign: 'db.Campaign.drop()'
+-- We might need to create PK and index as when inserting collection, getting text autoIndexId will be removed in future releases
+
+db.createCollection("Campaign",{autoIndexId: true})
+
+db.Campaign.insert({
+ name: "Hackathon",
+ description: "This is to give people an initiative to collaborate and build trogether a platform for innovation and ideas.",
+ createdBy: NumberInt(1),
+ startDate: new Date(),
+ endDate: new Date("2020-06-20"),
+ creationDate: new Date(),
+ department: ["IT","CS"],
+ stage: ["Submitted","Approved","In Implmentation","Complete"],
+ RAGStatus:["Red", "Amber", "Green"],
+ workflows:[{start:"Initiation", next:["Screening"]},
+			{start:"Screening", previous:["Initiation"], next: ["Approved","Closed"]},
+			{start:"Approved", previous:["Screening"], next: ["Implementation","Closed"]} , 
+			{start:"Implementation", previous:["Approved"], next: ["Launched","Closed"]},
+			{start:"Launched", previous:["Implementation"]},
+			{start:"Closed", previous:["Screening"]}]
+})
+
+db.Campaign.insert({
+ name: "Innovation Tuesdays",
+ description: "This is to give people an initiative to discuss innovative ideas on Tuesdays.",
+ createdBy: NumberInt(2),
+ startDate: new Date(),
+ endDate: new Date("2020-08-20"),
+ creationDate: new Date(),
+ department: ["Sales", "HR"],
+ stage: ["Submitted","Approved","Complete"],
+ workflows:[{start:"Initiation", next:["Approved","Closed"]},
+			{start:"Approved", previous:["Initiation"], next: ["Delivered","Closed"]} , 
+			{start:"Delivered", previous:["Approved"]},
+			{start:"Closed", previous:["Initiation"]}]
+})
+
+db.Campaign.insert({
+ name: "Technovation",
+ description: "This is to get benefits by leveraging technology in organisation.",
+ createdBy: NumberInt(1),
+ startDate: new Date("2020-03-24"),
+ endDate: new Date("2020-07-24"),
+ creationDate: new Date(),
+ theme: ["Data science","Charity","HeForShe"],
+ stage: ["Submitted","Approved","In implmentation","Complete"],
+ workflows:[{start:"Initiation", next:["Screening"]},
+			{start:"Screening", previous:["Initiation"], next: ["Approved","Closed"]},
+			{start:"Approved", previous:["Screening"], next: ["Implementation","Closed"]} , 
+			{start:"Implementation", previous:["Approved"], next: ["Launched","Closed"]},
+			{start:"Launched", previous:["Implementation"]},
+			{start:"Closed", previous:["Screening"]}]
+})
+
+db.createCollection("User",{autoIndexId: true})
+db.User.insert({
+ firstName:"Abhinav",
+ lastName:"Khattar",
+ userName:"abhinav.khattar",
+ password:"password",
+ role:"SUBMITTER"
+})
+
+db.User.insert({
+ firstName:"Siddharth",
+ lastName:"Jain",
+ userName:"Siddharth.Jain",
+ password:"password",
+ role:"SUBMITTER"
+})
+
+db.User.insert({
+ firstName:"Ajay Kumar",
+ lastName:"Lamba",
+ userName:"AjayKumar.Lamba",
+ password:"password",
+ role:"SUBMITTER"
+})
+
+db.User.insert({
+ firstName:"Rakesh",
+ lastName:"Mahajan",
+ userName:"Rakesh.Mahajan",
+ password:"password",
+ role:"ADMIN"
+})
+
+db.createCollection("Idea",{autoIndexId: true})
+-- Document structure of Idea
+{
+	IdeaId: NumberInt(1)
+	IdeaName:'',
+	CampaignName: 'Campaign Name',	
+	Likes: [userName:''],
+	Comments: [{userName:'',
+				  commentText:''}
+				],		
+	Favourites: ['userName'],		
+	Stage:'',
+	Add customise attributes as key: value pairs for whatever attributes user used for an idea,	
+	Contributer: [{'userName':''} ,{'userName',''}],
+	SubmittedBy:'',
+	CreationDate:'',
+	lastUpdateDate:'',
+	lastUpdatedBy:'',
+	currentWorkflowStatus:''
+	
+}
