@@ -1,4 +1,4 @@
-package com.innovationshub.app;
+package src.test.hub.com.innovationshub.app;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
