@@ -33,9 +33,33 @@ public class LandingController {
 
     @Autowired
     private IHubService hubService;
+
+    @RequestMapping(value = LANDING_URL, produces = "application/json")
+    public ResponseEntity<Object> landing() throws Exception {
+        //        JSONParser jParser = new JSONParser();
+        //        JSONObject jo = (JSONObject) jParser.parse("Sid testing");
+        //GsonJsonParser gson = new GsonJsonParser();
+
+
+        /*Campaign campaign1 = new Campaign("Campaign1", "Sid");
+
+        ObjectMapper obj = new ObjectMapper();
+
+
+        Document doc = Document.parse(obj.writeValueAsString(campaign1));
+
+
+        //DBObject dbObject = (DBObject) com.mongodb.util.JSON.parse(campaign1);
+        Object returnObject = mongoTemplate.insert(doc, "test");*/
+
+
+
+        return new ResponseEntity<>( new HubResponseWrapper("Server is up and running"), HttpStatus.OK);
+    }
+
     // ResponseEntity
     @RequestMapping(value = SUBMIT_IDEA, produces = "application/json")
-    public ResponseEntity<Object> test( @RequestBody HubRequestWrapper idea) throws Exception {
+    public ResponseEntity<Object> submitIdea( @RequestBody HubRequestWrapper idea) throws Exception {
         //        JSONParser jParser = new JSONParser();
         //        JSONObject jo = (JSONObject) jParser.parse("Sid testing");
         //GsonJsonParser gson = new GsonJsonParser();

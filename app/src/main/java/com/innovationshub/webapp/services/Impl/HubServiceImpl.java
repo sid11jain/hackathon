@@ -36,14 +36,19 @@ public class HubServiceImpl  implements IHubService {
 
     @Override
     public Object addIdea(Object idea) throws  Exception {
-        ObjectMapper obj = new ObjectMapper();
+        Object insertedIdea = null;
+        if(null != idea){
+            ObjectMapper obj = new ObjectMapper();
 
 
-        Document doc = Document.parse((String)idea);
+            Document doc = Document.parse((String)idea);
 
 
-        // For now assuming that idea will be the collection name in mongo
-        Object insertedIdea = mongoTemplate.insert(idea, "idea");
+            // For now assuming that idea will be the collection name in mongo
+            insertedIdea   = mongoTemplate.insert(idea, "idea");
+
+        }
+
         return insertedIdea;
     }
 
