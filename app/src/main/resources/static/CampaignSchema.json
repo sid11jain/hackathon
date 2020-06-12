@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "campaign",
+  "title": "Campaign for Innovations Hub",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "The Name of Campaign",
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description about the campaign"
+    },
+    "startDate": {
+      "type": "date",
+      "description": "Start date of Campaign"
+    },
+    "endDate": {
+      "type": "date",
+      "description": "End date of Campaign"
+    },
+    "campaignFields": {
+      "type": "array",
+      "description": "Array of Custom Criteria Fields in Campaign",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of field"
+        },
+        "type": {
+          "type": "string",
+          "description": "Data type of Custom field ",
+          "enum": [
+            "text",
+            "single-select",
+            "multi-select",
+            "radio",
+            "date"
+          ]
+        },
+        "allowedValues": {
+          "type": "array",
+          "description": "String array of allowed values in Custom field criteria"
+        },
+        "defaultValue": {
+          "type": "string",
+          "description": "Default values in Custom field criteria"
+        }
+      }
+    },
+    "workflow": {
+      "type": "array",
+      "description": "Array of Workflow Fields in Campaign",
+      "properties": {
+        "currentStage": {
+          "type": "string",
+          "description": "Current stage in workflow"
+        },
+        "nextStage": {
+          "type": "array",
+          "description": "Next allowed stage from this current stage of workflow"
+        },
+        "prevStage": {
+          "type": "array",
+          "description": "Previous allowed stage from this current stage of workflow"
+        }
+      }
+    },
+    "required": [
+      "name",
+      "startDate"
+    ]
+  }
+}

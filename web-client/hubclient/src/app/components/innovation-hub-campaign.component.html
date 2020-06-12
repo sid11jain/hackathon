@@ -1,0 +1,77 @@
+<main>
+    <form [formGroup]="parentForm">
+           
+         
+     <div class="row">
+      <div class="col-12">
+         <div class="col-md-3">
+            <label>Campaign Name : </label>
+            <span>{{campaign.name}} </span>
+         </div>
+       </div>
+    </div>
+    
+    <div class="row">
+       <div class="col-12">
+          <div class="col-md-3">
+             <label>Campaign Description : </label>
+             <span>{{campaign.description}} </span>
+          </div>
+        </div>
+     </div>
+         
+         
+         <!-- <div class="col-md-3">
+         <label>Single select</label>
+         <select id="selectId" formControlName="singleSelect">
+         <option *ngFor="let option of options | async" value="{{option}}">single select</option>
+         </select>
+         </div>
+          <div class="col-md-3">
+            <label> Radio </label>
+            <ul class="list-inline">
+               <li class="list-inline-item">
+                  <label class="radio-container">
+                     
+                     <input type="radio" [value]="true" class="radio-btn" formControlName="radioButton"
+                     (click)="onRadioChange(true)">
+                     <span class="radio-checkmark"></span>
+                  </label>
+               </li>
+               <li class="list-inline-item">
+                  <label class="radio-container">
+                     <input type="radio" [value]="false" class="radio-btn" formControlName="radioButton"
+                     (click)="onRadioChange(false)">
+                     <span class="radio-checkmark"></span>
+                  </label>
+               </li>
+            </ul>
+         </div> -->
+      
+    
+    <div class="row col-12">
+       <div class="col-md-3">
+          <label>Campaign Start Date :
+         <span>{{campaign.startDate}} </span>
+       </label>
+       </div>
+       <div class="col-md-3">
+          <label>Campaign End Date : 
+          <span>{{campaign.endDate}} </span>
+       </label>
+       </div>
+    </div>
+    
+    
+    <ng-container>
+       <div *ngFor="let field of campaign.customValues" > 
+          <label> {{field.name}} </label>
+          <input type="text" class="form-control" id="something" formControlName="freeText">
+      </div>
+    </ng-container>
+    
+      <button type="button" title="Submit" class="btn" (click)="submit()">
+     
+      </button>
+    </form>
+    </main>

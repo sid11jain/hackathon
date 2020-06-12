@@ -1,53 +1,101 @@
 {
-"Name": "Campaign1",
-"Description": "Sample campaign",
-"StartDate": "08-06-20",
-"EndDate": "21-06-20",
-"CustomValue1":
-	{
-	"FieldName": "Name1",
-	"ValueType": "MultiSelect",
-	"Values": ["Value1", "Value2", "Value3"]
-	},
-"CustomeValue2":
-	{
-	"FieldName": "Name2",
-	"ValueType": "Radio",
-	"Values": ["Value11", "Value22"]
-	},
-"CustomValue3":
-	{
-	"FieldName": "Name3",
-	"ValueType": "Text",
-	"Value": "Empty text box"
-	},
-"CustomValue4":
-	{
-	"FieldName": "Name4",
-	"ValueType": "Date",
-	"Value": "new Date()"
-	},
-"CustomValue5":
-	{
-	"FieldName": "Name5",
-	"ValueType": "SingleSelect",
-	"Value": "Value5"
-	},
-"Workflow":
-	{
-	"CurrentStatus": ["NextStatus1", "NextStatus2"],
-	"Initiation": ["Submitted", "Approved", "Scrapped"],
-	"Submitted": ["Approved", "Proposed Changes", "Rejected"],
-	"Approved": ["In Progress", "Scrapped"],
-	"In Progress": ["Out For Review", "Approved", "Blocked", "Scrapped"],
-	"Out for Review": ["Reviewed", "In Progress", "Scrapped"],
-	"Reviewed": ["Presentation", "Released", "Complete"],
-	"Presentation": ["Released", "In Progress", "Complete"],
-	"Released": ["Complete"],
-	"Complete": [],
-	"Scrapped": [],
-	"Rejected": [],
-	"Proposed Changes": ["Submitted", "Approved", "Scrapped"],
-	"Blocked": ["In Progress", "Scrapped"]
-	}
+  "Name": "Campaign1",
+  "Description": "Sample campaign",
+  "StartDate": "08-06-20",
+  "EndDate": "21-06-20",
+  "CustomValues": [
+    {
+      "Name": "Name1",
+      "Type": "MultiSelect",
+      "AllowedValues": [
+        "Value1",
+        "Value2",
+        "Value3"
+      ],
+      "DefaultValue": "default"
+    },
+    {
+      "Name": "Name2",
+      "Type": "Radio",
+      "AllowedValues": [
+        "Value11",
+        "Value22"
+      ],
+      "DefaultValue": "default"
+    },
+    {
+      "Name": "Name3",
+      "Type": "Text",
+      "AllowedValues": "Empty text box",
+      "DefaultValue": "default"
+    },
+    {
+      "Name": "Name4",
+      "Type": "Date",
+      "AllowedValues": "new Date()",
+      "DefaultValue": "default"
+    },
+    {
+      "Name": "Name5",
+      "Type": "SingleSelect",
+      "AllowedValues": "Value5",
+      "DefaultValue": "default"
+    }
+  ],
+  "Workflow": {
+    "CurrentStatus": [
+      "NextStatus1",
+      "NextStatus2"
+    ],
+    "Initiation": [
+      "Submitted",
+      "Approved",
+      "Scrapped"
+    ],
+    "Submitted": [
+      "Approved",
+      "Proposed Changes",
+      "Rejected"
+    ],
+    "Approved": [
+      "In Progress",
+      "Scrapped"
+    ],
+    "In Progress": [
+      "Out For Review",
+      "Approved",
+      "Blocked",
+      "Scrapped"
+    ],
+    "Out for Review": [
+      "Reviewed",
+      "In Progress",
+      "Scrapped"
+    ],
+    "Reviewed": [
+      "Presentation",
+      "Released",
+      "Complete"
+    ],
+    "Presentation": [
+      "Released",
+      "In Progress",
+      "Complete"
+    ],
+    "Released": [
+      "Complete"
+    ],
+    "Complete": [],
+    "Scrapped": [],
+    "Rejected": [],
+    "Proposed Changes": [
+      "Submitted",
+      "Approved",
+      "Scrapped"
+    ],
+    "Blocked": [
+      "In Progress",
+      "Scrapped"
+    ]
+  }
 }

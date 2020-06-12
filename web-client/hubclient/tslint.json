@@ -144,5 +144,9 @@
   },
   "rulesDirectory": [
     "codelyzer"
-  ]
+  ],
+  "linterOptions": {
+    "exclude": [
+      "src/app/models/sample/*"    ]
+}
 }

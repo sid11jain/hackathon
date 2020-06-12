@@ -1,0 +1,36 @@
+<main>
+    <form [formGroup]="ideaForm">
+        <div class="row">
+            <div class="col-12">
+                <div class="col-md-3">
+                    <label>Idea Name : </label>
+                    <input type="text" class="form-control" id="something" formControlName="name" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="col-md-3">
+                    <label>Idea Description : </label>
+                    <input type="text" class="form-control" id="something" formControlName="description" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row col-12">
+                <label>Contributors :
+                    <input type="text" class="form-control" id="something" formControlName="description" />
+                </label>            
+        </div>
+
+            <div *ngFor="let field of campaignFields; let fieldPosition = index" formArrayName="campaignValues">
+                <label> {{ field.name }} -- populated from campaign</label>
+                <ng-container formGroupName="{{fieldPosition}}">
+                <input type="text" class="form-control" id="something" formControlName={{field.name}}/>
+            </ng-container>
+            </div>
+
+        <button type="button" title="Submit" class="btn" (click)="submitIdea()"> Submit</button>
+    </form>
+</main>

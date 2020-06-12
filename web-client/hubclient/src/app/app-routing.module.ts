@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {InnovationHubComponent} from "./components/innovation-hub/innovation-hub.component";
+import { InnovationHubComponent } from './components/innovation-hub.component';
 
 
 const routes: Routes = [{
