@@ -1,4 +1,4 @@
-package models;
+package com.innovationshub.webapp.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.repository.NoRepositoryBean;

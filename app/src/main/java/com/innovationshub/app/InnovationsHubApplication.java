@@ -1,9 +1,13 @@
-package src.main.hub.com.innovationshub.app;
+package com.innovationshub.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan({"com.innovationshub.webapp.controllers", "com.innovationshub.webapp.services"})
+@EntityScan("com.innovationshub.webapp.services")
 public class InnovationsHubApplication {
 
     public static void main(String[] args) {

@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InnovationHubComponent } from './components/innovation-hub/innovation-hub.component';
 import {HttpClientModule} from "@angular/common/http";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InnovationsHubService} from "./services/innovations-hub.service";
 
 @NgModule({
@@ -17,7 +17,8 @@ import {InnovationsHubService} from "./services/innovations-hub.service";
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [InnovationsHubService],
   bootstrap: [AppComponent]

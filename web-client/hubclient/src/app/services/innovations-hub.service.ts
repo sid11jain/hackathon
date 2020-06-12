@@ -1,19 +1,24 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class InnovationsHubService {
 
-  private url = 'http://localhost:8080/test';
+  headers = new HttpHeaders({
+    'Content-Type': 'application/json'
+  });
+
+  private url = 'http://localhost:8080/';
 
   constructor(private http: HttpClient) {
 
   }
 
-  test(){
-    this.http.get(this.url).subscribe(x => console.log(x));
+  submitIdea(data: any){
+    const submitUrl = this.url + 'submit-idea';
+    this.http.post(submitUrl, { data: JSON.stringify(data) }).subscribe(x => console.log(x));
 
   }
 }

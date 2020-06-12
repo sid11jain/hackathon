@@ -4,6 +4,9 @@ import {InnovationHubComponent} from "./components/innovation-hub/innovation-hub
 
 
 const routes: Routes = [{
+  path: '', component: InnovationHubComponent
+},
+  {
   path: 'innovation', component: InnovationHubComponent
 }];
 

@@ -1,4 +1,4 @@
-package src.main.hub.com.innovationshub.app;
+package com.innovationshub.app;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
