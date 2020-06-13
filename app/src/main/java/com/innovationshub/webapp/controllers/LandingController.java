@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.innovationshub.webapp.models.Campaign;
 import com.innovationshub.webapp.models.HubRequestWrapper;
 import com.innovationshub.webapp.models.HubResponseWrapper;
+import com.innovationshub.webapp.models.Idea;
 import com.innovationshub.webapp.services.IHubService;
 import jdk.nashorn.internal.parser.JSONParser;
 
@@ -27,32 +28,13 @@ import jdk.nashorn.internal.parser.JSONParser;
 public class LandingController {
     private static final String LANDING_URL = "";
     private static final String SUBMIT_IDEA = "/submit-idea";
-
-    @Autowired
-    private MongoTemplate mongoTemplate;
+    private static final String GET_IDEA = "/get-idea";
 
     @Autowired
     private IHubService hubService;
 
     @RequestMapping(value = LANDING_URL, produces = "application/json")
     public ResponseEntity<Object> landing() throws Exception {
-        //        JSONParser jParser = new JSONParser();
-        //        JSONObject jo = (JSONObject) jParser.parse("Sid testing");
-        //GsonJsonParser gson = new GsonJsonParser();
-
-
-        /*Campaign campaign1 = new Campaign("Campaign1", "Sid");
-
-        ObjectMapper obj = new ObjectMapper();
-
-
-        Document doc = Document.parse(obj.writeValueAsString(campaign1));
-
-
-        //DBObject dbObject = (DBObject) com.mongodb.util.JSON.parse(campaign1);
-        Object returnObject = mongoTemplate.insert(doc, "test");*/
-
-
 
         return new ResponseEntity<>( new HubResponseWrapper("Server is up and running"), HttpStatus.OK);
     }
@@ -60,23 +42,20 @@ public class LandingController {
     // ResponseEntity
     @RequestMapping(value = SUBMIT_IDEA, produces = "application/json")
     public ResponseEntity<Object> submitIdea( @RequestBody HubRequestWrapper idea) throws Exception {
-        //        JSONParser jParser = new JSONParser();
-        //        JSONObject jo = (JSONObject) jParser.parse("Sid testing");
-        //GsonJsonParser gson = new GsonJsonParser();
+       Object returnData = hubService.addIdea(idea.getData());
 
+        return new ResponseEntity<>( new HubResponseWrapper(returnData), HttpStatus.OK);
+    }
 
-        /*Campaign campaign1 = new Campaign("Campaign1", "Sid");
+    @RequestMapping(value = GET_IDEA, produces = "application/json")
+    public ResponseEntity<Object> getIdea( @RequestBody HubRequestWrapper inputIdea) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
 
-        ObjectMapper obj = new ObjectMapper();
+        //convert json string to object
+        // Problem in converting json to object. Try if direct access can be done
+        Idea idea = objectMapper.readValue((String)inputIdea.getData(), Idea.class);
 
-
-        Document doc = Document.parse(obj.writeValueAsString(campaign1));
-
-
-        //DBObject dbObject = (DBObject) com.mongodb.util.JSON.parse(campaign1);
-        Object returnObject = mongoTemplate.insert(doc, "test");*/
-
-        Object returnData = hubService.addIdea(idea.getData());
+        Object returnData = hubService.getIdea(idea);
 
         return new ResponseEntity<>( new HubResponseWrapper(returnData), HttpStatus.OK);
     }

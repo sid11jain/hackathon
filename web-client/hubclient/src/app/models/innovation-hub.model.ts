@@ -3,7 +3,8 @@ export enum Types {
     SINGLE_SELECT = 'single-select',
     MULTI_SELECT = 'multi-select',
     RADIO = 'radio',
-    DATE = 'date'
+    DATE = 'date',
+    DOCUMENT = 'doc'
 }
 
 export class Campaign {
@@ -20,6 +21,7 @@ export class CampaignField{
     type: Types;
     allowedValues: any[];
     defaultValue: any;
+    // Collection
 }
 
 export class Workflow{
@@ -31,6 +33,7 @@ prevStage: string[];
 export class Idea{
     name: string;
     description: string;
+    campaignName: string;
     campaignValues: any[];
     postedOn: Date;
     submittedBy: any;

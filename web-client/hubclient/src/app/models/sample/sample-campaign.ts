@@ -12,6 +12,14 @@ export const FirstCampaign = {
     {
         'name': 'Department',
         'ValueType': 'text'
+      },
+      {
+        'name': 'RAG Status',
+        'ValueType': 'text'
+      },
+      {
+        'name': 'Theme',
+        'ValueType': 'text'
       }
   ]
 };

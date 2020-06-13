@@ -20,11 +20,12 @@
 
         <div class="row col-12">
                 <label>Contributors :
-                    <input type="text" class="form-control" id="something" formControlName="description" />
+                    <input type="text" class="form-control" id="something" formControlName="contributors" />
                 </label>            
         </div>
 
             <div *ngFor="let field of campaignFields; let fieldPosition = index" formArrayName="campaignValues">
+                <!-- switch cases for each input type-->
                 <label> {{ field.name }} -- populated from campaign</label>
                 <ng-container formGroupName="{{fieldPosition}}">
                 <input type="text" class="form-control" id="something" formControlName={{field.name}}/>
@@ -32,5 +33,9 @@
             </div>
 
         <button type="button" title="Submit" class="btn" (click)="submitIdea()"> Submit</button>
+        
+
+        <li><button type="button" title="view" class="btn" (click)="getIdea()"> View</button></li>
+
     </form>
 </main>

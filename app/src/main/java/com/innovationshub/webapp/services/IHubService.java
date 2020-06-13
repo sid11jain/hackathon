@@ -9,4 +9,7 @@ public interface IHubService {
     /* For now keeping return type for testing */
     Object addIdea(Object idea) throws Exception;
 
+    Object getIdea(Object idea) throws Exception;
+
+
 }

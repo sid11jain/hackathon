@@ -27,7 +27,7 @@ export class InnovationHubComponent implements OnInit {
       radioButton: new FormControl()
     });
     this.options = of(['options1', 'options2']);
-    this.campaign = plainToClass(Campaign, FirstCampaign);
+    this.getCampaign();
     console.log('main comp ', this.campaign.campaignFields);
   }
 
@@ -35,6 +35,10 @@ export class InnovationHubComponent implements OnInit {
 
 
   }
+
+getCampaign(){
+  this.campaign = plainToClass(Campaign, FirstCampaign);
+}
 
   submit(){
     console.log('test fired');

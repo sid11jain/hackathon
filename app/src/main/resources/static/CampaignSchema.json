@@ -36,7 +36,8 @@
             "single-select",
             "multi-select",
             "radio",
-            "date"
+            "date",
+			"doc"
           ]
         },
         "allowedValues": {
@@ -46,7 +47,10 @@
         "defaultValue": {
           "type": "string",
           "description": "Default values in Custom field criteria"
-        }
+        },
+		"mandatory":{
+		"type": "boolean",
+		"description": "If the field shall have some value or nullable"
       }
     },
     "workflow": {

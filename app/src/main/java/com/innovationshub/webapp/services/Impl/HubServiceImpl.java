@@ -38,12 +38,6 @@ public class HubServiceImpl  implements IHubService {
     public Object addIdea(Object idea) throws  Exception {
         Object insertedIdea = null;
         if(null != idea){
-            ObjectMapper obj = new ObjectMapper();
-
-
-            Document doc = Document.parse((String)idea);
-
-
             // For now assuming that idea will be the collection name in mongo
             insertedIdea   = mongoTemplate.insert(idea, "idea");
 
@@ -52,38 +46,14 @@ public class HubServiceImpl  implements IHubService {
         return insertedIdea;
     }
 
-    // Ajay's methods for reference
-
-   /* public void insertRawData(@RequestBody HubJSONWrapper payload) {
-        try {
-            //Inserting raw JSON into collection
-            JSONObject obj = payload.getPayloadData();
-            mongoTemplate.insert(obj, "Hotels");
-            //Finding documents based on configurable fields
-            MongoClient client = MongoClients.create();
-            MongoDatabase db = client.getDatabase("HotelDb");
-            MongoCollection<Document> collection = db.getCollection("Hotels");
-            long count = collection.countDocuments();
-            //Find documents by applying filters
-            Document filterDoc = new Document();
-            //            filterDoc.append("Hello", "Welcome");
-            filterDoc.append("name", "Marriot");
-            FindIterable<Document> matchingDocs = collection.find(filterDoc);
-            Document filteredDoc = matchingDocs.first();
-            //Find documents based on multiple conditions
-            AggregateIterable<Document> documents
-                    = collection.aggregate(
-                    Arrays.asList(
-                            Aggregates.match(in("name", Arrays.asList("Marriot", "Ibis"))), //!! Order is important here
-                            Aggregates.sort(Sorts.ascending("name"))
-                    ));
-            List<Document> docs = new ArrayList<>();
-            for(Document doc : documents) {
-                docs.add(doc);
-            }
-            System.out.println(count);
-        } catch (Exception e) {
-            e.printStackTrace();
+    @Override
+    public Object getIdea(Object idea) throws  Exception {
+        if(null != idea){
+              // Call to retrieve idea from idea name and return
         }
-    }*/
+
+        // For now returning same idea for testing purpose
+        return idea;
+    }
+
 }

@@ -34,4 +34,10 @@ export class InnovationHubIdeaComponent implements OnInit {
     this.hubService.submitIdea(this.ideaForm.value);
   }
 
+  getIdea(){
+    if(this.ideaForm.value.name){
+      this.hubService.getIdea(this.ideaForm.value.name);
+    }
+  }
+
 }
