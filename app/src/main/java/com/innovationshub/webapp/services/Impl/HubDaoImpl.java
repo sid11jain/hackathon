@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
-import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.innovationshub.webapp.services.IHubDao;
+import com.innovationshub.webapp.common.ApplicationProperties;
+import com.innovationshub.webapp.common.IHConstants;
+import com.innovationshub.webapp.services.api.IHubDao;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
@@ -16,30 +18,37 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 /**
+ * Implementation class for database operations.
+ *
  * @author AJAYLAMBA
  * @since Jun 12, 2020 10:01 PM
  */
+@Service
 public class HubDaoImpl implements IHubDao {
     @Autowired
     private MongoClient mongoClient;
     private MongoDatabase db;
-    private static final String COLLECTION_NAME = "Hotels";
-    private static final String DATABASE_NAME = "HotelDb";
+//    @Autowired
+//    private ApplicationProperties appProperties;
 
     public HubDaoImpl() {
         this.mongoClient = MongoClients.create();
-        this.db = this.mongoClient.getDatabase(DATABASE_NAME);
+        this.db = this.mongoClient.getDatabase(IHConstants.DATABASE_NAME);
+//        this.db = this.mongoClient.getDatabase(appProperties.getProperty(IHConstants.DATABASE_NAME_FIELD));
     }
 
     @Override
-    public void addIdea(JSONObject idea) {
-        MongoCollection<Document> collection = db.getCollection(COLLECTION_NAME);
-        collection.insertOne(Document.parse(idea.toString()));
+    public Object addIdea(Object idea) {
+        MongoCollection<Document> collection = db.getCollection(IHConstants.IDEA_COLLECTION);
+        Object insertedIdea = collection.insertOne(Document.parse(idea.toString()));
+        return insertedIdea;
     }
+
+
 
     @Override
     public void printAll() {
-        MongoCollection<Document> collection = db.getCollection(COLLECTION_NAME);
+        MongoCollection<Document> collection = db.getCollection(IHConstants.IDEA_COLLECTION);
         //Find all documents
         FindIterable<Document> cursor = collection.find();
         for (Document doc : cursor) {
@@ -67,5 +76,36 @@ public class HubDaoImpl implements IHubDao {
         for (Document doc : inCursor) {
             System.out.println(doc.entrySet());
         }
+    }
+
+    @Override
+    public Object retrieveIdeaByName(String ideaName) {
+        MongoCollection<Document> collection = db.getCollection(IHConstants.IDEA_COLLECTION);
+        BasicDBObject whereQuery = new BasicDBObject();
+        whereQuery.put(IHConstants.NAME_FIELD, ideaName);
+
+        FindIterable<Document> ideas = collection.find(whereQuery);
+        Document idea = ideas.first();
+        if (idea != null) {
+            //Campaign name field is not present in Idea, so using name of existing campaign
+//            Object campaign = retrieveCampaignByName(idea.get(IHConstants.CAMPAIGN_NAME_FIELD).toString());
+            Object campaign = retrieveCampaignByName("Campaign1");
+            if (null != campaign) {
+                idea.append(IHConstants.CAMPAIGN_FIELD, campaign);
+            }
+
+            return idea;
+        }
+        //Idea not found
+        return null;
+    }
+
+    @Override
+    public Object retrieveCampaignByName(String campaignName) {
+        MongoCollection<Document> collection = db.getCollection(IHConstants.CAMPAIGN_COLLECTION);
+        BasicDBObject campaignQuery = new BasicDBObject();
+        campaignQuery.put(IHConstants.NAME_FIELD, campaignName);
+        FindIterable<Document> campaigns = collection.find(campaignQuery);
+        return campaigns.first();
     }
 }

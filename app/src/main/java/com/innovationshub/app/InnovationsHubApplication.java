@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({"com.innovationshub.webapp.controllers", "com.innovationshub.webapp.services"})
+@ComponentScan({ "com.innovationshub.webapp.controllers", "com.innovationshub.webapp.services", "com.innovationshub.webapp.common" })
 @EntityScan("com.innovationshub.webapp.services")
 public class InnovationsHubApplication {
 

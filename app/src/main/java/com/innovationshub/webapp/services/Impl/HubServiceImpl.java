@@ -1,59 +1,47 @@
 package com.innovationshub.webapp.services.Impl;
 
-import java.util.ArrayList;
-
-import org.bson.Document;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.innovationshub.webapp.services.IHubService;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Aggregates;
-import com.mongodb.client.model.Sorts;
+import com.innovationshub.webapp.common.IHConstants;
+import com.innovationshub.webapp.services.api.IHubDao;
+import com.innovationshub.webapp.services.api.IHubService;
 
 /**
  * @author Sid
  * @since Jun 12, 2020 19:43
  */
 @Service
-public class HubServiceImpl  implements IHubService {
+public class HubServiceImpl implements IHubService {
 
     @Autowired
-    private MongoTemplate mongoTemplate;
+    private IHubDao iHubDao;
 
     private final Logger LOG;
 
-    HubServiceImpl(){
+    HubServiceImpl() {
         LOG = LoggerFactory.getLogger(HubServiceImpl.class);
     }
 
     @Override
-    public Object addIdea(Object idea) throws  Exception {
+    public Object addIdea(Object idea) {
         Object insertedIdea = null;
-        if(null != idea){
-            // For now assuming that idea will be the collection name in mongo
-            insertedIdea   = mongoTemplate.insert(idea, "idea");
-
+        if (null != idea) {
+            insertedIdea = iHubDao.addIdea(idea);
         }
-
         return insertedIdea;
     }
 
     @Override
-    public Object getIdea(Object idea) throws  Exception {
-        if(null != idea){
-              // Call to retrieve idea from idea name and return
+    public Object getIdea(String ideaName) {
+        if (null != ideaName) {
+                return iHubDao.retrieveIdeaByName(ideaName);
         }
-
-        // For now returning same idea for testing purpose
-        return idea;
+        return null;
     }
 
 }

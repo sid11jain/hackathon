@@ -1,9 +1,6 @@
 package com.innovationshub.webapp.controllers;
 
-import org.bson.Document;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,12 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.innovationshub.webapp.models.Campaign;
 import com.innovationshub.webapp.models.HubRequestWrapper;
 import com.innovationshub.webapp.models.HubResponseWrapper;
 import com.innovationshub.webapp.models.Idea;
-import com.innovationshub.webapp.services.IHubService;
-import jdk.nashorn.internal.parser.JSONParser;
+import com.innovationshub.webapp.services.api.IHubService;
 
 /**
  * @author Sid
@@ -53,9 +48,11 @@ public class LandingController {
 
         //convert json string to object
         // Problem in converting json to object. Try if direct access can be done
-        Idea idea = objectMapper.readValue((String)inputIdea.getData(), Idea.class);
+//        Idea idea = objectMapper.readValue((String)inputIdea.getData(), Idea.class);
 
-        Object returnData = hubService.getIdea(idea);
+        //TODO: Might need to revisit the wrapper, because we are not able to get idea name here
+        //passing hard coded value for testing
+        Object returnData = hubService.getIdea("Idea1");
 
         return new ResponseEntity<>( new HubResponseWrapper(returnData), HttpStatus.OK);
     }
