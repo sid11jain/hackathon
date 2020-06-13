@@ -54,7 +54,7 @@ public class HubServiceImpl  implements IHubService {
 
     // Ajay's methods for reference
 
-   /* public void insertRawData(@RequestBody JsonWrapper payload) {
+   /* public void insertRawData(@RequestBody HubJSONWrapper payload) {
         try {
             //Inserting raw JSON into collection
             JSONObject obj = payload.getPayloadData();
