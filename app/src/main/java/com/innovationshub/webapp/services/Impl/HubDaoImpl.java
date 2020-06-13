@@ -1,10 +1,11 @@
 package com.innovationshub.webapp.services.Impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.Document;
-import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 
 import com.innovationshub.webapp.services.IHubDao;
 import com.mongodb.BasicDBObject;
@@ -20,7 +21,6 @@ import com.mongodb.client.MongoDatabase;
  */
 public class HubDaoImpl implements IHubDao {
     @Autowired
-    private MongoTemplate mongoTemplate;
     private MongoClient mongoClient;
     private MongoDatabase db;
     private static final String COLLECTION_NAME = "Hotels";
@@ -40,24 +40,32 @@ public class HubDaoImpl implements IHubDao {
     @Override
     public void printAll() {
         MongoCollection<Document> collection = db.getCollection(COLLECTION_NAME);
-        try {
-            //For now constructing the search key object here, idea is to pass this from UI
-            //and then searching based on that
-            JSONObject searchKeys = new JSONObject();
-            searchKeys.append("name", "Marriot");
-
-            //This query needs to be modified to work properly
-            BasicDBObject query = BasicDBObject.parse(searchKeys.toString());
-
-            //Searching by constructing DB object here
-            BasicDBObject whereClause = new BasicDBObject();
-            whereClause.put("Hello", "Welcome");
-            FindIterable<Document> cursor = collection.find(whereClause);
-            for (Document doc : cursor) {
-                System.out.println(doc.entrySet());
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        //Find all documents
+        FindIterable<Document> cursor = collection.find();
+        for (Document doc : cursor) {
+            System.out.println(doc.entrySet());
+        }
+        System.out.println("Search using AND query");
+        //Searching by using two multiple conditions
+        BasicDBObject andQuery = new BasicDBObject();
+        List<BasicDBObject> objects = new ArrayList<>();
+        objects.add(new BasicDBObject("Hello", "Welcome"));
+        objects.add(new BasicDBObject("test", "value"));
+        andQuery.put("$and", objects);
+        FindIterable<Document> andCursor = collection.find(andQuery);
+        for (Document doc : andCursor) {
+            System.out.println(doc.entrySet());
+        }
+        System.out.println("Search using IN query");
+        //Search using in clause
+        BasicDBObject inQuery = new BasicDBObject();
+        List<String> names = new ArrayList<>();
+        names.add("Marriot");
+        names.add("Ibis");
+        inQuery.put("name", new BasicDBObject("$in", names));
+        FindIterable<Document> inCursor = collection.find(inQuery);
+        for (Document doc : inCursor) {
+            System.out.println(doc.entrySet());
         }
     }
 }
