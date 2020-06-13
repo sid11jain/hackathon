@@ -19,21 +19,47 @@
         </div>
 
         <div class="row col-12">
-                <label>Contributors :
-                    <input type="text" class="form-control" id="something" formControlName="contributors" />
-                </label>            
+            <label>Contributors :
+                <input type="text" class="form-control" id="something" formControlName="contributors" />
+            </label>
         </div>
 
-            <div *ngFor="let field of campaignFields; let fieldPosition = index" formArrayName="campaignValues">
-                <!-- switch cases for each input type-->
-                <label> {{ field.name }} -- populated from campaign</label>
-                <ng-container formGroupName="{{fieldPosition}}">
-                <input type="text" class="form-control" id="something" formControlName={{field.name}}/>
-            </ng-container>
-            </div>
+        <div *ngFor="let field of campaignFields; let fieldPosition = index" formArrayName="campaignValues">
+            <!-- switch cases for each input type-->
+            <div>
 
+                <ng-container [ngSwitch]="field.type" formGroupName="{{fieldPosition}}">
+                    <label> {{ field.name }} -- populated from campaign</label>
+                    <div *ngSwitchCase="'text'">
+                        <input type="text" class="form-control" id="something" formControlName={{field.name}} />
+                    </div>
+                    <div *ngSwitchCase="'single-option'">
+                        <innovation-hub-select-option formControlName={{field.name}} [campaignField]="field"
+                          [multipleOptions]="false"></innovation-hub-select-option>
+                    </div>
+                    <div *ngSwitchCase="'multiple-option'">
+                        <innovation-hub-select-option formControlName={{field.name}} [campaignField]="field"
+                          [selectedValues]="testSelectedValues"  [multipleOptions]="true"></innovation-hub-select-option>
+                            
+                  <!-- <ng-select [items]="field.allowedValues"
+                            bindLabel="value"
+                            bindValue="value"
+                            [multiple]="true"
+                            placeholder="Please Select"
+                            formControlName={{field.name}}>     
+                 </ng-select>     -->
+                    </div>
+                </ng-container>
+                  
+                
+            </div>
+        </div>
+        <!-- <div >
+            <innovation-hub-select-option formControlName="multipOptionsTest" [campaignField]="campaignFields[2]"
+                config="multiOptionConfig"></innovation-hub-select-option>
+        </div> -->
         <button type="button" title="Submit" class="btn" (click)="submitIdea()"> Submit</button>
-        
+
 
         <li><button type="button" title="view" class="btn" (click)="getIdea()"> View</button></li>
 

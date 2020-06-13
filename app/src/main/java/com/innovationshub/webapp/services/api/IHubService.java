@@ -1,5 +1,7 @@
 package com.innovationshub.webapp.services.api;
 
+import com.innovationshub.webapp.models.Idea;
+
 /**
  * @author Sid
  * @since Jun 12, 2020 19:43
@@ -12,10 +14,10 @@ public interface IHubService {
     /**
      * For now passing idea name
      *
-     * @param ideaName
+     * @param idea
      * @return
      */
-    Object getIdea(String ideaName);
+    Object getIdea(Idea idea);
 
 
 }

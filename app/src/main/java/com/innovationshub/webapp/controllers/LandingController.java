@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,19 +44,19 @@ public class LandingController {
         return new ResponseEntity<>( new HubResponseWrapper(returnData), HttpStatus.OK);
     }
 
-    @RequestMapping(value = GET_IDEA, produces = "application/json")
-    public ResponseEntity<Object> getIdea( @RequestBody HubRequestWrapper inputIdea) throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
+    @RequestMapping(value = GET_IDEA, produces = "application/json", method =  RequestMethod.POST)
+    public ResponseEntity<Object> getIdea(@RequestBody Idea inputIdea) throws Exception {
 
-        //convert json string to object
-        // Problem in converting json to object. Try if direct access can be done
-//        Idea idea = objectMapper.readValue((String)inputIdea.getData(), Idea.class);
+        Object returnData = hubService.getIdea(inputIdea);
 
-        //TODO: Might need to revisit the wrapper, because we are not able to get idea name here
-        //passing hard coded value for testing
-        Object returnData = hubService.getIdea("Idea1");
+        return new ResponseEntity<>(new HubResponseWrapper(returnData), HttpStatus.OK);
+    }
 
-        return new ResponseEntity<>( new HubResponseWrapper(returnData), HttpStatus.OK);
+    @ModelAttribute("idea")
+    public Idea getIdeaCriteria(){
+        Idea idea = new Idea();
+        idea.setName("default");;
+        return idea;
     }
 
 }

@@ -4,7 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.innovationshub.webapp.models.Idea;
 import com.innovationshub.webapp.services.api.IHubDao;
 import com.innovationshub.webapp.services.api.IHubService;
 
@@ -34,9 +36,9 @@ public class HubServiceImpl implements IHubService {
     }
 
     @Override
-    public Object getIdea(String ideaName) {
-        if (null != ideaName) {
-                return iHubDao.retrieveIdeaByName(ideaName);
+    public Object getIdea(@ModelAttribute() Idea idea) {
+        if (null != idea) {
+                return iHubDao.retrieveIdeaByName(idea.getName());
         }
         return null;
     }

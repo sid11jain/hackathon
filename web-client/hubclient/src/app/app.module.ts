@@ -5,16 +5,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InnovationHubComponent } from './components/innovation-hub.component';
 import {HttpClientModule} from '@angular/common/http';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule, ɵNgSelectMultipleOption} from '@angular/forms';
 import {InnovationsHubService} from './services/innovations-hub.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { InnovationHubIdeaComponent } from './components/innovation-hub-idea.component';
+import { InnovationHubSelectOptionComponent } from './components/common/innovation-hub-select-option.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InnovationHubComponent,
-    InnovationHubIdeaComponent
+    InnovationHubIdeaComponent,
+    InnovationHubSelectOptionComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +25,8 @@ import { InnovationHubIdeaComponent } from './components/innovation-hub-idea.com
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    NgSelectModule
   ],
   providers: [InnovationsHubService],
   bootstrap: [AppComponent]

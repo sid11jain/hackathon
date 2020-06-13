@@ -1,7 +1,7 @@
 export enum Types {
     TEXT = 'text',
-    SINGLE_SELECT = 'single-select',
-    MULTI_SELECT = 'multi-select',
+    SINGLE_OPTION = 'single-option',
+    MULTI_OPTION = 'multiple-option',
     RADIO = 'radio',
     DATE = 'date',
     DOCUMENT = 'doc'

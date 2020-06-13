@@ -17,12 +17,12 @@ public class IHConstants {
     /**
      * Collection name for Campaign.
      */
-    public static final String CAMPAIGN_COLLECTION = "Campaign";
+    public static final String CAMPAIGN_COLLECTION = "campaign";
 
     /**
      * Collection name for Idea.
      */
-    public static final String IDEA_COLLECTION = "Idea";
+    public static final String IDEA_COLLECTION = "idea";
 
     public static final String DATABASE_NAME_PROPERTY = "spring.data.mongodb.database";
 

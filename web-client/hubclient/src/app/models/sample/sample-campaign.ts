@@ -7,19 +7,26 @@ export const FirstCampaign = {
     {
       
         'name': 'Technology',
-        'ValueType': 'text'      
+        'type': 'text'      
     },
     {
         'name': 'Department',
-        'ValueType': 'text'
+        'type': 'text'
       },
-      {
-        'name': 'RAG Status',
-        'ValueType': 'text'
-      },
+      
       {
         'name': 'Theme',
-        'ValueType': 'text'
+        'type': 'single-option',
+        "allowedValues":["Theme one", "Theme two", "Theme three"]
+      },
+      {
+        'name': 'RAG_Status',
+        'type': 'multiple-option',
+        'allowedValues': [
+           'RAG Staus One',
+         'RAG Staus Two',
+          'RAG Staus Three'
+        ]
       }
   ]
 };
