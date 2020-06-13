@@ -37,7 +37,7 @@
             "multi-select",
             "radio",
             "date",
-			"doc"
+            "doc"
           ]
         },
         "allowedValues": {
@@ -48,32 +48,33 @@
           "type": "string",
           "description": "Default values in Custom field criteria"
         },
-		"mandatory":{
-		"type": "boolean",
-		"description": "If the field shall have some value or nullable"
-      }
-    },
-    "workflow": {
-      "type": "array",
-      "description": "Array of Workflow Fields in Campaign",
-      "properties": {
-        "currentStage": {
-          "type": "string",
-          "description": "Current stage in workflow"
-        },
-        "nextStage": {
-          "type": "array",
-          "description": "Next allowed stage from this current stage of workflow"
-        },
-        "prevStage": {
-          "type": "array",
-          "description": "Previous allowed stage from this current stage of workflow"
+        "mandatory": {
+          "type": "boolean",
+          "description": "If the field shall have some value or nullable"
         }
-      }
-    },
-    "required": [
-      "name",
-      "startDate"
-    ]
+      },
+      "workflow": {
+        "type": "array",
+        "description": "Array of Workflow Fields in Campaign",
+        "properties": {
+          "currentStage": {
+            "type": "string",
+            "description": "Current stage in workflow"
+          },
+          "nextStage": {
+            "type": "array",
+            "description": "Next allowed stage from this current stage of workflow"
+          },
+          "prevStage": {
+            "type": "array",
+            "description": "Previous allowed stage from this current stage of workflow"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "startDate"
+      ]
+    }
   }
 }

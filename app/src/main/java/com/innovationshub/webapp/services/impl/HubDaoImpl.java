@@ -1,13 +1,16 @@
-package com.innovationshub.webapp.services.Impl;
+package com.innovationshub.webapp.services.impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.bson.Document;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.innovationshub.webapp.common.ApplicationProperties;
 import com.innovationshub.webapp.common.IHConstants;
 import com.innovationshub.webapp.services.api.IHubDao;
 import com.mongodb.BasicDBObject;
@@ -33,6 +36,7 @@ public class HubDaoImpl implements IHubDao {
 
     public HubDaoImpl() {
         this.mongoClient = MongoClients.create();
+        //TODO: Use ApplicationProperties class to get property value, use autowiring
         this.db = this.mongoClient.getDatabase(IHConstants.DATABASE_NAME);
 //        this.db = this.mongoClient.getDatabase(appProperties.getProperty(IHConstants.DATABASE_NAME_FIELD));
     }

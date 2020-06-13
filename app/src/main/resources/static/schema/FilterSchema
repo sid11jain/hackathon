@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org",
+  "id": "searchFilter",
+  "title": "Search filter for retrieving data from DB",
+  "type": "JSONObject",
+  "filters": [
+    {
+      "filterName": "name",
+      "valueType": "string",
+      "values": [
+        "Name1",
+        "Name2"
+      ]
+    },
+    {
+      "filterName": "tech",
+      "valueType": "string",
+      "values": [
+        "Java",
+        "Python"
+      ]
+    },
+    {
+      "filterName": "startDate",
+      "valueType": "date",
+      "value": "13-06-20 21:00:00"
+    },
+    {
+      "filterName": "numOfDays",
+      "valueType": "numeric",
+      "comparisonOp": "LT/GT/EQ",
+      "value": "10"
+    }
+  ]
+}
