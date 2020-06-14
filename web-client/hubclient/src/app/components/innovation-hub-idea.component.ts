@@ -23,7 +23,7 @@ export class InnovationHubIdeaComponent implements OnInit {
   campaign: Campaign;
 
   @Input()
-  providedIdea: Idea = new Idea(); // Can initialize by default = new Idea();
+  providedIdea: Idea ; // Can initialize by default = new Idea();
 
   @Input()
   add = true;
@@ -52,22 +52,22 @@ export class InnovationHubIdeaComponent implements OnInit {
 
     this.campaignFields = this.campaign.campaignFields;
     if (this.providedIdea) {
-      console.log('befroe conver input', this.providedIdea.campaignValues);
+      // console.log('befroe conver input', this.providedIdea.campaignValues);
 
-      const cam = Object.assign(this.providedIdea.campaignValues.values());
+      // const cam = Object.assign(this.providedIdea.campaignValues.values());
       this.mapIdeaCampaignValueAsKeyValue(this.providedIdea);
-      console.log('after conert input', cam);
+      // console.log('after conert input', cam);
     }
     console.log('campaing fields', this.campaignFields);
     this.ideaForm = new FormGroup({
-      name: new FormControl(this.providedIdea.name),
-      campaignName: new FormControl(this.providedIdea.campaignName),
-      description: new FormControl(this.providedIdea.description),
+      name: new FormControl(this.providedIdea ? this.providedIdea.name : undefined ),
+      campaignName: new FormControl(this.providedIdea ? this.providedIdea.campaignName : undefined),
+      description: new FormControl(this.providedIdea ? this.providedIdea.description : undefined),
       postedOn: new FormControl(
         this.providedIdea ? this.providedIdea.postedOn : new Date()
       ),
-      submittedBy: new FormControl(this.providedIdea.submittedBy),
-      contributors: new FormControl(this.providedIdea.contributors),
+      submittedBy: new FormControl(this.providedIdea ? this.providedIdea.submittedBy : undefined),
+      contributors: new FormControl(this.providedIdea ? this.providedIdea.contributors : undefined),
       campaignValues: new FormArray(
         this.campaignFields.map(
           (field) =>
