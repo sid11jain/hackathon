@@ -1,0 +1,52 @@
+<div class="home-page-container">
+
+<nav>
+<div class="menu-container">
+    <ul>
+    <li> All Ideas</li>
+    <li> Trending Ideas</li>
+    <li> Popular Ideas</li>
+    <button type="button" title="Add" class="btn btn-primary" (click)="openComponentToAdd()"> Add</button>
+</ul>
+</div>
+</nav>
+<div class ="filter-and-cards-container">
+    <div class="filter-and-cards-section">
+<div class="filters-container">
+<label><h5>Filters</h5></label>
+<div>Filter1</div>
+<div>Filter2</div>
+<div>Filter3</div>
+<div>Filter4</div>
+</div>
+
+<div class="cards-container">
+<basic-card [heading]="'Idea Name'" [useDefault]="'true'" [description]="'this will be description and should not exceed indidvdual div width. must overlap to next line'">
+</basic-card>
+</div>
+</div>
+</div>
+</div>
+
+<ng-template>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+    <app-innovation-hub></app-innovation-hub>
+  </div>
+</ng-template>

@@ -1,0 +1,26 @@
+<div class="cards-row-count">Row Count: {{ numberOfElements }}</div>
+<div class="card-elements" *ngFor="let datatype of datatypeToDisplay"> 
+  <div class="basic-card card">
+      <div class="card-header">
+            <h4>{{ datatype.name }}</h4>           
+      </div>
+      <div class="card-body">
+          <div class="basic-card-fields">
+          <div>
+                <label>Posted On: {{ datatype.postedOn }}</label>
+          </div>
+          <div>
+                <label>Stage: {{ datatype.stage }}</label>
+          </div>
+          <div>
+                <label>Description: {{ datatype.description }}</label>
+          </div>
+        </div>  
+      </div>  
+      <div class="card-footer">
+        <button type="button" title="Likes" class="btn">Like</button>
+        <button type="button" title="Comments" class="btn">Comment</button>
+        <button type="button" title="Favourites" class="btn">Favourites</button>
+      </div>
+  </div>
+</div>

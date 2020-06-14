@@ -37,4 +37,8 @@ export class InnovationsHubService {
     return this.http.post(getIdeaUrl,  ideaCriteria);
 
   }
+
+  getCollection(collectionName: string){
+      return this.http.post(this.url+ 'get-collection', collectionName);
+  }
 }

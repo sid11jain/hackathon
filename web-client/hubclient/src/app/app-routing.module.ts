@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { InnovationHubComponent } from './components/innovation-hub.component';
+import { LandingViewComponent } from './shared/components/landing-view.component';
 
 
 const routes: Routes = [{
-  path: '', component: InnovationHubComponent
+  path: '', component: LandingViewComponent
 },
   {
   path: 'innovation', component: InnovationHubComponent

@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.xml.ws.RequestWrapper;
+
 import com.innovationshub.webapp.models.Campaign;
 import com.innovationshub.webapp.models.HubRequestWrapper;
 import com.innovationshub.webapp.models.HubResponseWrapper;
 import com.innovationshub.webapp.models.Idea;
 import com.innovationshub.webapp.services.api.IHubService;
+import java.util.List;
 
 /**
  * @author Sid
@@ -27,6 +30,7 @@ public class LandingController {
     private static final String SUBMIT_IDEA = "/submit-idea";
     private static final String GET_IDEA = "/get-idea";
     private static final String GET_CAMPAIGN = "/get-campaign";
+    private static final String GET_COLLECTION= "/get-collection";
 
     @Autowired
     private IHubService hubService;
@@ -66,6 +70,12 @@ public class LandingController {
         Idea idea = new Idea();
         idea.setName("default");;
         return idea;
+    }
+
+    @RequestMapping(value=GET_COLLECTION, produces = "application/json", method =  RequestMethod.POST)
+    public ResponseEntity<Object> findAllDocuments(@RequestBody String collectionName) throws Exception{
+        List<Object> objs=hubService.findAllDocuments(collectionName);
+        return new ResponseEntity<>(new HubResponseWrapper(objs), HttpStatus.OK);
     }
 
 }

@@ -10,6 +10,7 @@ import com.innovationshub.webapp.models.Campaign;
 import com.innovationshub.webapp.models.Idea;
 import com.innovationshub.webapp.services.api.IHubDao;
 import com.innovationshub.webapp.services.api.IHubService;
+import java.util.List;
 
 /**
  * @author Sid
@@ -50,5 +51,10 @@ public class HubServiceImpl implements IHubService {
             return iHubDao.retrieveCampaignByName(campaignSearchCriteria.getName());
         }
         return null;
+    }
+
+    @Override
+    public List<Object> findAllDocuments(String collectionName){
+        return iHubDao.findAllDocuments(collectionName);
     }
 }

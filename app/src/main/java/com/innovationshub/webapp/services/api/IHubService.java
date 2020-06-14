@@ -2,6 +2,7 @@ package com.innovationshub.webapp.services.api;
 
 import com.innovationshub.webapp.models.Campaign;
 import com.innovationshub.webapp.models.Idea;
+import java.util.List;
 
 /**
  * @author Sid
@@ -22,5 +23,6 @@ public interface IHubService {
 
 Object getCampaign(Campaign campaignSearchCriteria);
 
+List<Object> findAllDocuments(String collectionName);
 
 }

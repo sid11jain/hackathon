@@ -19,6 +19,8 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import java.util.List;
+import com.mongodb.*;
 
 /**
  * Implementation class for database operations.
@@ -111,5 +113,13 @@ public class HubDaoImpl implements IHubDao {
         campaignQuery.put(IHConstants.NAME_FIELD, campaignName);
         FindIterable<Document> campaigns = collection.find(campaignQuery);
         return campaigns.first();
+    }
+
+    @Override
+    public List<Object> findAllDocuments(String collectionName){
+        MongoCollection<Document> collection = db.getCollection(collectionName);
+       // DBCursor cursor =collection.find();
+       // return cursor.toArray();
+       return null;
     }
 }

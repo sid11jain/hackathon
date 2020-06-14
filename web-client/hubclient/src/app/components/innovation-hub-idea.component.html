@@ -1,5 +1,4 @@
 
-    <form [formGroup]="ideaForm">
         <div class="row">
             <div class="col-12">
                 <div class="col-md-3">
@@ -39,6 +38,7 @@
                         [selectedOptions]="providedIdeaCampaignValues? providedIdeaCampaignValues[field.name] : []" [multipleOptions]="false"></innovation-hub-select-option>
                     </div>
                     <div *ngSwitchCase="'multiple-option'">
+                        
                         {{providedIdeaCampaignValues[field.name]}}
                         <innovation-hub-select-option [fieldFormControlName]="field.name" [optionList]="field.allowedValues"
                           [selectedOptions]="providedIdeaCampaignValues? providedIdeaCampaignValues[field.name] : []"  [multipleOptions]="true"></innovation-hub-select-option>
@@ -65,4 +65,4 @@
 
         <li><button type="button" title="view" class="btn" (click)="getIdea()"> View</button></li>
 
-    </form>
+

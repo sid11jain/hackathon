@@ -5,6 +5,7 @@ import { FirstCampaign } from 'src/app/models/sample/sample-campaign';
 import { Campaign, Idea } from 'src/app/models/innovation-hub.model';
 import { plainToClass } from 'class-transformer';
 import { InnovationsHubService } from '../services/innovations-hub.service';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-innovation-hub',

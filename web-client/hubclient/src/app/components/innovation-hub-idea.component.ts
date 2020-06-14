@@ -6,8 +6,6 @@ import {
 } from 'src/app/models/innovation-hub.model';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { InnovationsHubService } from 'src/app/services/innovations-hub.service';
-import { Types } from 'src/app/models/innovation-hub.model';
-import { SelectOptionConfig } from '../models/common/common-utility.model';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -17,7 +15,6 @@ import { SelectOptionConfig } from '../models/common/common-utility.model';
 export class InnovationHubIdeaComponent implements OnInit {
   constructor(protected hubService: InnovationsHubService) {}
 
-  type: Types = Types.TEXT;
 
   @Input()
   campaign: Campaign;
@@ -30,7 +27,6 @@ export class InnovationHubIdeaComponent implements OnInit {
 
   ideaForm: FormGroup;
 
-  multiItems: any[] = [];
 
   campaignFields: CampaignField[] = [];
   providedIdeaCampaignValues: any = {};

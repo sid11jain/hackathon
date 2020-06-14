@@ -1,7 +1,9 @@
 <main>
 <form [formGroup]="parentForm">
-
-<div >
+<div class="modal-header">
+    Add a new Idea
+</div>
+<div class="modal-body">
    <div class="row">
    <label>Select Campaign to submit idea</label>
    <input type="text" class="form-control" formControlName="campaignName"/>
@@ -18,4 +20,6 @@
 </div>
 </form>
 </main>
+
+
 <router-outlet></router-outlet>

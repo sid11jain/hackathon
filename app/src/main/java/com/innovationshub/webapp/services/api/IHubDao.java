@@ -1,6 +1,7 @@
 package com.innovationshub.webapp.services.api;
 
 import org.codehaus.jettison.json.JSONObject;
+import java.util.List;
 
 /**
  * @author AJAYLAMBA
@@ -33,5 +34,7 @@ public interface IHubDao {
      * @return
      */
     public Object retrieveCampaignByName(String campaignName);
+
+    List<Object> findAllDocuments(String collectionName);
 
 }
