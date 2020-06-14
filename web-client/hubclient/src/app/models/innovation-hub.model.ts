@@ -21,6 +21,7 @@ export class CampaignField{
     type: Types;
     allowedValues: any[];
     defaultValue: any;
+    mandatroy: boolean;
     // Collection
 }
 
@@ -38,5 +39,6 @@ export class Idea{
     postedOn: Date;
     submittedBy: any;
     contributors: any[];
+    campaign: Campaign;
     // workflow audit data structure
 }

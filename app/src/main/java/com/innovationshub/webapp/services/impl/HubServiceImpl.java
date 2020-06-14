@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.innovationshub.webapp.models.Campaign;
 import com.innovationshub.webapp.models.Idea;
 import com.innovationshub.webapp.services.api.IHubDao;
 import com.innovationshub.webapp.services.api.IHubService;
@@ -43,4 +44,11 @@ public class HubServiceImpl implements IHubService {
         return null;
     }
 
+    @Override
+    public Object getCampaign(@ModelAttribute() Campaign campaignSearchCriteria) {
+        if (null != campaignSearchCriteria) {
+            return iHubDao.retrieveCampaignByName(campaignSearchCriteria.getName());
+        }
+        return null;
+    }
 }

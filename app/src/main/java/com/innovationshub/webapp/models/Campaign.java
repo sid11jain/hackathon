@@ -16,8 +16,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Campaign {
 
-    @Id
-    private String campaignName;
+    //@Id
+    private String name;
+
+    private String description;
 
     private String campaignType;
 

@@ -3,3 +3,8 @@ export class SelectOptionConfig {
     searchable: boolean;
     clearable: boolean;
 }
+
+export class IdValuePair{
+    id: any;
+    value: any;
+}

@@ -1,26 +1,45 @@
-import { Component, OnInit, Input, forwardRef, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  forwardRef,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { CampaignField, Idea } from 'src/app/models/innovation-hub.model';
-import { SelectOptionConfig } from 'src/app/models/common/common-utility.model';
-import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ControlContainer, FormControl, FormGroup } from '@angular/forms';
+import {
+  SelectOptionConfig,
+  IdValuePair,
+} from 'src/app/models/common/common-utility.model';
+import {
+  ControlValueAccessor,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ControlContainer,
+  FormControl,
+  FormGroup,
+} from '@angular/forms';
 
 @Component({
   // tslint:disable-next-line: component-selector
   selector: 'innovation-hub-select-option',
   templateUrl: './innovation-hub-select-option.component.html',
-  providers: [  {
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => InnovationHubSelectOptionComponent),
-    multi: true,
-  }
-  // , {
-  //   provide: NG_VALIDATORS,
-  //   useExisting: forwardRef(() => InnovationHubSelectOptionComponent),
-  //   multi: true,
-  // }
-]
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InnovationHubSelectOptionComponent),
+      multi: true,
+    },
+    // , {
+    //   provide: NG_VALIDATORS,
+    //   useExisting: forwardRef(() => InnovationHubSelectOptionComponent),
+    //   multi: true,
+    // }
+  ],
 })
-export class InnovationHubSelectOptionComponent implements ControlValueAccessor  {
-  constructor(private controlContainer: ControlContainer) { }
+export class InnovationHubSelectOptionComponent
+  implements ControlValueAccessor {
+  constructor(private controlContainer: ControlContainer) {}
 
   @ViewChild('selectOptionContainer', { static: true })
   selectOptionContainer: ElementRef;
@@ -29,103 +48,122 @@ export class InnovationHubSelectOptionComponent implements ControlValueAccessor 
   public callingFormGroup: FormGroup;
 
   @Input()
-  campaignField: CampaignField;
+  optionList: IdValuePair[];
 
   @Input()
   defaultValueLabel = 'Please Select';
 
   @Input()
-  selectedValues: any = [];
+  fieldFormControlName: string;
+
+  @Input()
+  selectedOptions: any = [];
 
   @Input()
   multipleOptions: false;
 
   config: SelectOptionConfig;
-  singleOptionConfig: SelectOptionConfig = {multipleOptions : false, searchable : false, clearable : false};
-  multiOptionConfig: SelectOptionConfig = {multipleOptions : true, searchable : true, clearable : true};
+  singleOptionConfig: SelectOptionConfig = {
+    multipleOptions: false,
+    searchable: false,
+    clearable: false,
+  };
+  multiOptionConfig: SelectOptionConfig = {
+    multipleOptions: true,
+    searchable: true,
+    clearable: true,
+  };
 
- @Input()
- disabled = false;
-// @Input()
-// optionList: any[];
+  @Input()
+  disabled = false;
+  // @Input()
+  // optionList: any[];
 
-// @Input()
-// selectedOptionList: any[];
+  // @Input()
+  // selectedOptionList: any[];
 
-// @Input()
-// config: any;
+  // @Input()
+  // config: any;
 
-// @Input()
-// defaultValueLabel: any = 'Please Select';
+  // @Input()
+  // defaultValueLabel: any = 'Please Select';
 
-// @Input()
-// multipleOptions = false;
+  // @Input()
+  // multipleOptions = false;
 
-// @Input()
-// searchable = false;
+  // @Input()
+  // searchable = false;
 
-// @Input()
-// clearable = false;
+  // @Input()
+  // clearable = false;
 
-// @Input()
-// maxSelectedOptions = 20;
+  // @Input()
+  // maxSelectedOptions = 20;
 
+  events: any[] = [];
 
+  ngOnInit() {
+    console.log('selector field', this.fieldFormControlName);
+    console.log('field list', this.optionList);
+    console.log('selected options', this.selectedOptions);
+    this.callingFormGroup = this.controlContainer.control as FormGroup;
+    this.callingForm = this.callingFormGroup.get(
+      this.fieldFormControlName
+    ) as FormControl;
+    if (this.selectedOptions && this.selectedOptions.length > 0){
+      if (this.multipleOptions){
+      this.callingForm.patchValue(this.selectedOptions);
+      }else{
+        this.callingForm.setValue(this.selectedOptions);
+      }
 
-
-
-events: any[] = [];
-
- ngOnInit() {
-  console.log('selector field', this.campaignField);
-  console.log('config field', this.config);
-  this.callingFormGroup = (this.controlContainer.control as FormGroup);
-  this.callingForm = this.callingFormGroup.get(this.campaignField.name) as FormControl;
-  if (this.selectedValues){
-    this.callingForm.patchValue(this.selectedValues);
+    }
+    if (this.multipleOptions) {
+      this.config = this.multiOptionConfig;
+    } else {
+      this.config = this.singleOptionConfig;
+    }
   }
-  if (this.multipleOptions){
-    this.config = this.multiOptionConfig;
-  }else{
-    this.config = this.singleOptionConfig;
 
-  }
-  }
+  writeValue(value: any[] | any): void {
+ }
 
+  registerOnChange(fn: any): void {}
 
-  writeValue(value: any[]|any): void {
-    this.selectedValues = value;
-  }
-  onModelChange: any = (_: any) => {};
-  onModelTouched: any = () => {};
-  registerOnChange(fn: any): void {
-    // this.onModelChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    // this.onModelTouched = fn;
-  }
+  registerOnTouched(fn: any): void {}
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
 
+  getValues() {}
+  public selectAll() {
+    // this.selectedValues = this.campaignField.allowedValues.map(allowedValue => allowedValue.value);
+    this.selectedOptions = this.optionList;
+    this.callingForm.patchValue(this.selectedOptions);
+  }
 
+  public clearAll() {
+    this.selectedOptions = [];
+    this.callingForm.patchValue(this.selectedOptions);
+  }
 
-getValues() {}
-public selectAll() {
-  // this.selectedValues = this.campaignField.allowedValues.map(allowedValue => allowedValue.value);
-  this.selectedValues = this.campaignField.allowedValues;
-  this.callingForm.patchValue(this.selectedValues);
-}
+//   onSubmit() {
+//     // console.log('event', event);
+//     const selectedValues = [];
+//     this.callingForm
+//       // .get(this.fieldFormControlName)
+//       .value.map((selectedId) =>
+//         selectedValues.push(
+//           this.optionList.filter((option) => option.id === selectedId)
+//         )
+//       );
+//     console.log('beore pathing', this.callingForm);
+//     this.callingForm.patchValue(selectedValues);
+//     console.log('after pathing', this.callingForm);
+//   }
 
-public clearAll() {
-  this.selectedValues = [];
-  this.callingForm.patchValue(this.selectedValues);
-}
-
-// onClose(){
-//   this.selectedValues = this.campaignField.allowedValues;
-// }
-
+//   compareIds(id1: IdValuePair, id2: IdValuePair){
+// return id1 && id2 && id1.id === id2.id;
+//   }
 }

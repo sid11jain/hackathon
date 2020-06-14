@@ -1,5 +1,6 @@
 package com.innovationshub.webapp.services.api;
 
+import com.innovationshub.webapp.models.Campaign;
 import com.innovationshub.webapp.models.Idea;
 
 /**
@@ -17,7 +18,9 @@ public interface IHubService {
      * @param idea
      * @return
      */
-    Object getIdea(Idea idea);
+    Object getIdea(Idea ideaSearchCriteria);
+
+Object getCampaign(Campaign campaignSearchCriteria);
 
 
 }

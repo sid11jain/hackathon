@@ -1,2 +1,21 @@
-<innovation-hub-idea [campaignFields]="campaign.campaignFields"></innovation-hub-idea>
+<main>
+<form [formGroup]="parentForm">
+
+<div >
+   <div class="row">
+   <label>Select Campaign to submit idea</label>
+   <input type="text" class="form-control" formControlName="campaignName"/>
+   <li><button type="button" title="view" class="btn" (click)="getCampaign()"> Add Idea</button></li>
+</div>
+<div class="row">
+   <label>Select idea to view </label>
+   <input type="text" class="form-control" formControlName="ideaName"/>
+   <li><button type="button" title="view" class="btn" (click)="getIdea()"> View</button></li>
+</div>
+<div *ngIf="campaign">
+<innovation-hub-idea [campaign]="campaign" [providedIdea]="idea? idea : null"></innovation-hub-idea>
+</div>
+</div>
+</form>
+</main>
 <router-outlet></router-outlet>

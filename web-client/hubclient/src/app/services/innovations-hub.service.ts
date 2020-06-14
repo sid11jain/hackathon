@@ -23,10 +23,18 @@ export class InnovationsHubService {
 
   }
 
+  getCampaign(campaginCriteria: any){
+    console.log('searched campaogn', campaginCriteria);
+
+    const getCampaignUrl = this.url + 'get-campaign';
+
+    return this.http.post(getCampaignUrl, campaginCriteria);
+  }
+
   getIdea(ideaCriteria: any){
     const getIdeaUrl = this.url + 'get-idea';
   // Can later be converted to get mappig
-    this.http.post(getIdeaUrl,  ideaCriteria).subscribe(x => console.log(x));
+    return this.http.post(getIdeaUrl,  ideaCriteria);
 
   }
 }

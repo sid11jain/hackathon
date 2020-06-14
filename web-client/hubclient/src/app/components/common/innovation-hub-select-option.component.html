@@ -1,5 +1,5 @@
 <div #selectOptionContainer>
-<ng-select [formControl]="callingForm" [items]="campaignField.allowedValues" bindValue="value"[placeholder]="defaultValueLabel"
+<ng-select  [formControl]="callingForm" [items]="optionList" bindLabel="value"  [placeholder]="defaultValueLabel"
     [multiple]="config.multipleOptions" [searchable]="config.searchable" [clearable]="config.clearable"
     >   
 </ng-select>

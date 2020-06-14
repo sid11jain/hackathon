@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.innovationshub.webapp.models.Campaign;
 import com.innovationshub.webapp.models.HubRequestWrapper;
 import com.innovationshub.webapp.models.HubResponseWrapper;
 import com.innovationshub.webapp.models.Idea;
@@ -26,6 +26,7 @@ public class LandingController {
     private static final String LANDING_URL = "";
     private static final String SUBMIT_IDEA = "/submit-idea";
     private static final String GET_IDEA = "/get-idea";
+    private static final String GET_CAMPAIGN = "/get-campaign";
 
     @Autowired
     private IHubService hubService;
@@ -48,6 +49,14 @@ public class LandingController {
     public ResponseEntity<Object> getIdea(@RequestBody Idea inputIdea) throws Exception {
 
         Object returnData = hubService.getIdea(inputIdea);
+
+        return new ResponseEntity<>(new HubResponseWrapper(returnData), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = GET_CAMPAIGN, produces = "application/json", method =  RequestMethod.POST)
+    public ResponseEntity<Object> getIdea(@RequestBody Campaign campaignSearchCriteria) throws Exception {
+
+        Object returnData = hubService.getCampaign(campaignSearchCriteria);
 
         return new ResponseEntity<>(new HubResponseWrapper(returnData), HttpStatus.OK);
     }
