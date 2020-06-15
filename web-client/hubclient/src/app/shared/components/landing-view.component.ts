@@ -6,16 +6,16 @@ import { Idea } from 'src/app/models/innovation-hub.model';
 
 
 @Component({
-    selector:'landing-view',
-    templateUrl:'./landing-view.component.html',
-    styleUrls:['./landing-view.component.scss']
+    selector: 'landing-view',
+    templateUrl: './landing-view.component.html',
+    styleUrls: ['./landing-view.component.scss']
 })
 export class LandingViewComponent implements OnInit{
     bsModalRef: BsModalRef;
 
     ideas: any[];
 
-    constructor(private service:InnovationsHubService){
+    constructor(private service: InnovationsHubService){
 
     }
 
@@ -23,17 +23,17 @@ export class LandingViewComponent implements OnInit{
 
 
     ngOnInit(): void {
-        this.service.getCollection("Idea").forEach(element => {
+        this.service.getCollection('idea').forEach(element => {
             this.ideas.push(element);
-        });;
+        }); ;
     }
-    
+
 
     openComponentToAdd(){
-      alert("Button is clicked");
+      alert('Button is clicked');
     }
 
 
-       
+
 
 }
