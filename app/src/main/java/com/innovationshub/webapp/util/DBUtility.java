@@ -36,7 +36,7 @@ public class DBUtility {
                         query.append(" { " + filterName + ": { $in: [");
                     } else {
                         //if field is part of campaign values, search nested document
-                        query.append(" { \'" + IHConstants.CAMPAIGN_VALUES + "." + filterName + "\': { $in: [");
+                        query.append(" { \'" + IHConstants.CAMPAIGN_VALUES + "." + filterName + "." + IHConstants.VALUE_FIELD + "\': { $in: [");
                     }
                     JSONArray values = filter.getJSONArray(IHConstants.VALUES);
                     for (int valIndex = 0; valIndex < values.length(); valIndex++) {
@@ -56,6 +56,8 @@ public class DBUtility {
 
         } catch (Exception e) {
             LOG.error("Error occurred while building query: ", e.getMessage());
+            //Return empty string as query to continue further processing
+            return "";
         }
 
         return query.toString();

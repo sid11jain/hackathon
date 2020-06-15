@@ -5,8 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InnovationHubComponent } from './components/innovation-hub.component';
 import {HttpClientModule} from '@angular/common/http';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {InnovationsHubService} from './services/innovations-hub.service';
+import {FormsModule, ReactiveFormsModule, ɵNgSelectMultipleOption} from '@angular/forms';
+import { InnovationsHubService } from './services/innovations-hub.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { InnovationHubIdeaComponent } from './components/innovation-hub-idea.component';
@@ -14,6 +14,7 @@ import { InnovationHubSelectOptionComponent } from './components/common/innovati
 import { BasicCardComponent } from './shared/components/basic-card.component';
 import { LandingViewComponent } from './shared/components/landing-view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ExportExcelService } from './services/export-excel.service';
 
 @NgModule({
   declarations: [
@@ -34,8 +35,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgSelectModule,
     BrowserAnimationsModule
   ],
-  schemas:[NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
-  providers: [InnovationsHubService],
+  schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
+   providers: [InnovationsHubService, ExportExcelService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

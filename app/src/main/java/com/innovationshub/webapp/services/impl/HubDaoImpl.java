@@ -1,12 +1,10 @@
 package com.innovationshub.webapp.services.impl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.bson.Document;
 import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +17,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import java.util.List;
-import com.mongodb.*;
+import com.mongodb.client.result.DeleteResult;
 
 /**
  * Implementation class for database operations.
@@ -50,6 +47,14 @@ public class HubDaoImpl implements IHubDao {
         return insertedIdea;
     }
 
+    @Override
+    public long deleteAllIdeasForName(String name) {
+        MongoCollection<Document> collection = db.getCollection(IHConstants.IDEA_COLLECTION);
+        String whereClause = "{ $and : [ { name: { $in: [\"" + name +"\"] } } ] }";
+        BasicDBObject query = BasicDBObject.parse(whereClause);
+        DeleteResult result = collection.deleteMany(query);
+        return result.getDeletedCount();
+    }
 
 
     @Override
@@ -116,10 +121,29 @@ public class HubDaoImpl implements IHubDao {
     }
 
     @Override
-    public List<Object> findAllDocuments(String collectionName){
+    public List<Object> findAllDocuments(String collectionName) {
         MongoCollection<Document> collection = db.getCollection(collectionName);
-       // DBCursor cursor =collection.find();
-       // return cursor.toArray();
-       return null;
+        // DBCursor cursor =collection.find();
+        // return cursor.toArray();
+        return null;
+    }
+
+    public JSONArray getAllIdeasForCampaignName(String campaignName) {
+        MongoCollection<Document> collection = db.getCollection(IHConstants.IDEA_COLLECTION);
+        BasicDBObject whereQuery = new BasicDBObject();
+        whereQuery.put(IHConstants.CAMPAIGN_NAME_FIELD, campaignName);
+        FindIterable<Document> ideas = collection.find(whereQuery);
+        JSONArray ideasArr = new JSONArray();
+        for (Document idea : ideas) {
+            if (idea != null) {
+                Object campaign = retrieveCampaignByName(campaignName);
+                if (null != campaign) {
+                    idea.append(IHConstants.CAMPAIGN_FIELD, campaign);
+                }
+                JSONObject obj = new JSONObject(idea);
+                ideasArr.put(obj);
+            }
+        }
+        return ideasArr;
     }
 }

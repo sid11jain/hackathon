@@ -2,7 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": []
+    "types": ["node"]//This is required for running exceljs on angular 9. See https://github.com/exceljs/exceljs/issues/1150
   },
   "files": [
     "src/main.ts",

@@ -34,6 +34,8 @@ public class IHConstants {
     public static final String CAMPAIGN_NAME_FIELD = "campaignName";
     public static final String NAME_FIELD = "name";
     public static final String CAMPAIGN_FIELD = "campaign";
+    public static final String DESCRIPTION_FIELD = "description";
+    public static final String VALUE_FIELD = "value";
 
     public static final String FILTERS = "filters";
 

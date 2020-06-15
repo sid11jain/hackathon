@@ -1,7 +1,9 @@
 package com.innovationshub.webapp.services.api;
 
 import com.innovationshub.webapp.models.Campaign;
+import org.codehaus.jettison.json.JSONArray;
 import com.innovationshub.webapp.models.Idea;
+
 import java.util.List;
 
 /**
@@ -21,8 +23,11 @@ public interface IHubService {
      */
     Object getIdea(Idea ideaSearchCriteria);
 
-Object getCampaign(Campaign campaignSearchCriteria);
+    Object getCampaign(Campaign campaignSearchCriteria);
 
-List<Object> findAllDocuments(String collectionName);
+    List<Object> findAllDocuments(String collectionName);
+
+    JSONArray exportAllIdeasForCampaign(String campaignName);
+
 
 }

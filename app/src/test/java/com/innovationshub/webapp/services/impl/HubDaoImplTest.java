@@ -1,11 +1,7 @@
 package com.innovationshub.webapp.services.impl;
 
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONObject;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import com.innovationshub.webapp.services.impl.HubDaoImpl;
 
 /**
  * @author AJAYLAMBA
@@ -17,5 +13,10 @@ public class HubDaoImplTest {
     @Test
     public void testRetrieve() throws Exception {
 
+    }
+
+    @Test
+    public void testDelete() throws Exception {
+        new HubDaoImpl().deleteAllIdeasForName("AjayIdea");
     }
 }

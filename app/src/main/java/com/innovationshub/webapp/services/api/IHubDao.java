@@ -1,7 +1,8 @@
 package com.innovationshub.webapp.services.api;
 
-import org.codehaus.jettison.json.JSONObject;
 import java.util.List;
+
+import org.codehaus.jettison.json.JSONArray;
 
 /**
  * @author AJAYLAMBA
@@ -36,5 +37,14 @@ public interface IHubDao {
     public Object retrieveCampaignByName(String campaignName);
 
     List<Object> findAllDocuments(String collectionName);
+    public JSONArray getAllIdeasForCampaignName(String campaignName);
+
+    /**
+     * Deletes all the ideas which have given name.
+     *
+     * @param ideaName
+     * @return
+     */
+    public long deleteAllIdeasForName(String ideaName);
 
 }

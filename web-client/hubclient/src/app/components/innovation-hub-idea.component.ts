@@ -106,4 +106,8 @@ export class InnovationHubIdeaComponent implements OnInit {
       console.log('LAst11', this.providedIdeaCampaignValues);
     }
   }
+  exportToExcel() {
+    this.hubService.exportToExcel('AjayCampaign');
+  }
+
 }

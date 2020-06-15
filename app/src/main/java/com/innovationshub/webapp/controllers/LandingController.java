@@ -1,5 +1,8 @@
 package com.innovationshub.webapp.controllers;
 
+import java.util.List;
+
+import org.codehaus.jettison.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,16 +11,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.xml.ws.RequestWrapper;
 
 import com.innovationshub.webapp.models.Campaign;
 import com.innovationshub.webapp.models.HubRequestWrapper;
 import com.innovationshub.webapp.models.HubResponseWrapper;
 import com.innovationshub.webapp.models.Idea;
 import com.innovationshub.webapp.services.api.IHubService;
-import java.util.List;
 
 /**
  * @author Sid
@@ -31,6 +32,7 @@ public class LandingController {
     private static final String GET_IDEA = "/get-idea";
     private static final String GET_CAMPAIGN = "/get-campaign";
     private static final String GET_COLLECTION= "/get-collection";
+    private static final String EXPORT_CAMPAIGN_IDEAS = "/export-campaign-ideas";
 
     @Autowired
     private IHubService hubService;
@@ -63,6 +65,12 @@ public class LandingController {
         Object returnData = hubService.getCampaign(campaignSearchCriteria);
 
         return new ResponseEntity<>(new HubResponseWrapper(returnData), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = EXPORT_CAMPAIGN_IDEAS, method = RequestMethod.GET)
+    public ResponseEntity<Object> exportAllIdeasForCampaign(@RequestParam String campaignName) {
+        JSONArray allIdeas = hubService.exportAllIdeasForCampaign(campaignName);
+        return new ResponseEntity(new HubResponseWrapper(allIdeas.toString()), HttpStatus.OK);
     }
 
     @ModelAttribute("idea")
