@@ -1,13 +1,13 @@
 <div #selectOptionContainer>
-<ng-select  [formControl]="callingForm" [items]="optionList" bindLabel="value"  [placeholder]="defaultValueLabel"
+<ng-select  [formControl]="callingForm" [items]="optionList"  bindLabel="{{config && config.bindLabel? config.bindLabel : defaultBindLabel}}" bindValue="{{config && config.bindValue? config.bindValue : null}}" [placeholder]="defaultValueLabel"
     [multiple]="config.multipleOptions" [searchable]="config.searchable" [clearable]="config.clearable"
     >   
 </ng-select>
 
-<div *ngIf="this.config.multipleOptions">
+<!-- <div *ngIf="this.config.multipleOptions">
     <button class="btn btn-link"
             (click)="selectAll()">Select All</button>
     <button class="btn btn-link"
             (click)="clearAll()">Clear All</button>
-  </div>
+  </div> -->
 </div>

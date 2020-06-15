@@ -26,15 +26,11 @@ export class InnovationHubComponent implements OnInit {
       ideaName: new FormControl(),
       radioButton: new FormControl(),
     });
-    // this.options = of(['options1', 'options2']);
-    // this.getCampaign();
-    // console.log('main comp ', this.campaign.campaignFields);
-  }
+   }
 
   onRadioChange(flag: boolean) {}
 
   getCampaign() {
-    console.log('campaing name', this.parentForm.value.campaignName);
     if (this.parentForm.value.campaignName) {
       const campaignCriteria = new Campaign();
       campaignCriteria.name = this.parentForm.value.campaignName;
@@ -46,9 +42,6 @@ export class InnovationHubComponent implements OnInit {
           }
         });
     }
-
-    // console.log('campaign at hub', this.campaign);
-    // this.campaign = plainToClass(Campaign, FirstCampaign);
   }
 
   getIdea(){
@@ -65,7 +58,7 @@ export class InnovationHubComponent implements OnInit {
         });
     }
 
-    console.log("Idea at hub", this.idea);
+    console.log('Idea at hub', this.idea);
   }
 
   // submit() {

@@ -1,19 +1,19 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {
-  CampaignField,
-  Campaign,
-  Idea,
-} from 'src/app/models/innovation-hub.model';
-import { FormGroup, FormControl, FormArray } from '@angular/forms';
+import { Idea, CampaignField, Campaign, Collection } from 'src/app/models/innovation-hub.model';
+import { FormControl, FormArray, FormGroup } from '@angular/forms';
 import { InnovationsHubService } from 'src/app/services/innovations-hub.service';
+import { SelectOptionConfig } from 'src/app/models/common/common-utility.model';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   // tslint:disable-next-line: component-selector
-  selector: 'innovation-hub-idea',
-  templateUrl: './innovation-hub-idea.component.html',
+  selector: 'innovation-hub-card',
+  templateUrl: './innovation-hub-card.component.html',
+  styleUrls: ['./innovation-hub-card.component.scss']
 })
-export class InnovationHubIdeaComponent implements OnInit{
-  constructor(protected hubService: InnovationsHubService) {}
+export class InnovationHubCardComponent implements OnInit {
+  constructor(protected modalRef: BsModalRef, protected hubService: InnovationsHubService) {}
 
 
   @Input()
@@ -26,21 +26,25 @@ export class InnovationHubIdeaComponent implements OnInit{
   add = true;
 
   ideaForm: FormGroup;
+  campaignForm: FormGroup;
+  allCampaigns: Campaign[];
+
 
 
   campaignFields: CampaignField[] = [];
   providedIdeaCampaignValues: any = {};
 
-  ngOnInit(): void {
-    console.log('campaign', this.campaign);
-    console.log('idea input', this.providedIdea);
-    // console.log('idea input', this.providedIdea.campaignValues['Department']);
+  loadIdea = new BehaviorSubject<Boolean>(false);
 
-    this.campaignFields = this.campaign.campaignFields;
+  ngOnInit(): void {
+    console.log('In idea card', this.campaign);
+    this.setCampaign();
     if (this.providedIdea) {
             this.mapIdeaCampaignValueAsKeyValue(this.providedIdea);
     }
-    console.log('campaing fields', this.campaignFields);
+    this.campaignForm = new FormGroup({
+      selectedCampaign: new FormControl()
+    });
     this.ideaForm = new FormGroup({
       name: new FormControl(this.providedIdea ? this.providedIdea.name : undefined ),
       campaignName: new FormControl(this.providedIdea ? this.providedIdea.campaignName : undefined),
@@ -61,10 +65,10 @@ export class InnovationHubIdeaComponent implements OnInit{
               ),
             })
         )
-      ),
+      )
     });
-    console.log('idea form', this.ideaForm);
   }
+
 
   submitIdea() {
     console.log('submitted form', this.ideaForm);
@@ -97,5 +101,31 @@ export class InnovationHubIdeaComponent implements OnInit{
       this.hubService.exportToExcel(this.campaign.name);
     }
   }
+
+  closeModal(){
+    this.modalRef.hide();
+  }
+
+  addEntity(){
+    // console.log('Add', this.campaignForm.value.selectedCampaign);
+    if (this.campaignForm.value.campaign){
+      this.campaign = this.campaignForm.value.selectedCampaign;
+      this.loadIdea.next(true);
+     }
+  }
+
+  setCampaign(){
+    console.log('idea card campaign', this.campaign);
+    if (this.campaign){
+      this.campaignFields = this.campaign.campaignFields;
+      } else{
+        this.hubService.getCollection(Collection.CAMPAIGN).subscribe((resp: any) => {
+          if (resp && resp.data){
+            this.allCampaigns =  JSON.parse(resp.data);
+            console.log('all camp', this.allCampaigns);
+          }
+        });
+      }
+ }
 
 }

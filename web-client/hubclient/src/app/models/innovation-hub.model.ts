@@ -1,3 +1,7 @@
+export enum Collection {
+    CAMPAIGN = 'campaign',
+    IDEA = 'idea'
+}
 export enum Types {
     TEXT = 'text',
     SINGLE_OPTION = 'single-option',

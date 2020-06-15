@@ -3,6 +3,7 @@ package com.innovationshub.webapp.controllers;
 import java.util.List;
 
 import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.innovationshub.webapp.common.IHConstants;
 import com.innovationshub.webapp.models.Campaign;
 import com.innovationshub.webapp.models.HubRequestWrapper;
 import com.innovationshub.webapp.models.HubResponseWrapper;
@@ -82,8 +84,10 @@ public class LandingController {
 
     @RequestMapping(value=GET_COLLECTION, produces = "application/json", method =  RequestMethod.POST)
     public ResponseEntity<Object> findAllDocuments(@RequestBody String collectionName) throws Exception{
-        List<Object> objs=hubService.findAllDocuments(collectionName);
-        return new ResponseEntity<>(new HubResponseWrapper(objs), HttpStatus.OK);
+        JSONArray objs=hubService.findAllDocuments(collectionName);
+        JSONObject obj = new JSONObject();
+        obj.put(IHConstants.CAMPAIGN_COLLECTION, objs);
+        return new ResponseEntity<>(new HubResponseWrapper(obj.toString()), HttpStatus.OK);
     }
 
 }

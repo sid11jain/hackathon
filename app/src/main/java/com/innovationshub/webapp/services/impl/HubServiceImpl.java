@@ -62,7 +62,7 @@ public class HubServiceImpl implements IHubService {
     }
 
     @Override
-    public List<Object> findAllDocuments(String collectionName){
+    public JSONArray findAllDocuments(String collectionName){
         return iHubDao.findAllDocuments(collectionName);
     }
 

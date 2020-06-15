@@ -20,7 +20,7 @@ export class InnovationsHubService {
   submitIdea(data: any) {
     const submitUrl = this.url + 'submit-idea';
     console.log('submitted data', data);
-    this.http.post(submitUrl, { data: JSON.stringify(data) }).subscribe(x => console.log(x));
+    // this.http.post(submitUrl, { data: JSON.stringify(data) }).subscribe(x => console.log(x));
 
   }
 
@@ -58,7 +58,7 @@ export class InnovationsHubService {
       this.ees.exportExcel(reportData);
     });
   }
-  
+
   getCollection(collectionName: string){
       return this.http.post(this.url + 'get-collection', collectionName);
   }

@@ -62,45 +62,25 @@ export class InnovationHubSelectOptionComponent
   @Input()
   multipleOptions: false;
 
+  @Input()
   config: SelectOptionConfig;
+
+  @Input()
+  disabled = false;
+
+  defaultBindLabel = 'value';
+  events: any[] = [];
+  
   singleOptionConfig: SelectOptionConfig = {
     multipleOptions: false,
     searchable: false,
-    clearable: false,
+    clearable: false
   };
   multiOptionConfig: SelectOptionConfig = {
     multipleOptions: true,
     searchable: true,
     clearable: true,
   };
-
-  @Input()
-  disabled = false;
-  // @Input()
-  // optionList: any[];
-
-  // @Input()
-  // selectedOptionList: any[];
-
-  // @Input()
-  // config: any;
-
-  // @Input()
-  // defaultValueLabel: any = 'Please Select';
-
-  // @Input()
-  // multipleOptions = false;
-
-  // @Input()
-  // searchable = false;
-
-  // @Input()
-  // clearable = false;
-
-  // @Input()
-  // maxSelectedOptions = 20;
-
-  events: any[] = [];
 
   ngOnInit() {
     console.log('selector field', this.fieldFormControlName);
@@ -116,12 +96,13 @@ export class InnovationHubSelectOptionComponent
         this.callingForm.patchValue(this.selectedOptions);
       }
 
-
+    if (!this.config){
     if (this.multipleOptions) {
       this.config = this.multiOptionConfig;
     } else {
       this.config = this.singleOptionConfig;
     }
+  }
   }
 
   writeValue(value: any[] | any): void {

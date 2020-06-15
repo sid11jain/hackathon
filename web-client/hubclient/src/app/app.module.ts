@@ -15,6 +15,9 @@ import { BasicCardComponent } from './shared/components/basic-card.component';
 import { LandingViewComponent } from './shared/components/landing-view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExportExcelService } from './services/export-excel.service';
+import { BsModalService, ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
+import { InnovationHubCardComponent } from './components/common/innovation-hub-card/innovation-hub-card.component';
+import { HubCampaignCardComponent } from './components/common/innovation-hub-card/hub-campaign-card.component';
 
 @NgModule({
   declarations: [
@@ -23,12 +26,15 @@ import { ExportExcelService } from './services/export-excel.service';
     InnovationHubIdeaComponent,
     BasicCardComponent,
     InnovationHubSelectOptionComponent,
-    LandingViewComponent
+    LandingViewComponent,
+    InnovationHubCardComponent,
+    HubCampaignCardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ModalModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
@@ -36,7 +42,7 @@ import { ExportExcelService } from './services/export-excel.service';
     BrowserAnimationsModule
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
-   providers: [InnovationsHubService, ExportExcelService],
+   providers: [InnovationsHubService, ExportExcelService, BsModalService, BsModalRef],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

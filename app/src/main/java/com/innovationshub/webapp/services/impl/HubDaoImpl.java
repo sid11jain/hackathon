@@ -3,6 +3,8 @@ package com.innovationshub.webapp.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.print.Doc;
+
 import org.bson.Document;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
@@ -121,11 +123,17 @@ public class HubDaoImpl implements IHubDao {
     }
 
     @Override
-    public List<Object> findAllDocuments(String collectionName) {
+    public JSONArray findAllDocuments(String collectionName) {
         MongoCollection<Document> collection = db.getCollection(collectionName);
-        // DBCursor cursor =collection.find();
-        // return cursor.toArray();
-        return null;
+        FindIterable<Document> documents = collection.find();
+        JSONArray allCollectionDoc = new JSONArray();
+        for(Document doc: documents){
+            if(null != doc){
+                //JSONObject obj = new JSONObject(doc);
+                allCollectionDoc.put(doc.toJson());
+            }
+        }
+        return allCollectionDoc;
     }
 
     public JSONArray getAllIdeasForCampaignName(String campaignName) {

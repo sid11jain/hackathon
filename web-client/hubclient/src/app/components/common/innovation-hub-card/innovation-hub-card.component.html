@@ -1,0 +1,75 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left"></h4>
+    <a class="close pull-right" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+        <i class="fas fa-times"></i>
+    </a>
+</div>
+<div class="modal-body">
+    <!-- <form [formGroup]="campaignForm">
+        <div *ngIf="!campaign">
+            <innovation-hub-select-option formControlName="selectedCampaign" [fieldFormControlName]="'selectedCampaign'"
+                [optionList]="allCampaigns" [multipleOptions]="false" [config]="configForCampaignSearch">
+            </innovation-hub-select-option>
+        </div>
+
+    </form> -->
+    <form [formGroup]="ideaForm">
+
+        <div *ngIf="loadIdea.value" class="card mx-auto">
+            <!-- w-50  -->
+            <div class="card-header">Campaign Name</div>
+            <div class="card-body">
+                <h6 class="card-title"> Idea Name
+                    <input type="text" class="form-control" [value]="providedIdea? providedIdea.name : ''"
+                        formControlName="name" />
+                </h6>
+                <h6 *ngIf="providedIdea && providedIdea.postedOn" class="card-subtitle mb-2 ">Posted On
+                    <span>{{ providedIdea.postedOn}}</span>
+                    <!--  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
+                </h6>
+                <p class="card-text text-left"> Description
+                    <input type="text" class="form-control" [value]="providedIdea? providedIdea.description : ''"
+                        formControlName="description" />
+                </p>
+                <ul *ngIf="campaignFields" class="list-group list-group-flush">
+                    <li class="list-group-item" *ngFor="let field of campaignFields; let fieldPosition = index"
+                        formArrayName="campaignValues">
+                        <!-- switch cases for each input type-->
+
+                        <ng-container [ngSwitch]="field.type" formGroupName="{{fieldPosition}}">
+                            <label> {{ field.name }} -- populated from campaign</label>
+                            <div *ngSwitchCase="'text'">
+                                <input type="text" class="form-control"
+                                    [value]="providedIdeaCampaignValues? providedIdeaCampaignValues[field.name] : ''"
+                                    formControlName={{field.name}} />
+                            </div>
+                            <div *ngSwitchCase="'single-option'">
+                                <innovation-hub-select-option [fieldFormControlName]="field.name"
+                                    [optionList]="field.allowedValues"
+                                    [selectedOptions]="providedIdeaCampaignValues? providedIdeaCampaignValues[field.name] : []"
+                                    [multipleOptions]="false"></innovation-hub-select-option>
+                            </div>
+                            <div *ngSwitchCase="'multiple-option'">
+                                <innovation-hub-select-option [fieldFormControlName]="field.name"
+                                    [optionList]="field.allowedValues"
+                                    [selectedOptions]="providedIdeaCampaignValues? providedIdeaCampaignValues[field.name] : []"
+                                    [multipleOptions]="true"></innovation-hub-select-option>
+                            </div>
+                        </ng-container>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-footer text-muted"> Likes comment and fav</div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <div class="container-fluid">
+        <div class="row form-action-row clearfix">
+            <div class="col-md-12">
+                <button class="btn btn-primary mr-2" type="button" (click)="addEntity()">Add</button>
+                <button class="btn btn-primary mr-2" type="button" (click)="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

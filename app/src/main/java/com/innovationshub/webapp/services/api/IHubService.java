@@ -25,7 +25,7 @@ public interface IHubService {
 
     Object getCampaign(Campaign campaignSearchCriteria);
 
-    List<Object> findAllDocuments(String collectionName);
+    JSONArray findAllDocuments(String collectionName);
 
     JSONArray exportAllIdeasForCampaign(String campaignName);
 

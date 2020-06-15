@@ -15,7 +15,8 @@
    <li><button type="button" title="view" class="btn" (click)="getIdea()"> View</button></li>
 </div>
 <div *ngIf="campaign">
-<innovation-hub-idea [campaign]="campaign" [providedIdea]="idea? idea : null"></innovation-hub-idea>
+<!-- <innovation-hub-idea [campaign]="campaign" [providedIdea]="idea? idea : null"></innovation-hub-idea> -->
+<innovation-hub-card [campaign]="campaign" [providedIdea]="idea? idea : null"></innovation-hub-card>
 </div>
 </div>
 </form>
