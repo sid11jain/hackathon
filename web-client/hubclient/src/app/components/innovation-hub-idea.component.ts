@@ -48,11 +48,7 @@ export class InnovationHubIdeaComponent implements OnInit {
 
     this.campaignFields = this.campaign.campaignFields;
     if (this.providedIdea) {
-      // console.log('befroe conver input', this.providedIdea.campaignValues);
-
-      // const cam = Object.assign(this.providedIdea.campaignValues.values());
-      this.mapIdeaCampaignValueAsKeyValue(this.providedIdea);
-      // console.log('after conert input', cam);
+            this.mapIdeaCampaignValueAsKeyValue(this.providedIdea);
     }
     console.log('campaing fields', this.campaignFields);
     this.ideaForm = new FormGroup({
@@ -69,7 +65,7 @@ export class InnovationHubIdeaComponent implements OnInit {
           (field) =>
             new FormGroup({
               [field.name]: new FormControl(
-                field.type === 'text'
+                field.type === 'text' && this.providedIdeaCampaignValues
                   ? this.providedIdeaCampaignValues[field.name]
                   : undefined
               ),

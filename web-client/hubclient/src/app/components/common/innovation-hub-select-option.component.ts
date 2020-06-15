@@ -110,14 +110,13 @@ export class InnovationHubSelectOptionComponent
     this.callingForm = this.callingFormGroup.get(
       this.fieldFormControlName
     ) as FormControl;
-    if (this.selectedOptions && this.selectedOptions.length > 0){
-      if (this.multipleOptions){
+    if (this.multipleOptions && this.selectedOptions && this.selectedOptions.length > 0){
       this.callingForm.patchValue(this.selectedOptions);
-      }else{
-        this.callingForm.setValue(this.selectedOptions);
+      }else if (this.selectedOptions) {
+        this.callingForm.patchValue(this.selectedOptions);
       }
 
-    }
+
     if (this.multipleOptions) {
       this.config = this.multiOptionConfig;
     } else {

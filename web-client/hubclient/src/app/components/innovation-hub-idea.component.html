@@ -1,70 +1,63 @@
+<form [formGroup]="ideaForm">
+<div class="row">
+    <div class="col-12">
+        <div class="col-md-3">
+            <label>Idea Name : </label>
+            <input type="text" class="form-control" [value]="providedIdea? providedIdea.name : ''"
+                formControlName="name" />
+        </div>
+    </div>
+</div>
 
-        <div class="row">
-            <div class="col-12">
-                <div class="col-md-3">
-                    <label>Idea Name : </label>
-                    <input type="text" class="form-control" [value]="providedIdea? providedIdea.name : ''" formControlName="name" />
-                </div>
+<div class="row">
+    <div class="col-12">
+        <div class="col-md-3">
+            <label>Idea Description : </label>
+            <input type="text" class="form-control" [value]="providedIdea?providedIdea.description : ''"
+                formControlName="description" />
+        </div>
+    </div>
+</div>
+
+<div class="row col-12">
+    <label>Contributors :
+        <input type="text" class="form-control" [value]="providedIdea?providedIdea.contributors : ''"
+            formControlName="contributors" />
+    </label>
+</div>
+
+<div *ngFor="let field of campaignFields; let fieldPosition = index" formArrayName="campaignValues">
+    <!-- switch cases for each input type-->
+    <div>
+
+        <ng-container [ngSwitch]="field.type" formGroupName="{{fieldPosition}}">
+            <label> {{ field.name }} -- populated from campaign</label>
+            <div *ngSwitchCase="'text'">
+                <input type="text" class="form-control"
+                    [value]="providedIdeaCampaignValues? providedIdeaCampaignValues[field.name] : ''"
+                    formControlName={{field.name}} />
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12">
-                <div class="col-md-3">
-                    <label>Idea Description : </label>
-                    <input type="text" class="form-control" [value]="providedIdea?providedIdea.description : ''" formControlName="description" />
-                </div>
+            <div *ngSwitchCase="'single-option'">
+                <innovation-hub-select-option [fieldFormControlName]="field.name" [optionList]="field.allowedValues"
+                    [selectedOptions]="providedIdeaCampaignValues? providedIdeaCampaignValues[field.name] : []"
+                    [multipleOptions]="false"></innovation-hub-select-option>
             </div>
-        </div>
+            <div *ngSwitchCase="'multiple-option'">
 
-        <div class="row col-12">
-            <label>Contributors :
-                <input type="text" class="form-control" [value]="providedIdea?providedIdea.contributors : ''" formControlName="contributors" />
-            </label>
-        </div>
-
-        <div *ngFor="let field of campaignFields; let fieldPosition = index" formArrayName="campaignValues">
-            <!-- switch cases for each input type-->
-            <div>
-
-                <ng-container [ngSwitch]="field.type" formGroupName="{{fieldPosition}}">
-                    <label> {{ field.name }} -- populated from campaign</label>
-                    <div *ngSwitchCase="'text'">
-                        {{providedIdeaCampaignValues[field.name]}}
-                        <input type="text" class="form-control" [value]="providedIdeaCampaignValues? providedIdeaCampaignValues[field.name] : ''" formControlName={{field.name}} />
-                    </div>
-                    <div *ngSwitchCase="'single-option'">
-                        <innovation-hub-select-option [fieldFormControlName]="field.name" [optionList]="field.allowedValues"
-                        [selectedOptions]="providedIdeaCampaignValues? providedIdeaCampaignValues[field.name] : []" [multipleOptions]="false"></innovation-hub-select-option>
-                    </div>
-                    <div *ngSwitchCase="'multiple-option'">
-                        
-                        {{providedIdeaCampaignValues[field.name]}}
-                        <innovation-hub-select-option [fieldFormControlName]="field.name" [optionList]="field.allowedValues"
-                          [selectedOptions]="providedIdeaCampaignValues? providedIdeaCampaignValues[field.name] : []"  [multipleOptions]="true"></innovation-hub-select-option>
-                            
-                  <!-- <ng-select [items]="field.allowedValues"
-                            bindLabel="value"
-                            bindValue="value"
-                            [multiple]="true"
-                            placeholder="Please Select"
-                            formControlName={{field.name}}>     
-                 </ng-select>     -->
-                    </div>
-                </ng-container>
-                  
-                
+                {{providedIdeaCampaignValues[field.name]}}
+                <innovation-hub-select-option [fieldFormControlName]="field.name" [optionList]="field.allowedValues"
+                    [selectedOptions]="providedIdeaCampaignValues? providedIdeaCampaignValues[field.name] : []"
+                    [multipleOptions]="true"></innovation-hub-select-option>
             </div>
-        </div>
-        <!-- <div >
-            <innovation-hub-select-option formControlName="multipOptionsTest" [campaignField]="campaignFields[2]"
-                config="multiOptionConfig"></innovation-hub-select-option>
-        </div> -->
-        <button type="button" title="Submit" class="btn" (click)="submitIdea()"> Submit</button>
+        </ng-container>
 
 
-        <li><button type="button" title="view" class="btn" (click)="getIdea()"> View</button></li>
-
+    </div>
+</div>
 
         <button type="button" title="Export" class="exportButton" (click)="exportToExcel()">Export to Excel</button>
 
+
+<li><button type="button" title="view" class="btn" (click)="getIdea()"> View</button></li>
+
+</form>
