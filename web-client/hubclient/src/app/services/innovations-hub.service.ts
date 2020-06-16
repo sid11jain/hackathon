@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ExportExcelService } from './export-excel.service';
-import { CAMPAIGN_VALUES, Collection } from '../models/innovation-hub.model';
+import { CAMPAIGN_VALUES, Collection, CampaignField, Idea } from '../models/innovation-hub.model';
 import { plainToClass } from 'class-transformer';
 import { IdValuePair } from '../models/common/common-utility.model';
 
@@ -16,6 +16,8 @@ export class InnovationsHubService {
   fieldToExcludeForExcelExport = [Collection.CAMPAIGN, '_id'];
 
   private url = 'http://localhost:8080/';
+  getExportUrl = this.url + 'export-campaign-ideas';
+
 
   constructor(private http: HttpClient, private ees: ExportExcelService) {}
 
@@ -41,12 +43,16 @@ export class InnovationsHubService {
     return this.http.post(getIdeaUrl, ideaCriteria);
   }
 
+  getAllIdeas(campaignName?: string){
+    const getAllIdeaUrl = campaignName ? this.getExportUrl + '?campaignName=' + campaignName : this.getExportUrl + '?campaignName=' + '';
+    return this.http
+    .get(getAllIdeaUrl);
+  }
+
   exportToExcel(cName: any) {
     const dataForExcel = [];
-    const getExportUrl = this.url + 'export-campaign-ideas';
-
     this.http
-      .get(getExportUrl + '?campaignName=' + cName)
+      .get(this.getExportUrl + '?campaignName=' + cName)
       .subscribe((res: any) => {
         const resp = res.data;
 
@@ -79,6 +85,7 @@ export class InnovationsHubService {
         if (fieldValue && fieldValue.id && fieldValue.value) {
           idea[field] = fieldValue.value;
         } else if (Array.isArray(fieldValue)) {
+          // For now only iterating one level, later this can be recursive with concating the values.
           console.log('Array field', field, ': value : ', fieldValue);
           const fieldValueOnly = [];
           fieldValue.forEach((attribute) => {
@@ -101,4 +108,23 @@ export class InnovationsHubService {
   getCollection(collectionName: string) {
     return this.http.post(this.url + 'get-collection', collectionName);
   }
+
+  mapIdeaCampaignValueAsKeyValue(providedIdea: Idea, campaignFields: CampaignField[]) {
+    let providedIdeaCampaignValues = [];
+    console.log('mapCampInput', providedIdea, campaignFields);
+    if (providedIdea) {
+      const keyValue = [];
+      providedIdea.campaignValues.map((ideaCampaignValue) => {
+        campaignFields.map((field) => {
+          if (ideaCampaignValue[field.name]) {
+            keyValue.push({ [field.name]: ideaCampaignValue[field.name] });
+          }
+        });
+      });
+      providedIdeaCampaignValues = Object.assign({}, ...keyValue);
+      console.log('LAst11', providedIdeaCampaignValues);
+    }
+    return providedIdeaCampaignValues;
+  }
+
 }

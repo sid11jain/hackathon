@@ -1,7 +1,11 @@
 package com.innovationshub.webapp.services.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.print.Doc;
 
@@ -20,6 +24,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
+import io.micrometer.core.instrument.util.StringUtils;
 
 /**
  * Implementation class for database operations.
@@ -102,7 +107,7 @@ public class HubDaoImpl implements IHubDao {
         if (idea != null) {
             //Campaign name field is not present in Idea, so using name of existing campaign
 //            Object campaign = retrieveCampaignByName(idea.get(IHConstants.CAMPAIGN_NAME_FIELD).toString());
-            Object campaign = retrieveCampaignByName("Campaign1");
+            Object campaign = retrieveCampaignByName(idea.getString(IHConstants.CAMPAIGN_NAME));
             if (null != campaign) {
                 idea.append(IHConstants.CAMPAIGN_FIELD, campaign);
             }
@@ -138,17 +143,36 @@ public class HubDaoImpl implements IHubDao {
     public List getAllIdeasForCampaignName(String campaignName) {
         MongoCollection<Document> collection = db.getCollection(IHConstants.IDEA_COLLECTION);
         BasicDBObject whereQuery = new BasicDBObject();
-        whereQuery.put(IHConstants.CAMPAIGN_NAME_FIELD, campaignName);
-        FindIterable<Document> ideas = collection.find(whereQuery);
+        // This if clause is to retrieve all ideas irrespective of campaign - for landing screen.
+        // This shall be modified later.
+        HashMap<String, Object> campaignsMap = new HashMap<>();
         ArrayList<Object> ideasArr = new ArrayList<>();
+        Map ideaAsMap;
+        Object campaign = null;
+        if(StringUtils.isNotBlank(campaignName)) {
+            whereQuery.put(IHConstants.CAMPAIGN_NAME_FIELD, campaignName);
+        }
+        FindIterable<Document> ideas = collection.find(whereQuery);
+
         for (Document idea : ideas) {
             if (idea != null) {
-                Object campaign = retrieveCampaignByName(campaignName);
+                campaign = null;
+                String ideaCampaignName = idea.getString(IHConstants.CAMPAIGN_NAME);
+                if(null == campaignsMap.get(ideaCampaignName)){
+                    Object ideaCampaign = retrieveCampaignByName(ideaCampaignName);
+                    campaignsMap.put(ideaCampaignName, ideaCampaign);
+                    campaign = ideaCampaign;
+                } else{
+                    campaign = campaignsMap.get(ideaCampaignName);
+                }
+
                 if (null != campaign) {
                     idea.append(IHConstants.CAMPAIGN_FIELD, campaign);
+                    // Adding idea only when campaign is present
+                    ideasArr.add(idea);
                 }
                 //JSONObject obj = new JSONObject(idea);
-                ideasArr.add(idea);
+
             }
         }
         return ideasArr;

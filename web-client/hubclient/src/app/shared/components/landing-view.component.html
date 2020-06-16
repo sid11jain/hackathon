@@ -6,8 +6,10 @@
     <li> All Ideas</li>
     <li> Trending Ideas</li>
     <li> Popular Ideas</li>
-    <button type="button" title="Add" class="btn btn-primary mr-2" (click)="openCampaignComponent(operation.ADD)"> Add</button>
-    <button type="button" title="Add" class="btn btn-primary mr-2" (click)="openCampaignComponent(operation.EXPORT)"> Export</button>
+    <button type="button" title="Add" class="btn btn-info mr-2" (click)="openCampaignComponent(operation.ADD)"> Add</button>
+    <button type="button" title="Export" class="btn btn-info mr-2" (click)="openCampaignComponent(operation.EXPORT)"> Export</button>
+    <button type="button" title="switchView" class="btn btn-info mr-3" (click)="switchView()">Switch View</button>
+
 </ul>
 </div>
 </nav>
@@ -22,7 +24,7 @@
 </div>
 
 <div class="cards-container">
-<basic-card [heading]="'Idea Name'" [useDefault]="'true'" [description]="'this will be description and should not exceed indidvdual div width. must overlap to next line'">
+<basic-card *ngIf="ideasLoaded" [heading]="'Idea Name'" [datatypeToDisplay]="ideas" [deckView]="deckView" [description]="'this will be description and should not exceed indidvdual div width. must overlap to next line'">
 </basic-card>
 </div>
 </div>

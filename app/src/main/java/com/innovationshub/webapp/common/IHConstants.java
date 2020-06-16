@@ -24,6 +24,9 @@ public class IHConstants {
      */
     public static final String IDEA_COLLECTION = "idea";
 
+    public static final String CAMPAIGN_NAME = "campaignName";
+
+
     public static final String DATABASE_NAME_PROPERTY = "spring.data.mongodb.database";
 
     /**

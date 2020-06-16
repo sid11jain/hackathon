@@ -1,9 +1,9 @@
-<div class="modal-header">
+<!-- <div class="modal-header ">
     <h4 class="modal-title pull-left"></h4>
     <a class="close pull-right" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
         <i class="fas fa-times"></i>
     </a>
-</div>
+</div> -->
 <div class="modal-body ">
     <!-- <form [formGroup]="campaignForm">
         <div *ngIf="!campaign">
@@ -13,12 +13,11 @@
         </div>
 
     </form> -->
-    <form [formGroup]="ideaForm">
-
-        <div class="card mx-auto">
+    <form [formGroup]="ideaForm" [disabled]="!editMode">
+        <div class="card mx-auto border-info mb-1">
             <!-- w-50  -->
-            <div *ngIf="campaign" class="card-header">{{campaign.name}}</div>
-            <div class="card-body">
+            <div *ngIf="campaign" class="card-header bg-warning">{{campaign.name}}</div>
+            <div class="card-body text-info">
                 <h6 class="card-title"> Idea Name
                     <input type="text" class="form-control" [value]="providedIdea? providedIdea.name : ''"
                         formControlName="name" />
@@ -31,9 +30,9 @@
                     <input type="text" class="form-control" [value]="providedIdea? providedIdea.description : ''"
                         formControlName="description" />
                 </p>
-                <ul *ngIf="campaignFields" class="list-group list-group-flush">
-                    <li class="list-group-item" *ngFor="let field of campaignFields; let fieldPosition = index"
-                        formArrayName="campaignValues">
+                <ul *ngIf="campaignFields" class="list-group list-group-flush ">
+                    <li class="list-group-item align-left"
+                        *ngFor="let field of campaignFields; let fieldPosition = index" formArrayName="campaignValues">
                         <!-- switch cases for each input type-->
 
                         <ng-container [ngSwitch]="field.type" formGroupName="{{fieldPosition}}">
@@ -67,8 +66,8 @@
     <div class="container-fluid">
         <div class="row form-action-row clearfix">
             <div class="col-md-12">
-                <button class="btn btn-primary mr-2" type="button" (click)="addEntity()">Add</button>
-                <button class="btn btn-primary mr-2" type="button" (click)="closeModal()">Close</button>
+                <button *ngIf="editMode" class="btn btn-info mr-2" type="button" (click)="addEntity()">Add</button>
+                <button class="btn btn-default mr-2" type="button" (click)="closeModal()">Close</button>
             </div>
         </div>
     </div>

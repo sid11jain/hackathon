@@ -1,3 +1,4 @@
+<!-- <div class="modal fade"> -->
 <div class="modal-header" >
     <h4 class="modal-title pull-left"></h4>
     <a class="close pull-right" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
@@ -18,10 +19,11 @@
     <div class="container-fluid">
         <div class="row form-action-row clearfix">
             <div class="col-md-12">
-                <button *ngIf="operation === allowedOperations.ADD" class="btn btn-primary mr-2" type="button" (click)="addIdea()">Add</button>
-                <button *ngIf="operation === allowedOperations.EXPORT" class="btn btn-primary mr-2" type="button" (click)="exportIdeas()">Export</button>
-                <button class="btn btn-primary mr-2" type="button" (click)="closeModal()">Close</button>
+                <button *ngIf="operation === allowedOperations.ADD" class="btn btn-info mr-2" type="button" (click)="addIdea()">Add</button>
+                <button *ngIf="operation === allowedOperations.EXPORT" class="btn btn-info mr-2" type="button" (click)="exportIdeas()">Export</button>
+                <button class="btn btn-default mr-2" type="button" (click)="closeModal()">Close</button>
             </div>
         </div>
     </div>
 </div>
+<!-- </div> -->

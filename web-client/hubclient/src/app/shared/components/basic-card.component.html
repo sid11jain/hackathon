@@ -1,26 +1,63 @@
-<div class="cards-row-count">Row Count: {{ numberOfElements }}</div>
-<div class="card-elements" *ngFor="let datatype of datatypeToDisplay"> 
-  <div class="basic-card card">
-      <div class="card-header">
-            <h4>{{ datatype.name }}</h4>           
+<!-- <div class="cards-row-count">Row Count: {{ numberOfElements }}</div> -->
+<!-- card-deck, card-columns -->
+<div [class.card-elements]="!deckView" [class.card-deck]="deckView" *ngFor="let providedIdea of datatypeToDisplay; let cardColor = index" >
+      <!-- basic-card -->
+      <!-- <button class="custom-card btn-block" data-toggle="modal" data-target="#expandedCard" (click)="onCardClick()"> -->
+      <div class="card {{cardBg[providedIdea.name.length % cardColor]}}">
+            <a href="#" class="custom-card btn btn-lg" role="button" aria-disabled="true" (click)="onCardClick(providedIdea)">
+
+            <div class="card-header text-center">
+                  <h10>{{ providedIdea.campaignName }}</h10>
+            </div>
+            <div class="card-body">
+                  <h12 class="row card-title font-weight-bold"> {{providedIdea.name}}
+                  </h12>
+                  <h14 *ngIf="providedIdea && providedIdea.postedOn" class="card-subtitle mb-2 font-weight-bold  ">
+                        Posted On
+                        <span class="font-weight-normal">{{ providedIdea.postedOn | date: 'dd-MM-yyyy'}}</span>
+                        <!--  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
+                  </h14>
+                  <p class="card-text text-left text-truncate">{{providedIdea.description}}
+
+                  </p>
+                  <!-- removed if clause on campaign fields -->
+                  <ul class="list-group list-group-flush ">
+                        <div *ngFor="let field of providedIdea.campaign.campaignFields; let fieldPosition = index">
+                              <!-- switch cases for each input type-->
+
+                              <ng-container [ngSwitch]="field.type">
+                                    <li *ngIf="field.type !== 'text'" class="list-group-item  align-left {{cardBg[providedIdea.name.length % cardColor]}}"
+                                          style="border: none">
+                                          <label>
+                                                <div *ngSwitchCase="'text'">
+
+                                                </div>
+                                                <div *ngSwitchCase="'single-option'">
+                                                      #{{providedIdeaCampaignValues[providedIdea.name][field.name].value | uppercase}}{{ field.name | lowercase }}
+
+                                                </div>
+                                                <div *ngSwitchCase="'multiple-option'">
+                                                      #{{providedIdeaCampaignValues[providedIdea.name][field.name][0].value | uppercase}}..{{ field.name | lowercase }}
+
+                                                </div>
+                                          </label>
+                                    </li>
+                              </ng-container>
+                        </div>
+                  </ul>
+            </div>
+            <div class="card-footer">
+                  <button type="button" title="Likes" class="btn">Like</button>
+                  <button type="button" title="Comments" class="btn">Comment</button>
+                  <button type="button" title="Favourites" class="btn">Favourites</button>
+            </div>
+      </a>
       </div>
-      <div class="card-body">
-          <div class="basic-card-fields">
-          <div>
-                <label>Posted On: {{ datatype.postedOn }}</label>
-          </div>
-          <div>
-                <label>Stage: {{ datatype.stage }}</label>
-          </div>
-          <div>
-                <label>Description: {{ datatype.description }}</label>
-          </div>
-        </div>  
-      </div>  
-      <div class="card-footer">
-        <button type="button" title="Likes" class="btn">Like</button>
-        <button type="button" title="Comments" class="btn">Comment</button>
-        <button type="button" title="Favourites" class="btn">Favourites</button>
-      </div>
-  </div>
+<!-- </button> -->
+
+
 </div>
+
+<ng-template id="expandedCard">
+      <innovation-hub-card></innovation-hub-card>
+</ng-template>

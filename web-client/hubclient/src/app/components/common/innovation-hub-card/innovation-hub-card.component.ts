@@ -23,7 +23,7 @@ export class InnovationHubCardComponent implements OnInit {
   providedIdea: Idea ; // Can initialize by default = new Idea();
 
   @Input()
-  add = true;
+  editMode = true;
 
   ideaForm: FormGroup;
   campaignForm: FormGroup;
@@ -67,6 +67,9 @@ export class InnovationHubCardComponent implements OnInit {
         )
       )
     });
+    if (!this.editMode){
+      this.ideaForm.disable();
+    }
   }
 
 
@@ -74,6 +77,7 @@ export class InnovationHubCardComponent implements OnInit {
     console.log('submitted form', this.ideaForm);
     this.ideaForm.value.campaignName = this.campaign.name;
     this.hubService.submitIdea(this.ideaForm.value);
+    this.hubService.getAllIdeas();
   }
 
   getIdea() {
@@ -96,6 +100,7 @@ export class InnovationHubCardComponent implements OnInit {
       console.log('LAst11', this.providedIdeaCampaignValues);
     }
   }
+
   exportToExcel() {
     if (this.campaign.name) {
       this.hubService.exportToExcel(this.campaign.name);
