@@ -127,4 +127,14 @@ export class InnovationsHubService {
     return providedIdeaCampaignValues;
   }
 
+  updateCollectionDocument(collectionName: string) {
+    // for updating document  , we need to take whole document as it is and 
+    // calling update will replace the document, since these field are not present for first time 
+    // we would have to rpelace the doc. Once we have entry , we will simply use below line to match criteria
+    // and update the field in document.
+    // Then updateQuery.append("$set",new BasicDBObject().append("clients", "888"));
+    return this.http.post(this.url + 'get-collection', collectionName);
+  }
+
+
 }

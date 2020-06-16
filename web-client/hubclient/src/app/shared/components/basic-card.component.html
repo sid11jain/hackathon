@@ -1,4 +1,11 @@
-<!-- <div class="cards-row-count">Row Count: {{ numberOfElements }}</div> -->
+<div class="grid-list-container">
+      <a (click)="switchView(false)">
+            <i class="fa fa-th" aria-hidden="true"></i>
+      </a>
+      <a (click)="switchView(true)">
+            <i class="fa fa-list" aria-hidden="true"></i>
+      </a>
+  </div>
 <!-- card-deck, card-columns -->
 <div [class.card-elements]="!deckView" [class.card-deck]="deckView" *ngFor="let providedIdea of datatypeToDisplay; let cardColor = index" >
       <!-- basic-card -->
@@ -32,7 +39,7 @@
                                                 <div *ngSwitchCase="'text'">
 
                                                 </div>
-                                                <div *ngSwitchCase="'single-option'">
+                                            <!--    <div *ngSwitchCase="'single-option'">
                                                       #{{providedIdeaCampaignValues[providedIdea.name][field.name].value | uppercase}}{{ field.name | lowercase }}
 
                                                 </div>
@@ -40,16 +47,18 @@
                                                       #{{providedIdeaCampaignValues[providedIdea.name][field.name][0].value | uppercase}}..{{ field.name | lowercase }}
 
                                                 </div>
+                                                -->
                                           </label>
                                     </li>
                               </ng-container>
                         </div>
                   </ul>
             </div>
-            <div class="card-footer">
-                  <button type="button" title="Likes" class="btn">Like</button>
-                  <button type="button" title="Comments" class="btn">Comment</button>
-                  <button type="button" title="Favourites" class="btn">Favourites</button>
+            <div class="basic-footer card-footer">
+                  <a title="Likes" (click)="updateIdea(providedIdea, 'Like')"><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
+                  <a title="Comments" (click)="updateIdea(providedIdea, 'Comment')"><i class="fa fa-comments"></i></a>
+                  <a title="Favourites" (click)="updateIdea(providedIdea, 'Favourite')"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                  <a title="Edit" (click)="updateIdea(providedIdea, 'Edit')"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
             </div>
       </a>
       </div>

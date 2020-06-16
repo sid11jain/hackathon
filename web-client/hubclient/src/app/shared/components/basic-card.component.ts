@@ -65,10 +65,7 @@ export class BasicCardComponent implements OnInit {
         }
       });
       console.log('provided idea', this.providedIdeaCampaignValues);
-
-      this.numberOfElements = this.datatypeToDisplay.length;
     }
-    this.numberOfElements = 7;
   }
 
   onCardClick(providedIdea: any) {
@@ -79,5 +76,31 @@ export class BasicCardComponent implements OnInit {
       InnovationHubCardComponent,
       Object.assign({}, { initialState })
     );
+  }
+
+  switchView(deckView:boolean){
+    console.log(deckView);
+
+    if(this.deckView){
+      if(!deckView){
+        this.deckView = false;
+      }
+
+    }else{
+      if(deckView){
+        this.deckView = true;
+      }
+    }
+  }
+
+  updateIdea(providedIdea: Idea, functionNumber: string){
+
+    switch(functionNumber){
+      case 'Like': {}
+      case 'Comment': {}
+      case 'Favourite': {}
+      case 'Edit': {}
+
+    } 
   }
 }

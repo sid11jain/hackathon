@@ -3,7 +3,7 @@
     border: 1px solid #d8d8d8;
     border-radius: 10px;
     margin:2px;    
-    width: calc(100%/4);
+    width: calc(95%/4);
 }
 
 .card-header{
@@ -22,16 +22,22 @@
     width:60%;
 }   
 
-.basic-card-footer{
-   width:80%;
-    border-top: 1px solid #d8d8d8
+.basic-footer{
+    border-top: 1px solid #d8d8d8;
+    a{  
+        cursor:pointer;
+        font-size:24px;
+        padding-right: 20px;
+    }
 }
 
-.basic-card-footer button{
-    padding-right: 5px;
-}
-
-.cards-row-count{
-    text-align:right;
+.grid-list-container{
     padding-right: 50px;
+    font-size:25px;
+    padding-right:10px;
+    padding-left:90%;
+    a{
+        cursor:pointer; 
+        padding-right:10px;   
+    }
 }
