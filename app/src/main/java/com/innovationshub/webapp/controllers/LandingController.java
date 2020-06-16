@@ -72,7 +72,7 @@ public class LandingController {
     @RequestMapping(value = EXPORT_CAMPAIGN_IDEAS, method = RequestMethod.GET)
     public ResponseEntity<Object> exportAllIdeasForCampaign(@RequestParam String campaignName) {
         Object allIdeas = hubService.exportAllIdeasForCampaign(campaignName);
-        return new ResponseEntity(new HubResponseWrapper(allIdeas.toString()), HttpStatus.OK);
+        return new ResponseEntity(new HubResponseWrapper(allIdeas), HttpStatus.OK);
     }
 
     @ModelAttribute("idea")

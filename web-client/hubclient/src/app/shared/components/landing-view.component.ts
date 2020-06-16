@@ -6,44 +6,33 @@ import { Idea } from 'src/app/models/innovation-hub.model';
 import { InnovationHubIdeaComponent } from 'src/app/components/innovation-hub-idea.component';
 import { InnovationHubCardComponent } from 'src/app/components/common/innovation-hub-card/innovation-hub-card.component';
 import { HubCampaignCardComponent } from 'src/app/components/common/innovation-hub-card/hub-campaign-card.component';
-
+import { OPERATION } from 'src/app/models/common/common-utility.model';
 
 @Component({
-    // tslint:disable-next-line: component-selector
-    selector: 'landing-view',
-    templateUrl: './landing-view.component.html',
-    styleUrls: ['./landing-view.component.scss']
+  // tslint:disable-next-line: component-selector
+  selector: 'landing-view',
+  templateUrl: './landing-view.component.html',
+  styleUrls: ['./landing-view.component.scss'],
 })
-export class LandingViewComponent implements OnInit{
-    bsModalRef: BsModalRef;
+export class LandingViewComponent implements OnInit {
+  bsModalRef: BsModalRef;
+  operation: any = OPERATION;
+  ideas: any[] = [];
 
-    ideas: any[] = [];
+  constructor(
+    private modalService: BsModalService,
+    private service: InnovationsHubService
+  ) {}
 
-    constructor(        private modalService: BsModalService,
-                        private service: InnovationsHubService){
+  ngOnInit(): void {
+    this.service.getCollection('idea').forEach((element) => {
+      this.ideas.push(element);
+    });
+  }
 
-    }
-
-
-
-
-    ngOnInit(): void {
-        this.service.getCollection('idea').forEach(element => {
-            this.ideas.push(element);
-        });
-    }
-
-
-    openComponentToAdd(){
-      // alert('Button is clicked');
-      this.modalService.show(
-        HubCampaignCardComponent);
-    //      Object.assign({}, {backdrop: 'static',
-    //      keyboard: false}, { class: 'modal-xl',   })
-    // );
-    }
-
-
-
-
+  openCampaignComponent(operationInput: OPERATION) {
+    const initialState = { operation: operationInput };
+    this.modalService.show(HubCampaignCardComponent,
+        Object.assign({}, { initialState }));
+  }
 }

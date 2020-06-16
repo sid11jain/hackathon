@@ -1,3 +1,5 @@
+export const CAMPAIGN_VALUES = 'campaignValues';
+
 export enum Collection {
     CAMPAIGN = 'campaign',
     IDEA = 'idea'

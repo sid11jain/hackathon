@@ -3,7 +3,7 @@ import { InnovationsHubService } from 'src/app/services/innovations-hub.service'
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Campaign, Collection } from 'src/app/models/innovation-hub.model';
-import { SelectOptionConfig } from 'src/app/models/common/common-utility.model';
+import { SelectOptionConfig, OPERATION } from 'src/app/models/common/common-utility.model';
 import { InnovationHubCardComponent } from './innovation-hub-card.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -22,6 +22,8 @@ export class HubCampaignCardComponent implements OnInit {
 
   @Input()
   campaign: Campaign;
+  @Input()
+  operation: OPERATION;
 
   configForCampaignSearch: SelectOptionConfig = {
     searchable: true,
@@ -32,6 +34,7 @@ export class HubCampaignCardComponent implements OnInit {
 
   campaignForm: FormGroup;
   allCampaigns: Campaign[];
+  allowedOperations: any = OPERATION;
 
   ngOnInit(): void {
     this.setCampaign();
@@ -62,7 +65,6 @@ export class HubCampaignCardComponent implements OnInit {
     console.log('Add', this.campaignForm.value.selectedCampaign);
     if (this.campaignForm.value.selectedCampaign) {
       this.campaign = this.campaignForm.value.selectedCampaign;
-
       this.spinner.show();
       this.modalRef.hide();
       const config: ModalOptions = { backdrop: 'static', keyboard: true };
@@ -77,6 +79,13 @@ export class HubCampaignCardComponent implements OnInit {
 
 
       console.log('add camp', this.campaign);
+    }
+  }
+
+  exportIdeas(){
+    if (this.campaignForm.value.selectedCampaign) {
+      this.hubService.exportToExcel(this.campaignForm.value.selectedCampaign.name);
+      this.modalRef.hide();
     }
   }
 
