@@ -71,7 +71,7 @@ public class LandingController {
 
     @RequestMapping(value = EXPORT_CAMPAIGN_IDEAS, method = RequestMethod.GET)
     public ResponseEntity<Object> exportAllIdeasForCampaign(@RequestParam String campaignName) {
-        JSONArray allIdeas = hubService.exportAllIdeasForCampaign(campaignName);
+        Object allIdeas = hubService.exportAllIdeasForCampaign(campaignName);
         return new ResponseEntity(new HubResponseWrapper(allIdeas.toString()), HttpStatus.OK);
     }
 
@@ -84,10 +84,10 @@ public class LandingController {
 
     @RequestMapping(value=GET_COLLECTION, produces = "application/json", method =  RequestMethod.POST)
     public ResponseEntity<Object> findAllDocuments(@RequestBody String collectionName) throws Exception{
-        JSONArray objs=hubService.findAllDocuments(collectionName);
-        JSONObject obj = new JSONObject();
-        obj.put(IHConstants.CAMPAIGN_COLLECTION, objs);
-        return new ResponseEntity<>(new HubResponseWrapper(obj.toString()), HttpStatus.OK);
+        Object objs=hubService.findAllDocuments(collectionName);
+//        JSONObject obj = new JSONObject();
+//        obj.put(IHConstants.CAMPAIGN_COLLECTION, objs);
+        return new ResponseEntity<>(new HubResponseWrapper(objs), HttpStatus.OK);
     }
 
 }

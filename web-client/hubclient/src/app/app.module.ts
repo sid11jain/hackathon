@@ -18,6 +18,7 @@ import { ExportExcelService } from './services/export-excel.service';
 import { BsModalService, ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 import { InnovationHubCardComponent } from './components/common/innovation-hub-card/innovation-hub-card.component';
 import { HubCampaignCardComponent } from './components/common/innovation-hub-card/hub-campaign-card.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { HubCampaignCardComponent } from './components/common/innovation-hub-car
   imports: [
     BrowserModule,
     AppRoutingModule,
+    NgxSpinnerModule ,
     HttpClientModule,
     ModalModule.forRoot(),
     FormsModule,

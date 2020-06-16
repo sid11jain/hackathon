@@ -36,8 +36,8 @@ public interface IHubDao {
      */
     public Object retrieveCampaignByName(String campaignName);
 
-    JSONArray findAllDocuments(String collectionName);
-    public JSONArray getAllIdeasForCampaignName(String campaignName);
+    List findAllDocuments(String collectionName);
+    List getAllIdeasForCampaignName(String campaignName);
 
     /**
      * Deletes all the ideas which have given name.

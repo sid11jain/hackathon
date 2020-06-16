@@ -107,11 +107,15 @@ export class InnovationHubCardComponent implements OnInit {
   }
 
   addEntity(){
-    // console.log('Add', this.campaignForm.value.selectedCampaign);
-    if (this.campaignForm.value.campaign){
-      this.campaign = this.campaignForm.value.selectedCampaign;
-      this.loadIdea.next(true);
+    console.log('Add', this.ideaForm.value);
+    if (this.ideaForm.value.name){
+      this.ideaForm.value.campaignName = this.campaign.name;
+      this.hubService.submitIdea(this.ideaForm.value);
+      this.modalRef.hide();
+     }else{
+      alert('Mandtaory values not provided');
      }
+
   }
 
   setCampaign(){

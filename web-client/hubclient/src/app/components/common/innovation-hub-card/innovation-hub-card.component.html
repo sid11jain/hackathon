@@ -4,7 +4,7 @@
         <i class="fas fa-times"></i>
     </a>
 </div>
-<div class="modal-body">
+<div class="modal-body ">
     <!-- <form [formGroup]="campaignForm">
         <div *ngIf="!campaign">
             <innovation-hub-select-option formControlName="selectedCampaign" [fieldFormControlName]="'selectedCampaign'"
@@ -15,9 +15,9 @@
     </form> -->
     <form [formGroup]="ideaForm">
 
-        <div *ngIf="loadIdea.value" class="card mx-auto">
+        <div class="card mx-auto">
             <!-- w-50  -->
-            <div class="card-header">Campaign Name</div>
+            <div *ngIf="campaign" class="card-header">{{campaign.name}}</div>
             <div class="card-body">
                 <h6 class="card-title"> Idea Name
                     <input type="text" class="form-control" [value]="providedIdea? providedIdea.name : ''"
@@ -37,7 +37,7 @@
                         <!-- switch cases for each input type-->
 
                         <ng-container [ngSwitch]="field.type" formGroupName="{{fieldPosition}}">
-                            <label> {{ field.name }} -- populated from campaign</label>
+                            <label> {{ field.name }}</label>
                             <div *ngSwitchCase="'text'">
                                 <input type="text" class="form-control"
                                     [value]="providedIdeaCampaignValues? providedIdeaCampaignValues[field.name] : ''"

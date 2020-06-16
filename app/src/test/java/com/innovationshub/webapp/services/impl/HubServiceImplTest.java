@@ -86,7 +86,7 @@ public class HubServiceImplTest {
 
 
         HubServiceImpl hubService = new HubServiceImpl();
-        JSONArray retreivedIdeas = hubService.exportAllIdeasForCampaign("AjayCampaign");
+       Object retreivedIdeas = hubService.exportAllIdeasForCampaign("AjayCampaign");
 
     }
 

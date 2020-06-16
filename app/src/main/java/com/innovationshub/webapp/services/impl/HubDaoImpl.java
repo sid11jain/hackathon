@@ -123,33 +123,32 @@ public class HubDaoImpl implements IHubDao {
     }
 
     @Override
-    public JSONArray findAllDocuments(String collectionName) {
+    public List findAllDocuments(String collectionName) {
         MongoCollection<Document> collection = db.getCollection(collectionName);
         FindIterable<Document> documents = collection.find();
-        JSONArray allCollectionDoc = new JSONArray();
+        ArrayList<Object> allCollectionDoc = new ArrayList<>();
         for(Document doc: documents){
             if(null != doc){
-                //JSONObject obj = new JSONObject(doc);
-                allCollectionDoc.put(doc.toJson());
+                allCollectionDoc.add(doc);
             }
         }
         return allCollectionDoc;
     }
 
-    public JSONArray getAllIdeasForCampaignName(String campaignName) {
+    public List getAllIdeasForCampaignName(String campaignName) {
         MongoCollection<Document> collection = db.getCollection(IHConstants.IDEA_COLLECTION);
         BasicDBObject whereQuery = new BasicDBObject();
         whereQuery.put(IHConstants.CAMPAIGN_NAME_FIELD, campaignName);
         FindIterable<Document> ideas = collection.find(whereQuery);
-        JSONArray ideasArr = new JSONArray();
+        ArrayList<Object> ideasArr = new ArrayList<>();
         for (Document idea : ideas) {
             if (idea != null) {
                 Object campaign = retrieveCampaignByName(campaignName);
                 if (null != campaign) {
                     idea.append(IHConstants.CAMPAIGN_FIELD, campaign);
                 }
-                JSONObject obj = new JSONObject(idea);
-                ideasArr.put(obj);
+                //JSONObject obj = new JSONObject(idea);
+                ideasArr.add(idea);
             }
         }
         return ideasArr;

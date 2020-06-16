@@ -20,7 +20,7 @@ export class InnovationsHubService {
   submitIdea(data: any) {
     const submitUrl = this.url + 'submit-idea';
     console.log('submitted data', data);
-    // this.http.post(submitUrl, { data: JSON.stringify(data) }).subscribe(x => console.log(x));
+    this.http.post(submitUrl, { data: JSON.stringify(data) }).subscribe(x => console.log(x));
 
   }
 

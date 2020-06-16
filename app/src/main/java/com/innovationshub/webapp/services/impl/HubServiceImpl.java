@@ -62,14 +62,14 @@ public class HubServiceImpl implements IHubService {
     }
 
     @Override
-    public JSONArray findAllDocuments(String collectionName){
+    public Object findAllDocuments(String collectionName){
         return iHubDao.findAllDocuments(collectionName);
     }
 
-    public JSONArray exportAllIdeasForCampaign(String campaignName) {
-        JSONArray ideaData = new HubDaoImpl().getAllIdeasForCampaignName(campaignName);
+    public List exportAllIdeasForCampaign(String campaignName) {
+        List ideaData = new HubDaoImpl().getAllIdeasForCampaignName(campaignName);
         //TODO: Could write custom JSON flattener class which would have separate methods to flatten Idea/Campaign etc
-        JSONArray exportableDataArr = new JSONArray();
+        /*JSONArray exportableDataArr = new JSONArray();
         try {
             for (int idx = 0; idx < ideaData.length(); idx++) {
                 JSONObject exportableData = flattenJSONObjectForIdea((JSONObject) ideaData.get(idx));
@@ -77,9 +77,9 @@ public class HubServiceImpl implements IHubService {
             }
         } catch (Exception e) {
             LOG.error("Error occurred" + e.getMessage());
-        }
+        }*/
 
-        return exportableDataArr;
+        return ideaData;
     }
 
     public JSONObject flattenJSONObjectForIdea(JSONObject ideaData) {
