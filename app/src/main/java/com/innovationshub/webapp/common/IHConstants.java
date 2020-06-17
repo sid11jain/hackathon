@@ -33,6 +33,7 @@ public class IHConstants {
      * Temp use only, later on will read from application properties file
      */
     public static final String DATABASE_NAME = "innovationHub";
+    public static final String APPLICATION_JSON = "application/json";
 
     public static final String CAMPAIGN_NAME_FIELD = "campaignName";
     public static final String NAME_FIELD = "name";

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.codehaus.jettison.json.JSONArray;
 
+import com.mongodb.MongoException;
+
 /**
  * @author AJAYLAMBA
  * @since Jun 12, 2020 10:01 PM
@@ -36,7 +38,7 @@ public interface IHubDao {
      */
     public Object retrieveCampaignByName(String campaignName);
 
-    List findAllDocuments(String collectionName);
+    List findAllDocuments(String collectionName, Object filters) throws Exception;
     List getAllIdeasForCampaignName(String campaignName);
 
     /**

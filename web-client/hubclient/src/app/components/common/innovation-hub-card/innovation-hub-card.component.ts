@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Idea, CampaignField, Campaign, Collection } from 'src/app/models/innovation-hub.model';
+import { Idea, CampaignField, Campaign, Collection, Types } from 'src/app/models/innovation-hub.model';
 import { FormControl, FormArray, FormGroup } from '@angular/forms';
 import { InnovationsHubService } from 'src/app/services/innovations-hub.service';
 import { SelectOptionConfig } from 'src/app/models/common/common-utility.model';
@@ -25,6 +25,7 @@ export class InnovationHubCardComponent implements OnInit {
   @Input()
   editMode = true;
 
+  inputType: any = Types;
   ideaForm: FormGroup;
   campaignForm: FormGroup;
   allCampaigns: Campaign[];

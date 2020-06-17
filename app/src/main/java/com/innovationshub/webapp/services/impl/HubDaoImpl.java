@@ -15,9 +15,12 @@ import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.innovationshub.webapp.common.IHConstants;
 import com.innovationshub.webapp.services.api.IHubDao;
+import com.innovationshub.webapp.util.DBUtility;
 import com.mongodb.BasicDBObject;
+import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -128,8 +131,14 @@ public class HubDaoImpl implements IHubDao {
     }
 
     @Override
-    public List findAllDocuments(String collectionName) {
+    public List findAllDocuments(String collectionName, Object filters) throws Exception {
+        String whereQuery = null;
+        if(null != filters){
+            whereQuery = DBUtility.buildQuery( new JSONObject((Map) filters));
+        }
+
         MongoCollection<Document> collection = db.getCollection(collectionName);
+        // find with whereQuery
         FindIterable<Document> documents = collection.find();
         ArrayList<Object> allCollectionDoc = new ArrayList<>();
         for(Document doc: documents){
@@ -171,8 +180,6 @@ public class HubDaoImpl implements IHubDao {
                     // Adding idea only when campaign is present
                     ideasArr.add(idea);
                 }
-                //JSONObject obj = new JSONObject(idea);
-
             }
         }
         return ideasArr;

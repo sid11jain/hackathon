@@ -1,6 +1,9 @@
 package com.innovationshub.webapp.controllers;
 
+import static com.innovationshub.webapp.common.IHConstants.APPLICATION_JSON;
+
 import java.util.List;
+import java.util.Map;
 
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
@@ -37,25 +40,26 @@ public class LandingController {
     private static final String GET_CAMPAIGN = "/get-campaign";
     private static final String GET_COLLECTION= "/get-collection";
     private static final String EXPORT_CAMPAIGN_IDEAS = "/export-campaign-ideas";
+    private static final String SEARCH_IDEAS = "/search-ideas";
 
     @Autowired
     private IHubService hubService;
 
-    @RequestMapping(value = LANDING_URL, produces = "application/json")
+    @RequestMapping(value = LANDING_URL, produces = APPLICATION_JSON)
     public ResponseEntity<Object> landing() throws Exception {
 
         return new ResponseEntity<>( new HubResponseWrapper("Server is up and running"), HttpStatus.OK);
     }
 
     // ResponseEntity
-    @RequestMapping(value = SUBMIT_IDEA, produces = "application/json")
+    @RequestMapping(value = SUBMIT_IDEA, produces = APPLICATION_JSON)
     public ResponseEntity<Object> submitIdea( @RequestBody HubRequestWrapper idea) throws Exception {
        Object returnData = hubService.addIdea(idea.getData());
 
         return new ResponseEntity<>( new HubResponseWrapper(returnData), HttpStatus.OK);
     }
 
-    @RequestMapping(value = GET_IDEA, produces = "application/json", method =  RequestMethod.POST)
+    @RequestMapping(value = GET_IDEA, produces = APPLICATION_JSON, method =  RequestMethod.POST)
     public ResponseEntity<Object> getIdea(@RequestBody Idea inputIdea) throws Exception {
 
         Object returnData = hubService.getIdea(inputIdea);
@@ -63,7 +67,7 @@ public class LandingController {
         return new ResponseEntity<>(new HubResponseWrapper(returnData), HttpStatus.OK);
     }
 
-    @RequestMapping(value = GET_CAMPAIGN, produces = "application/json", method =  RequestMethod.POST)
+    @RequestMapping(value = GET_CAMPAIGN, produces = APPLICATION_JSON, method =  RequestMethod.POST)
     public ResponseEntity<Object> getIdea(@RequestBody Campaign campaignSearchCriteria) throws Exception {
 
         Object returnData = hubService.getCampaign(campaignSearchCriteria);
@@ -71,7 +75,7 @@ public class LandingController {
         return new ResponseEntity<>(new HubResponseWrapper(returnData), HttpStatus.OK);
     }
 
-    @RequestMapping(value = EXPORT_CAMPAIGN_IDEAS, method = RequestMethod.GET)
+    @RequestMapping(value = EXPORT_CAMPAIGN_IDEAS, produces = APPLICATION_JSON, method = RequestMethod.GET)
     public ResponseEntity<Object> exportAllIdeasForCampaign(@RequestParam String campaignName) {
         Object allIdeas = hubService.exportAllIdeasForCampaign(campaignName);
         return new ResponseEntity(new HubResponseWrapper(allIdeas), HttpStatus.OK);
@@ -84,11 +88,9 @@ public class LandingController {
         return idea;
     }
 
-    @RequestMapping(value=GET_COLLECTION, produces = "application/json", method =  RequestMethod.POST)
+    @RequestMapping(value=GET_COLLECTION, produces = APPLICATION_JSON, method =  RequestMethod.POST)
     public ResponseEntity<Object> findAllDocuments(@RequestBody String collectionName) throws Exception{
-        Object objs=hubService.findAllDocuments(collectionName);
-//        JSONObject obj = new JSONObject();
-//        obj.put(IHConstants.CAMPAIGN_COLLECTION, objs);
+        Object objs=hubService.findAllDocuments(collectionName, null);
         return new ResponseEntity<>(new HubResponseWrapper(objs), HttpStatus.OK);
     }
 
@@ -97,5 +99,15 @@ public class LandingController {
     public ResponseEntity<Object> validateLogin() {
         User user = new User("User successfully authenticated");
         return new ResponseEntity<>(new HubResponseWrapper(user), HttpStatus.OK);
+    }
+
+    @RequestMapping(value=SEARCH_IDEAS, produces=APPLICATION_JSON)
+    public ResponseEntity<Object> searchIdeas(@RequestBody HubRequestWrapper ideaSearchCriteria) throws  Exception{
+        Object ideas = null;
+        if(null != ideaSearchCriteria && Map.class.isAssignableFrom(ideaSearchCriteria.getData().getClass())){
+         ideas = hubService.findAllDocuments(IHConstants.IDEA_COLLECTION, ideaSearchCriteria.getData());
+        }
+
+    return new ResponseEntity<>(new HubResponseWrapper(ideas), HttpStatus.OK);
     }
 }

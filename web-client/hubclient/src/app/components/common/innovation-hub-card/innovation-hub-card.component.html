@@ -37,18 +37,18 @@
 
                         <ng-container [ngSwitch]="field.type" formGroupName="{{fieldPosition}}">
                             <label> {{ field.name }}</label>
-                            <div *ngSwitchCase="'text'">
+                            <div *ngSwitchCase="inputType.TEXT">
                                 <input type="text" class="form-control"
                                     [value]="providedIdeaCampaignValues? providedIdeaCampaignValues[field.name] : ''"
                                     formControlName={{field.name}} />
                             </div>
-                            <div *ngSwitchCase="'single-option'">
+                            <div *ngSwitchCase="inputType.SINGLE_OPTION">
                                 <innovation-hub-select-option [fieldFormControlName]="field.name"
                                     [optionList]="field.allowedValues"
                                     [selectedOptions]="providedIdeaCampaignValues? providedIdeaCampaignValues[field.name] : []"
                                     [multipleOptions]="false"></innovation-hub-select-option>
                             </div>
-                            <div *ngSwitchCase="'multiple-option'">
+                            <div *ngSwitchCase="inputType.MULTI_OPTION">
                                 <innovation-hub-select-option [fieldFormControlName]="field.name"
                                     [optionList]="field.allowedValues"
                                     [selectedOptions]="providedIdeaCampaignValues? providedIdeaCampaignValues[field.name] : []"

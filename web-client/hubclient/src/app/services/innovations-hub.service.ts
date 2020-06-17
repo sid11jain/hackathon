@@ -34,6 +34,7 @@ export class InnovationsHubService {
 
     const getCampaignUrl = this.url + 'get-campaign';
 
+
     return this.http.post(getCampaignUrl, campaginCriteria);
   }
 
@@ -74,6 +75,7 @@ export class InnovationsHubService {
       });
   }
 
+  /* REmove it at UI and do same at backend*/
   flatCampaignValuesOnIdea(idea: any) {
     if (idea && idea.campaignValues) {
       const campaignValues = idea.campaignValues;
@@ -106,6 +108,8 @@ export class InnovationsHubService {
   }
 
   getCollection(collectionName: string) {
+    this.http.post(this.url + 'search-ideas', {data: {filters: this.createFilter()}} ).subscribe(x => console.log(x));
+
     return this.http.post(this.url + 'get-collection', collectionName);
   }
 
@@ -128,13 +132,44 @@ export class InnovationsHubService {
   }
 
   updateCollectionDocument(collectionName: string) {
-    // for updating document  , we need to take whole document as it is and 
-    // calling update will replace the document, since these field are not present for first time 
+    // for updating document  , we need to take whole document as it is and
+    // calling update will replace the document, since these field are not present for first time
     // we would have to rpelace the doc. Once we have entry , we will simply use below line to match criteria
     // and update the field in document.
     // Then updateQuery.append("$set",new BasicDBObject().append("clients", "888"));
     return this.http.post(this.url + 'get-collection', collectionName);
   }
+
+createFilter(){
+  const filters = [
+    {
+      filterName: 'name',
+      valueType: 'string',
+      values: ['Idea']
+    },
+    {
+      filterName: 'Technology',
+      valueType: 'string',
+      values: ['Java', 'Python', 'Angular']
+    },
+    {
+      filterName: 'Department',
+      valueType: 'string',
+      values: ['IT']
+    },
+    {
+      filterName: 'Business Case',
+      valueType: 'string',
+      values: ['Platform for innovations']
+    },
+    {
+      filterName: 'Theme',
+      valueType: 'string',
+      values: ['Dark']
+    }
+  ];
+  return filters;
+}
 
 
 }

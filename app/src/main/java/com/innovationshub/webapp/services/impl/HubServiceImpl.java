@@ -62,12 +62,13 @@ public class HubServiceImpl implements IHubService {
     }
 
     @Override
-    public Object findAllDocuments(String collectionName){
-        return iHubDao.findAllDocuments(collectionName);
+    public Object findAllDocuments(String collectionName, Object filters) throws Exception{
+        return iHubDao.findAllDocuments(collectionName, filters);
     }
 
     public List exportAllIdeasForCampaign(String campaignName) {
         List ideaData = new HubDaoImpl().getAllIdeasForCampaignName(campaignName);
+        // TODO: remove front end flattening and incoporate it here. 
         //TODO: Could write custom JSON flattener class which would have separate methods to flatten Idea/Campaign etc
         /*JSONArray exportableDataArr = new JSONArray();
         try {

@@ -25,9 +25,11 @@ public interface IHubService {
 
     Object getCampaign(Campaign campaignSearchCriteria);
 
-    Object findAllDocuments(String collectionName);
+    Object findAllDocuments(String collectionName, Object filters) throws  Exception;
 
     List exportAllIdeasForCampaign(String campaignName);
+
+
 
 
 }
