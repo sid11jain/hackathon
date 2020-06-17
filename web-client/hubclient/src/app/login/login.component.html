@@ -1,0 +1,15 @@
+<div style="text-align: center; margin-top: 10%;">
+    <form class="text-center border border-light p-5">
+        <div style="text-align: center; width: 33%; margin-left: 33%;">
+            <p class="h4 mb-4">Enter Credentials</p>
+            <!-- Username -->
+            <input type="text" id="username" class="form-control mb-4" placeholder="username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}">
+
+            <!-- Password -->
+            <input type="password" id="password" class="form-control mb-4" placeholder="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+
+            <!-- Login button -->
+            <button (click)=checkLogin() class="btn btn-success">Login</button>
+        </div>
+    </form>
+</div>

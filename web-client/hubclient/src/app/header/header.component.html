@@ -1,0 +1,10 @@
+<header class="fixed-top">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="header-navbar">
+            <h2 style="color: darkgrey">Innovations Hub</h2>
+        </div>
+        <ul class="header-navbar-logout">
+            <ul><a style="color: red; font-weight: 1000; font-size: larger;" *ngIf="loginService.isUserLoggedIn()" routerLink="/logout">LogOut</a></ul>
+        </ul>
+    </nav>
+</header>

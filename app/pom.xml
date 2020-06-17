@@ -75,11 +75,6 @@
             <artifactId>jettison</artifactId>
             <version>1.2</version>
         </dependency>
-        <dependency>
-            <groupId>org.codehaus.jettison</groupId>
-            <artifactId>jettison</artifactId>
-            <version>1.2</version>
-        </dependency>
         <!-- Dependency for spring authorization
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -87,6 +82,11 @@
             <scope>test</scope>
         </dependency>
         -->
+        <!-- Dependency for spring authentication -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-security</artifactId>-->
+<!--        </dependency>-->
 
     </dependencies>
 

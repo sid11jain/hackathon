@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import com.innovationshub.webapp.models.Campaign;
 import com.innovationshub.webapp.models.HubRequestWrapper;
 import com.innovationshub.webapp.models.HubResponseWrapper;
 import com.innovationshub.webapp.models.Idea;
+import com.innovationshub.webapp.models.User;
 import com.innovationshub.webapp.services.api.IHubService;
 
 /**
@@ -90,4 +92,10 @@ public class LandingController {
         return new ResponseEntity<>(new HubResponseWrapper(objs), HttpStatus.OK);
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "/validateLogin", method = RequestMethod.GET)
+    public ResponseEntity<Object> validateLogin() {
+        User user = new User("User successfully authenticated");
+        return new ResponseEntity<>(new HubResponseWrapper(user), HttpStatus.OK);
+    }
 }

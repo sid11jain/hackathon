@@ -19,6 +19,10 @@ import { BsModalService, ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 import { InnovationHubCardComponent } from './components/common/innovation-hub-card/innovation-hub-card.component';
 import { HubCampaignCardComponent } from './components/common/innovation-hub-card/hub-campaign-card.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,11 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     InnovationHubSelectOptionComponent,
     LandingViewComponent,
     InnovationHubCardComponent,
-    HubCampaignCardComponent
+    HubCampaignCardComponent,
+    LoginComponent,
+    LogoutComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
