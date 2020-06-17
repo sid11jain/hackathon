@@ -1,5 +1,10 @@
 package com.innovationshub.webapp.util;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
@@ -17,15 +22,17 @@ public class DBUtility {
 
     private static Logger LOG = LoggerFactory.getLogger(DBUtility.class);
 
-    public static String buildQuery(JSONObject filterConditions) {
+    public static String buildQuery(Map filterConditions) {
         StringBuilder query = new StringBuilder();
         try {
+            //TODO: Implement logic seach based on key, instead of value
+            //TODO: Implement logic to search text like
             //This array will contain values of different filters
-            JSONArray filtersArray = filterConditions.getJSONArray(IHConstants.FILTERS);
+            ArrayList<LinkedHashMap> filtersList = (ArrayList) filterConditions.get(IHConstants.FILTERS);
             //for each filer, add query in 'and' clause
             query.append("{ $and : [ ");
-            for (int filterIndex = 0; filterIndex < filtersArray.length(); filterIndex++) {
-                JSONObject filter = (JSONObject) filtersArray.get(filterIndex);
+            for (int filterIndex = 0; filterIndex < filtersList.size(); filterIndex++) {
+                LinkedHashMap filter = filtersList.get(filterIndex);
                 String filterName = (String) filter.get(IHConstants.FILTER_NAME);
                 String valueType = (String) filter.get(IHConstants.VALUE_TYPE);
                 //each filer can have more than one value
@@ -38,17 +45,17 @@ public class DBUtility {
                         //if field is part of campaign values, search nested document
                         query.append(" { \'" + IHConstants.CAMPAIGN_VALUES + "." + filterName + "." + IHConstants.VALUE_FIELD + "\': { $in: [");
                     }
-                    JSONArray values = filter.getJSONArray(IHConstants.VALUES);
-                    for (int valIndex = 0; valIndex < values.length(); valIndex++) {
+                    ArrayList values = (ArrayList) filter.get(IHConstants.VALUES);
+                    for (int valIndex = 0; valIndex < values.size(); valIndex++) {
                         String value = (String) values.get(valIndex);
                         query.append("\"" + value + "\"");
-                        if (valIndex != values.length() - 1) {
+                        if (valIndex != values.size() - 1) {
                             query.append(",");
                         }
                     }
                     query.append("] } }");
                 }
-                if (filterIndex != filtersArray.length() - 1) {
+                if (filterIndex != filtersList.size() - 1) {
                     query.append(",");
                 }
             }

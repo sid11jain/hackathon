@@ -132,14 +132,11 @@ public class HubDaoImpl implements IHubDao {
 
     @Override
     public List findAllDocuments(String collectionName, Object filters) throws Exception {
-        String whereQuery = null;
-        if(null != filters){
-            whereQuery = DBUtility.buildQuery( new JSONObject((Map) filters));
-        }
 
         MongoCollection<Document> collection = db.getCollection(collectionName);
+        BasicDBObject whereQuery = BasicDBObject.parse(DBUtility.buildQuery((Map) filters));
         // find with whereQuery
-        FindIterable<Document> documents = collection.find();
+        FindIterable<Document> documents = collection.find(whereQuery);
         ArrayList<Object> allCollectionDoc = new ArrayList<>();
         for(Document doc: documents){
             if(null != doc){
