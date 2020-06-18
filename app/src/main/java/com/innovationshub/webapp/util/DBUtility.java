@@ -1,13 +1,9 @@
 package com.innovationshub.webapp.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,12 +20,19 @@ public class DBUtility {
     private static Logger LOG = LoggerFactory.getLogger(DBUtility.class);
 
     public static String buildQuery(Map filterConditions) {
+        String defaultQuery = "{}";
         StringBuilder query = new StringBuilder();
         try {
+            if (filterConditions == null || filterConditions.size() == 0) {
+                return defaultQuery;
+            }
             //TODO: Implement logic seach based on key, instead of value
             //TODO: Implement logic to search text like
             //This array will contain values of different filters
             ArrayList<LinkedHashMap> filtersList = (ArrayList) filterConditions.get(IHConstants.FILTERS);
+            if (filtersList == null || filtersList.size() == 0) {
+                return defaultQuery;
+            }
             //for each filer, add query in 'and' clause
             query.append("{ $and : [ ");
             for (int filterIndex = 0; filterIndex < filtersList.size(); filterIndex++) {
