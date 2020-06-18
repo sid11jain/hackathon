@@ -1,38 +1,60 @@
 <div class="home-page-container">
 
-<nav>
-<div class="menu-container">
-    <ul>
-    <li> All Ideas</li>
-    <li> Trending Ideas</li>
-    <li> Popular Ideas</li>
-    <button type="button" title="Add" class="btn btn-info mr-2" (click)="openCampaignComponent(operation.ADD)"> Add</button>
-    <button type="button" title="Export" class="btn btn-info mr-2" (click)="openCampaignComponent(operation.EXPORT)"> Export</button>
-    <button type="button" title="switchView" class="btn btn-info mr-3" (click)="switchView()">Switch View</button>
-
-</ul>
-</div>
-</nav>
-<div class ="filter-and-cards-container">
+  <nav>
+    <div class="menu-container">
+      <ul>
+        <li> All Ideas</li>
+        <li> Trending Ideas</li>
+        <li> Popular Ideas</li>
+        <button type="button" title="Add" class="btn btn-info mr-2" (click)="openCampaignComponent(operation.ADD)">
+          Add</button>
+        <button type="button" title="Export" class="btn btn-info mr-2"
+          (click)="openCampaignComponent(operation.EXPORT)"> Export</button>
+        <button type="button" title="searchIdeas" class="btn btn-info mr-3" (click)="searchIdeas()">Search</button>
+      </ul>
+    </div>
+  </nav>
+  <div class="filter-and-cards-container">
     <div class="filter-and-cards-section">
-<div class="filters-container">
-<label><h5>Filters</h5></label>
-<div>Filter1</div>
-<div>Filter2</div>
-<div>Filter3</div>
-<div>Filter4</div>
-</div>
+      <form *ngIf="filtersForm" [formGroup]="filtersForm" class="filters-container">
+        <mat-accordion [multi]="true">
+          <mat-expansion-panel *ngFor="let filter of allFilters; let filterPosition = index"
+            [expanded]="filter.expanded" (opened)="setStep(0)" hideToggle [disabled]="disableFilters"
+            formArrayName="filters">
+            <mat-expansion-panel-header>
+              <!-- <mat-panel-title>
+              {{filter.filterName}}
+            </mat-panel-title> -->
+              {{filter.filterName}}
+            </mat-expansion-panel-header>
 
-<div class="cards-container">
-<basic-card *ngIf="ideasLoaded" [heading]="'Idea Name'" [datatypeToDisplay]="ideas" [deckView]="deckView" [description]="'this will be description and should not exceed indidvdual div width. must overlap to next line'">
-</basic-card>
-</div>
-</div>
-</div>
+            <form formGroupName="{{filterPosition}}" class="control-group">
+              <!-- <form formGroupName="{{filter.filterName}}"> -->
+                <div formArrayName="values" *ngFor="let filterValue of filter.values; let valuePosition = index " class="controls span2">
+                    <label class="mat-checkbox">
+                      <input type="checkbox" value="{{filterValue.value}}"
+                        formControlName="{{valuePosition}}" (change)="onFilterCheck(filter, filterPosition, valuePosition, filterValue.value)"> {{filterValue.value}}
+                    </label>
+                </div>
+              <!-- </form> -->
+            </form>
+            <!-- <mat-action-row></mat-action-row> -->
+          </mat-expansion-panel>
+        </mat-accordion>
+      </form>
+
+      <div class="cards-container">
+        <basic-card *ngIf="ideasLoaded" [heading]="'Idea Name'" [datatypeToDisplay]="ideas" [deckView]="deckView"
+          [description]="'this will be description and should not exceed indidvdual div width. must overlap to next line'">
+        </basic-card>
+      </div>
+    </div>
+  </div>
 </div>
 
 <ng-template>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -51,5 +73,15 @@
       </div>
     </div>
     <app-innovation-hub></app-innovation-hub>
+  </div>
+</ng-template>
+
+<ng-template #filterTemplate let-filter="filter">
+  <!-- <ng-container *ngTemplateOutlet="filterTemplate; context: {filter: filter}"></ng-container> -->
+
+  <div *ngFor="let filterValue of filter.values" class="controls span2">
+    <label class="checkbox">
+      <input type="checkbox" value="filterValue.value" id="filterValue.id"> {{filterValue.value}}
+    </label>
   </div>
 </ng-template>

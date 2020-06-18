@@ -107,8 +107,13 @@ export class InnovationsHubService {
     }
   }
 
+searchIdeas(filters: any){
+  return this.http.post(this.url + 'search-ideas', {data: filters});
+
+}
+
   getCollection(collectionName: string) {
-    this.http.post(this.url + 'search-ideas', {data: {filters: this.createFilter()}} ).subscribe(x => console.log(x));
+//    this.http.post(this.url + 'search-ideas', {data: {filters: this.createFilter()}} ).subscribe(x => console.log(x));
 
     return this.http.post(this.url + 'get-collection', collectionName);
   }
@@ -156,7 +161,7 @@ createFilter(){
       filterName: 'Department',
       valueType: 'string',
       values: ['IT']
-    },
+    } ,
     {
       filterName: 'Business Case',
       valueType: 'string',
@@ -166,6 +171,112 @@ createFilter(){
       filterName: 'Theme',
       valueType: 'string',
       values: ['Dark']
+    }
+  ];
+  return filters;
+}
+
+createFilterIdValue(){
+  const filters = [
+       {
+      filterName: 'Technology',
+      valueType: 'string',
+      values: [
+        {
+          id: 'Java',
+          value: 'Java'
+        },
+        {
+          id: 'Python',
+          value: 'Python'
+        },
+        {
+          id: 'Angular',
+          value: 'Angular'
+        },
+        {
+          id: 'Mongo-DB',
+          value: 'Mongo-DB'
+        },
+        {
+          id: 'AWS',
+          value: 'AWS'
+        },
+        {
+          id: 'Docker',
+          value: 'Docker'
+        },
+        {
+          id: 'Spring',
+          value: 'Spring'
+        }
+      ]
+    },
+    {
+      filterName: 'Department',
+      valueType: 'string',
+      values: [
+        {
+          id: 'Finance',
+          value: 'Finance'
+        },
+        {
+          id: 'HR',
+          value: 'HR'
+        },
+        {
+          id: 'Admin',
+          value: 'Admin'
+        },
+        {
+          id: 'IT',
+          value: 'IT'
+        }
+      ]
+    } ,
+    {
+      filterName: 'Workouts',
+      valueType: 'string',
+      values: [
+        {
+          id: 'Home Workouts',
+          value: 'Home Workouts'
+        },
+        {
+          id: 'Outdoor Activity',
+          value: 'Outdoor Activity'
+        },
+        {
+          id: 'Gym Workouts',
+          value: 'Gym Workouts'
+        },
+        {
+          id: 'Aerobics',
+          value: 'Aerobics'
+        },
+        {
+          id: 'Yoga',
+          value: 'Yoga'
+        }
+      ]
+    },
+    {
+      filterName: 'Theme',
+      valueType: 'string',
+      values: [
+        {
+          id: 'Dark',
+          value: 'Dark'
+        },
+        {
+          id: 'Light',
+          value: 'Light'
+        },
+        {
+          id: 'Bright',
+          value: 'Bright'
+        }
+      ]
     }
   ];
   return filters;

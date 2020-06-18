@@ -1,6 +1,7 @@
 package com.innovationshub.webapp.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -46,6 +47,7 @@ public class DBUtility {
                         query.append(" { \'" + IHConstants.CAMPAIGN_VALUES + "." + filterName + "." + IHConstants.VALUE_FIELD + "\': { $in: [");
                     }
                     ArrayList values = (ArrayList) filter.get(IHConstants.VALUES);
+                    // values.removeAll(Arrays.asList(null,"")); -- this can be used to remove null values
                     for (int valIndex = 0; valIndex < values.size(); valIndex++) {
                         String value = (String) values.get(valIndex);
                         query.append("\"" + value + "\"");

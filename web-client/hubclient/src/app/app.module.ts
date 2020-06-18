@@ -23,6 +23,8 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { FooterComponent } from './footer/footer.component';
     ReactiveFormsModule,
     NgbModule,
     NgSelectModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatExpansionModule,
+    NgbModule
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
    providers: [InnovationsHubService, ExportExcelService, BsModalService, BsModalRef],

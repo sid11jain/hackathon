@@ -16,3 +16,7 @@ export enum OPERATION{
     EXPORT = 'export',
     VIEW = 'view'
 }
+
+export enum FILTER_TYPE{
+    STRING = 'string'
+}

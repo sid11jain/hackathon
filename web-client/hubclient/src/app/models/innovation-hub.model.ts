@@ -48,3 +48,10 @@ export class Idea{
     campaign: Campaign;
     // workflow audit data structure
 }
+
+export class Filter{
+    filterName: string;
+    valueType = 'string';
+    values: any[];
+    expanded? = false;
+}

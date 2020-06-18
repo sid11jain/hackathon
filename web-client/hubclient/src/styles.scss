@@ -1,11 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
-
+// $primary: Cyan;
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import "~font-awesome/css/font-awesome.css";
 
-a.custom-card,
-a.custom-card:hover {
-  color: inherit;
+
+
+.mat-expansion-panel-header.mat-expanded,
+.mat-expansion-panel-header.mat-expanded:hover,
+.mat-expansion-panel-header.mat-expanded:focus {
+    background-color:#5bc0de;
 }
+
+
+// a.custom-card,
+// a.custom-card:hover {
+//   color: inherit;
+// }
+// /* remove the original arrow */
+// selectOption.input-lg {
+//     -webkit-appearance: none;
+//     -moz-appearance: none;
+//     -o-appearance: none;
+//     /* no standardized syntax available, no ie-friendly solution available */
+//   }
+  
+//   selectOption + i.fa {
+//     float: right;
+//     margin-top: -30px;
+//     margin-right: 5px;
+//     /* this is so when you click on the chevron, your click actually goes on the dropdown menu */
+//     pointer-events: none;
+//     /* everything after this is just to cover up the original arrow */
+//     /* (for browsers that don't support the syntax used above) */
+//     background-color: #fff;
+//     padding-right: 5px;
+//   }
+
+  
+// html, body { height: 100%; }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
