@@ -2,26 +2,18 @@ package com.innovationshub.webapp.services.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import javax.print.Doc;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.innovationshub.webapp.common.IHConstants;
 import com.innovationshub.webapp.services.api.IHubDao;
 import com.innovationshub.webapp.util.DBUtility;
 import com.mongodb.BasicDBObject;
-import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;

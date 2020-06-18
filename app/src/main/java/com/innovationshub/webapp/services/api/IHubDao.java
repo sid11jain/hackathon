@@ -2,10 +2,6 @@ package com.innovationshub.webapp.services.api;
 
 import java.util.List;
 
-import org.codehaus.jettison.json.JSONArray;
-
-import com.mongodb.MongoException;
-
 /**
  * @author AJAYLAMBA
  * @since Jun 12, 2020 10:01 PM

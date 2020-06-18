@@ -6,7 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AuthGaurdService } from './services/auth-gaurd.service';
 
-
+// add canActivate auth gaurd service in all routes to prevent unathorized access
 const routes: Routes = [{
   path: '', component: LandingViewComponent, canActivate: [AuthGaurdService]
 },

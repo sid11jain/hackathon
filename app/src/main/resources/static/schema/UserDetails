@@ -1,0 +1,79 @@
+{
+  "username": "alan.turing@ihsmarkit.com",
+  "email": "alan.turing@ihsmarkit.com",
+  "password": "$2y$12$qigRGybrRJfXKYi3VbuF7OKphqd1ZnpFVMNqkoUjDPIlNAKyzFOpK",
+  "fullName": "Alan Turing",
+  "enable": true,
+  "roles": [
+    {
+      "id": "5eeb9394fe28023d787d56ec",
+      "role": "ADMIN"
+    }
+  ]
+},
+
+{
+"username": "albert.einstein@ihsmarkit.com",
+"email": "albert.einstein@ihsmarkit.com",
+"password" : "$2y$12$M83DQyRfWWga/hLsIE.XEuRk34SOWfjke56Dg4NfD2HF/jB78nQKu",
+"fullName": "Albert Einstein",
+"enable": true,
+"roles": [
+    {
+    "id": "5eeb9394fe28023d787d56ec",
+    "role": "ADMIN"
+    }
+  ]
+},
+{
+"username": "issac.newton@ihsmarkit.com",
+"email": "issac.newton@ihsmarkit.com",
+"password": "$2y$12$NU/CGCQ9.0A2gepul/w.U.hh8xNb6ltjDJrjwzIoaLISdIH7Wo1Ea",
+"fullName": "Issac Newton",
+"enable" : true,
+"roles": [
+    {
+    "id": "5eeb9394fe28023d787d56ec",
+    "role": "ADMIN"
+    }
+  ]
+},
+{
+"username": "nikola.tesla@ihsmarkit.com",
+"email": "nikola.tesla@ihsmarkit.com",
+"password": "$2y$12$oxt.rXghGYptWnD2dEWG7O4Qd7Wcib3FCcAZIIv0MylywHUssfoH.",
+"fullName": "Nikola Tesla",
+"enable" : true,
+"roles": [
+    {
+    "id": "5eebbd53fe28023d787d685e",
+    "role": "BUSINESS"
+    }
+  ]
+},
+{
+"username": "charles.darwin@ihsmarkit.com",
+"email": "charles.darwin@ihsmarkit.com",
+"password": "$2y$12$UGmkm7NQszOe9kGiPuIfHe77ldWFsb2rCdryoc6EO7L9BT2FkQ/Tm",
+"fullName": "Charles Darwin",
+"enable" : true,
+"roles": [
+    {
+    "id": "5eebbd53fe28023d787d685e",
+    "role": "BUSINESS"
+    }
+  ]
+},
+{
+"username": "marie.curie@ihsmarkit.com",
+"email": "marie.curie@ihsmarkit.com",
+"password": "$2y$12$XZajx2cFekDrIqRz1hETMu8HlivWxu5EFgRIILis.tz4zl.55oLsG",
+"fullName": "Marie Curie",
+"enable" : true,
+"roles": [
+    {
+    "id": "5eebbd53fe28023d787d685e",
+    "role": "BUSINESS"
+    }
+  ]
+}
