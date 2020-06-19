@@ -47,6 +47,11 @@ export class Idea{
     contributors: any[];
     campaign: Campaign;
     // workflow audit data structure
+    comments: any[];
+    likes: any[];
+    likeCount: number;
+    favourites: any[];
+    favouritesCount: number;
 }
 
 export class Filter{

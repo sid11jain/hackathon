@@ -54,4 +54,11 @@ public class IHConstants {
 
     public static final Set<String> IDEA_STATIC_FIELDS =
             new HashSet<>(Arrays.asList("name", "description", "postedOn", "submittedBy", "contributors"));
+
+    public static final String LIKES_FIELD="likes";
+    public static final String LIKES_COUNT_FIELD="likesCount";
+    public static final String FAVOURITES_FIELD="favourites";
+    public static final String FAVOURITES_COUNT_FIELD="favouritesCount";
+    public static final String COMMENTS_FIELD="comments";
+    public static final String COMMENTS_COUNT_FIELD="commentsCount";
 }

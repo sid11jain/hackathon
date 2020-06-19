@@ -24,6 +24,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { BasicCardCommentsComponent } from './shared/components/basic-card-comments.component';
 
 import { BasicAuthHttpInterceptorService } from './services/basic-auth-interceptor.service';
 
@@ -51,7 +52,8 @@ export class XhrInterceptor implements HttpInterceptor {
     LoginComponent,
     LogoutComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    BasicCardCommentsComponent
   ],
   imports: [
     BrowserModule,

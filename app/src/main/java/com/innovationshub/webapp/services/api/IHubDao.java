@@ -45,4 +45,6 @@ public interface IHubDao {
      */
     public long deleteAllIdeasForName(String ideaName);
 
+    public Object updateIdeaDocument(Object idea, String attribute) throws Exception;
+
 }

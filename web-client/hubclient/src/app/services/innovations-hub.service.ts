@@ -41,7 +41,7 @@ export class InnovationsHubService {
   getIdea(ideaCriteria: any) {
     const getIdeaUrl = this.url + 'get-idea';
     // Can later be converted to get mappig
-    return this.http.post(getIdeaUrl, ideaCriteria);
+    return this.http.get(getIdeaUrl, ideaCriteria);
   }
 
   getAllIdeas(campaignName?: string){
@@ -113,7 +113,7 @@ searchIdeas(filters: any){
 }
 
   getCollection(collectionName: string) {
-//    this.http.post(this.url + 'search-ideas', {data: {filters: this.createFilter()}} ).subscribe(x => console.log(x));
+    this.http.post(this.url + 'search-ideas', {data: {filters: this.createFilter()}} ).subscribe(x => console.log(x));
 
     return this.http.post(this.url + 'get-collection', collectionName);
   }
@@ -136,13 +136,8 @@ searchIdeas(filters: any){
     return providedIdeaCampaignValues;
   }
 
-  updateCollectionDocument(collectionName: string) {
-    // for updating document  , we need to take whole document as it is and
-    // calling update will replace the document, since these field are not present for first time
-    // we would have to rpelace the doc. Once we have entry , we will simply use below line to match criteria
-    // and update the field in document.
-    // Then updateQuery.append("$set",new BasicDBObject().append("clients", "888"));
-    return this.http.post(this.url + 'get-collection', collectionName);
+  updateCollectionDocument(data: any, attributeName: string) {
+    return this.http.post(this.url + 'update-document-attribute', {data: {data: data, attributeName: attributeName}});
   }
 
 createFilter(){

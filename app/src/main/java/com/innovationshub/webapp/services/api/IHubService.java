@@ -29,6 +29,8 @@ public interface IHubService {
 
     List exportAllIdeasForCampaign(String campaignName);
 
+    public Object updateIdeaDocument(Object idea, String attribute) throws Exception;
+
 
 
 

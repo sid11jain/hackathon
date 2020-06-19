@@ -12,7 +12,6 @@
       <!-- <button class="custom-card btn-block" data-toggle="modal" data-target="#expandedCard" (click)="onCardClick()"> -->
       <div class="card {{cardBg[providedIdea.name.length % cardColor]}}">
             <a href="#" class="custom-card btn btn-lg" role="button" aria-disabled="true" (click)="onCardClick(providedIdea)">
-
             <div class="card-header text-center">
                   <h10>{{ providedIdea.campaignName }}</h10>
             </div>
@@ -54,13 +53,14 @@
                         </div>
                   </ul>
             </div>
+            </a>
             <div class="basic-footer card-footer">
-                  <a title="Likes" (click)="updateIdea(providedIdea, 'Like')"><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
-                  <a title="Comments" (click)="updateIdea(providedIdea, 'Comment')"><i class="fa fa-comments"></i></a>
-                  <a title="Favourites" (click)="updateIdea(providedIdea, 'Favourite')"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                  <a title="Edit" (click)="updateIdea(providedIdea, 'Edit')"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                  <a title="Likes" (click)="updateIdea(providedIdea, 'likes')"><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
+                  <a title="Comments" (click)="updateIdea(providedIdea, 'comments')"><i class="fa fa-comments" aria-hidden="true"></i></a>
+                  <a title="Favourites" (click)="updateIdea(providedIdea, 'favourites')"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                  <a title="Edit" (click)="updateIdea(providedIdea, 'edit')"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
             </div>
-      </a>
+      
       </div>
 <!-- </button> -->
 

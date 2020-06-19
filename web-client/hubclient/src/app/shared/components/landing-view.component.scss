@@ -1,7 +1,7 @@
 
 .menu-container{
     border-bottom: 2px solid black;
-    padding: 50px;
+    padding-top: 75px;
     ul{
         display: flex;
         width:100%; 
@@ -13,6 +13,8 @@
             border: 1px sold black;
             list-style-type: none;
             cursor: pointer;
+            border-right: 1px solid black;
+            text-align: center;
         }
     }
 }
@@ -33,6 +35,8 @@
 
 .cards-container{
     width: calc(100% - 200px);
+    overflow-y:scroll;
+    height:500px;
     }
 }
 

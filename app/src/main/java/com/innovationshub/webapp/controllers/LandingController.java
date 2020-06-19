@@ -36,6 +36,7 @@ public class LandingController {
     private static final String GET_COLLECTION= "/get-collection";
     private static final String EXPORT_CAMPAIGN_IDEAS = "/export-campaign-ideas";
     private static final String SEARCH_IDEAS = "/search-ideas";
+    private static final String UPDATE_DOCUMENT_ATTRIBUTE="/update-document-attribute";
 
     @Autowired
     private IHubService hubService;
@@ -97,5 +98,18 @@ public class LandingController {
         }
 
     return new ResponseEntity<>(new HubResponseWrapper(ideas), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = UPDATE_DOCUMENT_ATTRIBUTE, produces = APPLICATION_JSON, method =  RequestMethod.POST)
+    public ResponseEntity<Object> updateIdeaDocument(@RequestBody HubRequestWrapper data) throws Exception{
+        Object updatedIdea= null;
+        if(data!=null && Map.class.isAssignableFrom(data.getData().getClass())){
+            Map objectAsMap = (Map)data;
+            Object idea = objectAsMap.get("data");
+            String attributeName = (String)objectAsMap.get("attributeName");
+                
+            updatedIdea = hubService.updateIdeaDocument(idea, attributeName);
+        } 
+        return new ResponseEntity<>(new HubResponseWrapper(updatedIdea), HttpStatus.OK);
     }
 }
