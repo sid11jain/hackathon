@@ -21,8 +21,8 @@ export class ExportExcelService {
         const worksheet = workbook.addWorksheet('Ideas');
 
         // Add title row and formatting
-        worksheet.mergeCells('C1', 'F4');
-        const titleRow = worksheet.getCell('C1');
+        worksheet.mergeCells('E1', 'H4');
+        const titleRow = worksheet.getCell('E1');
         titleRow.value = title;
         titleRow.font = {
             name: 'Calibri',
@@ -34,10 +34,10 @@ export class ExportExcelService {
         titleRow.alignment = { vertical: 'middle', horizontal: 'center' };
 
         // Adding current date alongside title
-        worksheet.mergeCells('G1:H4');
+        worksheet.mergeCells('I1:J4');
         const d = new Date();
         const date = d.getDate() + '-' + d.getMonth() + '-' + d.getFullYear();
-        const dateCell = worksheet.getCell('G1');
+        const dateCell = worksheet.getCell('I1');
         dateCell.value = date;
         dateCell.font = {
             name: 'Calibri',
@@ -51,8 +51,8 @@ export class ExportExcelService {
             base64: logo.imgBase64,
             extension: 'png',
         });
-        worksheet.mergeCells('A1:B4');
-        worksheet.addImage(myLogoImage, 'A1:B4');
+        worksheet.mergeCells('A1:D4');
+        worksheet.addImage(myLogoImage, 'A1:D4');
 
         // Blank row
         worksheet.addRow([]);
@@ -90,7 +90,7 @@ export class ExportExcelService {
         };
         footerRow.alignment = { vertical: 'middle', horizontal: 'center' };
         // Merge footer cells
-        worksheet.mergeCells(`A${footerRow.number}:H${footerRow.number}`);
+        worksheet.mergeCells(`A${footerRow.number}:J${footerRow.number}`);
 
         // Generate and save excel file
         workbook.xlsx.writeBuffer().then((dataContent) => {
