@@ -26,9 +26,7 @@ export class AuthenticationService {
             const role = userData.roles[0];
             return userData;
           }
-          // Add error handler here to show message on UI for bad credentials
         })
-        // or catch error here, i'm not sure :|
       );
   }
 

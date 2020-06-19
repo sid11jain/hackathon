@@ -46,11 +46,7 @@ public class JwtAuthenticationController {
     public ResponseEntity<?> generateAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
             throws Exception {
 
-        try {
-            authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-        } catch (BadCredentialsException e) {
-            ResponseEntity.ok(new JwtResponse(null, null, false, "Bad Credentials"));
-        }
+        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
