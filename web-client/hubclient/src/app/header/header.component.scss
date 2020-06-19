@@ -2,13 +2,13 @@
    float: none;
    left: 50%;
    top: 50%;
-   position: relative;
+   position: absolute;
    transform: translate(-50%);
 }
-.header-navbar-logout {
-   float: none;
-   left: 50%;
-   top: 50%;
-   position: relative;
-   transform: translate(-50%);
+.headerBanner {
+   font-family: 'Candara';
+   font-weight: 800;
+   font-size: 4em;
+   color: rgb(217, 243, 72);
+   text-align: center;
 }
