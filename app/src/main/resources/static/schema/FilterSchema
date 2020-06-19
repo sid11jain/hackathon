@@ -10,7 +10,11 @@
       "values": [
         "Name1",
         "Name2"
-      ]
+      ],
+      "nestedOn": false,
+      "searchType": "like",
+      "caseSensitive(not supported currently)": true
+
     },
     {
       "filterName": "tech",
@@ -18,18 +22,27 @@
       "values": [
         "Java",
         "Python"
-      ]
+      ],
+      "nestedOn": true,
+      "searchType": "equals",
+      "caseSensitive(not supported currently)": true
     },
     {
       "filterName": "startDate",
       "valueType": "date",
-      "value": "13-06-20 21:00:00"
+      "comparisonOp": "LT/LTE/GT/GTE/EQ/NEQ/IN/NIN",
+      "value": "13-06-20 21:00:00",
+      "nestedOn": false,
+      "searchType": "equals"
     },
     {
       "filterName": "numOfDays",
       "valueType": "numeric",
-      "comparisonOp": "LT/GT/EQ",
-      "value": "10"
+      "comparisonOp": "LT/LTE/GT/GTE/EQ/NEQ/IN/NIN",
+      "value": "10",
+      "nestedOn": false,
+      "searchType": "equals",
+      "caseSensitive(not supported currently)": true
     }
   ]
 }

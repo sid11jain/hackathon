@@ -107,8 +107,43 @@ export class InnovationsHubService {
     }
   }
 
-searchIdeas(filters: any){
-  return this.http.post(this.url + 'search-ideas', {data: filters});
+  searchIdeas(filters: any) {
+    // TODO: Remove blow code after implementing date search code here
+    // Date need to be passed as String here
+    // const filters = [
+    //   {
+    //     filterName: 'name',
+    //     valueType: 'string',
+    //     values: ['idea', 'football'],
+    //     nestedOn: false,
+    //     searchType: 'like'
+    //   },
+    //   {
+    //     filterName: 'Technology',
+    //     valueType: 'string',
+    //     values: ['Java', 'Python'],
+    //     nestedOn: true,
+    //     searchType: 'equals'
+    //   },
+    //   {
+    //     filterName: 'postedOn',
+    //     valueType: 'date',
+    //     comparisonOp: 'GT',
+    //     values: ['2020-06-16T04:13:47.684Z'],
+    //     nestedOn: false,
+    //     searchType: 'equals'
+    //   },
+    //   {
+    //     filterName: 'postedOn',
+    //     valueType: 'date',
+    //     comparisonOp: 'LT',
+    //     values: ['2020-06-19T04:13:47.684Z'],
+    //     nestedOn: false,
+    //     searchType: 'equals'
+    //   }
+    // ];
+    // return this.http.post(this.url + 'search-ideas', { data: { filters }});
+    return this.http.post(this.url + 'search-ideas', {data: filters});
 
 }
 
