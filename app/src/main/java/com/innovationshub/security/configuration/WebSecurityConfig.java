@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.innovationshub.security.authentication.JwtAuthenticationEntryPoint;
 import com.innovationshub.security.authentication.JwtRequestFilter;
+import com.innovationshub.webapp.common.IHConstants;
 import com.innovationshub.webapp.services.impl.InnovationsHubUserDetailsService;
 
 /**
@@ -65,6 +66,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // dont authenticate this particular request
                 .authorizeRequests().antMatchers("/authenticate").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                //Allow access to this URL with users having ADMIN role only
+                //.antMatchers("/search-ideas").hasAuthority(IHConstants.ROLE_ADMIN)
                 // all other requests need to be authenticated
                 .anyRequest().authenticated().and()
                 // make sure we use stateless session; session won't be used to

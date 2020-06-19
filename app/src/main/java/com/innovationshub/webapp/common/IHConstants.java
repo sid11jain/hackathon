@@ -43,6 +43,9 @@ public class IHConstants {
     public static final String DESCRIPTION_FIELD = "description";
     public static final String VALUE_FIELD = "value";
 
+    public static final String ROLE_ADMIN = "ADMIN";
+    public static final String ROLE_BUSINESS = "BUSINESS";
+
     public static final String FILTERS = "filters";
 
     public static final String STRING_TYPE = "string";

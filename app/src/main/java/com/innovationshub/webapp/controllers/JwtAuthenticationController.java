@@ -1,6 +1,9 @@
 package com.innovationshub.webapp.controllers;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +11,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,13 +46,23 @@ public class JwtAuthenticationController {
     public ResponseEntity<?> generateAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
             throws Exception {
 
-        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+        try {
+            authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+        } catch (BadCredentialsException e) {
+            ResponseEntity.ok(new JwtResponse(null, null, false, "Bad Credentials"));
+        }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
         final String token = jwtTokenUtil.generateToken(userDetails);
+        // Get all the roles user have
+        Set<String> roles = new HashSet<>();
+        userDetails.getAuthorities().forEach(authority -> roles.add(authority.getAuthority()));
 
-        return ResponseEntity.ok(new JwtResponse(token));
+        // and pass the roles in response along with token
+        // these roles will be used to grant read only or write access to user
+        // we are going with this approach for now - later on will grant access based on request URL
+        return ResponseEntity.ok(new JwtResponse(token, roles, true, "Success"));
     }
 
     private void authenticate(String username, String password) throws Exception {
