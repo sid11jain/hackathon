@@ -26,6 +26,8 @@ public class IHConstants {
      */
     public static final String IDEA_COLLECTION = "idea";
 
+    public static final String USERS_COLLECTION = "users";
+
     public static final String CAMPAIGN_NAME = "campaignName";
 
 
@@ -94,4 +96,8 @@ public class IHConstants {
     public static final String FAVOURITES_COUNT_FIELD="favouritesCount";
     public static final String COMMENTS_FIELD="comments";
     public static final String COMMENTS_COUNT_FIELD="commentsCount";
+
+    public static final int ENTITY_ALREADY_EXIST = 101;
+
+    public static final String ENTITY_ALREADY_EXIST_MESSAGE = "is already present. Please choose another";
 }

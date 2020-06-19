@@ -20,3 +20,5 @@ export enum OPERATION{
 export enum FILTER_TYPE{
     STRING = 'string'
 }
+
+export const DATE_FORMAT = 'DD-MM-YYYY';

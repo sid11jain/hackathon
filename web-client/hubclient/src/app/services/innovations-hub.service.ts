@@ -23,10 +23,10 @@ export class InnovationsHubService {
 
   submitIdea(data: any) {
     const submitUrl = this.url + 'submit-idea';
-    console.log('submitted data', data);
-    this.http
-      .post(submitUrl, { data: JSON.stringify(data) })
-      .subscribe((x) => console.log(x));
+    // console.log('submitted data', data);
+    return this.http
+      .post(submitUrl, { data: JSON.stringify(data) });
+
   }
 
   getCampaign(campaginCriteria: any) {
@@ -148,8 +148,6 @@ export class InnovationsHubService {
 }
 
   getCollection(collectionName: string) {
-    this.http.post(this.url + 'search-ideas', {data: {filters: this.createFilter()}} ).subscribe(x => console.log(x));
-
     return this.http.post(this.url + 'get-collection', collectionName);
   }
 
@@ -172,7 +170,7 @@ export class InnovationsHubService {
   }
 
   updateCollectionDocument(data: any, attributeName: string) {
-    return this.http.post(this.url + 'update-document-attribute', {data: {data: data, attributeName: attributeName}});
+    return this.http.post(this.url + 'update-document-attribute', {data: {data, attributeName}});
   }
 
 createFilter(){

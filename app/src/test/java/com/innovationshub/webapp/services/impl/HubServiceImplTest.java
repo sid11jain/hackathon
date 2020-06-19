@@ -47,7 +47,7 @@ public class HubServiceImplTest {
 
     @Test
     public void testBuildDataByInsertingData() throws Exception {
-        JSONObject data = new JSONObject("{\n"
+        String data = new String("{\n"
                 + "    \"name\" : \"AjayIdea\",\n"
                 + "    \"description\" : \"desc\",\n"
                 + "    \"PostedOn\" : \"14-06-20\",\n"

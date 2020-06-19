@@ -1,6 +1,7 @@
 package com.innovationshub.webapp.services.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,25 @@ public class HubDaoImpl implements IHubDao {
     @Override
     public Object addIdea(Object idea) {
         MongoCollection<Document> collection = db.getCollection(IHConstants.IDEA_COLLECTION);
-        Object insertedIdea = collection.insertOne(Document.parse(idea.toString()));
+        Map ideaAsMap = null;
+        Object insertedIdea = null;
+        try{
+            ideaAsMap= (!Map.class.isAssignableFrom(idea.getClass())?(new ObjectMapper()).readValue((String)idea, Map.class): (Map)idea);
+        }catch (Exception e){
+            // swallowing the exception
+        }
+
+        if(ideaAsMap.size()>0){
+            BasicDBObject exists = new BasicDBObject();
+            exists.put(IHConstants.NAME_FIELD , ideaAsMap.get(IHConstants.NAME_FIELD));
+            FindIterable<Document> found = collection.find(exists).limit(1);
+
+            if(null != found.first()){
+                insertedIdea = null;
+            }else{
+                insertedIdea = collection.insertOne(Document.parse(idea.toString()));
+            }
+        }
         return insertedIdea;
     }
 

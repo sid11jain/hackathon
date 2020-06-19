@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.innovationshub.webapp.common.IHConstants;
 import com.innovationshub.webapp.models.Campaign;
+import com.innovationshub.webapp.models.HubError;
 import com.innovationshub.webapp.models.HubRequestWrapper;
 import com.innovationshub.webapp.models.HubResponseWrapper;
 import com.innovationshub.webapp.models.Idea;
@@ -52,7 +53,10 @@ public class LandingController {
     public ResponseEntity<Object> submitIdea( @RequestBody HubRequestWrapper idea) throws Exception {
        Object returnData = hubService.addIdea(idea.getData());
 
-        return new ResponseEntity<>( new HubResponseWrapper(returnData), HttpStatus.OK);
+        return new ResponseEntity<>(null != returnData ?
+                new HubResponseWrapper(returnData) :
+                new HubResponseWrapper(returnData, new HubError(IHConstants.ENTITY_ALREADY_EXIST, IHConstants.ENTITY_ALREADY_EXIST_MESSAGE, null)),
+                HttpStatus.OK);
     }
 
     @RequestMapping(value = GET_IDEA, produces = APPLICATION_JSON, method =  RequestMethod.POST)

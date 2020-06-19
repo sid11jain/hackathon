@@ -2,9 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Idea, CampaignField, Campaign, Collection, Types } from 'src/app/models/innovation-hub.model';
 import { FormControl, FormArray, FormGroup } from '@angular/forms';
 import { InnovationsHubService } from 'src/app/services/innovations-hub.service';
-import { SelectOptionConfig } from 'src/app/models/common/common-utility.model';
+import { SelectOptionConfig, DATE_FORMAT } from 'src/app/models/common/common-utility.model';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { formatDate } from '@angular/common';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -74,12 +75,12 @@ export class InnovationHubCardComponent implements OnInit {
   }
 
 
-  submitIdea() {
-    console.log('submitted form', this.ideaForm);
-    this.ideaForm.value.campaignName = this.campaign.name;
-    this.hubService.submitIdea(this.ideaForm.value);
-    this.hubService.getAllIdeas();
-  }
+  // submitIdea() {
+  //   console.log('submitted form', this.ideaForm);
+  //   this.ideaForm.value.campaignName = this.campaign.name;
+  //   this.hubService.submitIdea(this.ideaForm.value).subscribe((x) => console.log(x)); ;
+  //   this.hubService.getAllIdeas();
+  // }
 
   getIdea() {
     if (this.ideaForm.value.name) {
@@ -116,8 +117,13 @@ export class InnovationHubCardComponent implements OnInit {
     console.log('Add', this.ideaForm.value);
     if (this.ideaForm.value.name){
       this.ideaForm.value.campaignName = this.campaign.name;
-      this.hubService.submitIdea(this.ideaForm.value);
-      this.modalRef.hide();
+      this.hubService.submitIdea(this.ideaForm.value).subscribe((resp: any) => {
+        if (resp && resp.error){
+          alert(this.ideaForm.value.name + '' + resp.error.errorMessage + ' name');
+        } else{
+          this.modalRef.hide();
+        }
+      });
      }else{
       alert('Mandtaory values not provided');
      }

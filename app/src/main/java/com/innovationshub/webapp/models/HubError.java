@@ -1,22 +1,27 @@
 package com.innovationshub.webapp.models;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONObject;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 /**
  * @author Sid
- * @since Jun 12, 2020 19:22
+ * @since Jun 18, 2020 21:19
  */
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class HubResponseWrapper {
+public class HubError {
 
-    final Object data;
+    @NotNull
+    int errorMessageNumber;
 
-    HubError error;
+    String errorMessage;
+
+    Object errorDetails;
+
 }
