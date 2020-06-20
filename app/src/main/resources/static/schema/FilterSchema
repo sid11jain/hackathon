@@ -7,11 +7,13 @@
     {
       "filterName": "name",
       "valueType": "string",
+      "comparisonOp": "LT/LTE/GT/GTE/EQ/NEQ/IN/NIN",
       "values": [
         "Name1",
         "Name2"
       ],
       "nestedOn": false,
+      "nestedField": "nestedFieldName",
       "searchType": "like",
       "caseSensitive(not supported currently)": true
 
@@ -19,11 +21,13 @@
     {
       "filterName": "tech",
       "valueType": "string",
+      "comparisonOp": "LT/LTE/GT/GTE/EQ/NEQ/IN/NIN",
       "values": [
         "Java",
         "Python"
       ],
       "nestedOn": true,
+      "nestedField": "nestedFieldName",
       "searchType": "equals",
       "caseSensitive(not supported currently)": true
     },
@@ -33,6 +37,7 @@
       "comparisonOp": "LT/LTE/GT/GTE/EQ/NEQ/IN/NIN",
       "value": "13-06-20 21:00:00",
       "nestedOn": false,
+      "nestedField": "nestedFieldName",
       "searchType": "equals"
     },
     {
@@ -41,6 +46,7 @@
       "comparisonOp": "LT/LTE/GT/GTE/EQ/NEQ/IN/NIN",
       "value": "10",
       "nestedOn": false,
+      "nestedField": "nestedFieldName",
       "searchType": "equals",
       "caseSensitive(not supported currently)": true
     }
