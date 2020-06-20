@@ -27,8 +27,9 @@
                     <!--  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
                 </h6>
                 <p class="card-text text-left"> Description
-                    <input type="text" class="form-control" [value]="providedIdea? providedIdea.description : ''"
-                        formControlName="description" />
+                    <textarea class="form-control" [value]="providedIdea? providedIdea.description : ''"
+                        formControlName="description"> 
+                    </textarea>
                 </p>
                 <ul *ngIf="campaignFields" class="list-group list-group-flush ">
                     <li class="list-group-item align-left"
@@ -57,6 +58,26 @@
                         </ng-container>
                     </li>
                 </ul>
+                <h8 class="card-subtitle mb-2 ">Tags
+                        <innovation-hub-select-option [fieldFormControlName]="'tags'"
+                        [optionList]="allTags"
+                        [selectedOptions]="providedIdea? providedIdea.tags : []"
+                        [multipleOptions]="true" [config]="tagsOptionConfig"></innovation-hub-select-option>
+                </h8>
+                <h8 class="card-subtitle mb-2 ">Contributors
+                        <innovation-hub-select-option [fieldFormControlName]="'contributors'"
+                        [optionList]="allUsers"
+                        [selectedOptions]="providedIdea? providedIdea.contributors : []"
+                        [multipleOptions]="true"
+                        [config]="userOptionConfig"></innovation-hub-select-option>
+                </h8>
+                <h8 *ngIf="!newIdea" class="card-subtitle mb-2 ">Current Stage
+                        <innovation-hub-select-option [fieldFormControlName]="'currentStage'"
+                        [optionList]="allowedWorkflows"
+                        [selectedOptions]="providedIdea? providedIdea.currentStage : []"
+                        [multipleOptions]="false"
+                        [config]="workflowOptionConfig"></innovation-hub-select-option>
+                </h8>
             </div>
             <div class="card-footer text-muted"> Likes comment and fav</div>
         </div>

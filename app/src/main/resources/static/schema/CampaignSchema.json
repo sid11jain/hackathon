@@ -68,6 +68,10 @@
           "prevStage": {
             "type": "array",
             "description": "Previous allowed stage from this current stage of workflow"
+          },
+          "description": {
+            "type": "string",
+            "description": "Value to be shown at UI"
           }
         }
       },

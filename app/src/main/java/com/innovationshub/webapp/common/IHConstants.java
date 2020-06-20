@@ -27,6 +27,8 @@ public class IHConstants {
     public static final String IDEA_COLLECTION = "idea";
 
     public static final String USERS_COLLECTION = "users";
+    public static final String WORKFLOW_COLLECTION = "workflow";
+    public static final String TAGS_COLLECTION = "tags";
 
     public static final String CAMPAIGN_NAME = "campaignName";
 
@@ -44,6 +46,9 @@ public class IHConstants {
     public static final String CAMPAIGN_FIELD = "campaign";
     public static final String DESCRIPTION_FIELD = "description";
     public static final String VALUE_FIELD = "value";
+
+    public static final String USERS_FIELD_USERNAME = "username";
+    public static final String USERS_FIELD_FULLNAME = "fullName";
 
     public static final String ROLE_ADMIN = "ADMIN";
     public static final String ROLE_BUSINESS = "BUSINESS";

@@ -25,7 +25,11 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { BasicCardCommentsComponent } from './shared/components/basic-card-comments.component';
-
+import { HubInputChipsComponent } from './components/common/hub-input-chips/hub-input-chips.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NgxTagsInputModule } from 'ngx-tags-input';
+import { TagInputModule } from 'ngx-chips';
+import { NgxTypeaheadModule } from 'ngx-typeahead';
 import { BasicAuthHttpInterceptorService } from './services/basic-auth-interceptor.service';
 
 @Injectable()
@@ -53,7 +57,8 @@ export class XhrInterceptor implements HttpInterceptor {
     LogoutComponent,
     HeaderComponent,
     FooterComponent,
-    BasicCardCommentsComponent
+    BasicCardCommentsComponent,
+    HubInputChipsComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +72,11 @@ export class XhrInterceptor implements HttpInterceptor {
     NgSelectModule,
     BrowserAnimationsModule,
     MatExpansionModule,
-    NgbModule
+    NgbModule,
+    Ng2SearchPipeModule,
+    NgxTagsInputModule,
+    TagInputModule,
+    NgxTypeaheadModule
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
   providers: [InnovationsHubService, ExportExcelService, BsModalService, BsModalRef,

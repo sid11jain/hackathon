@@ -5,14 +5,21 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import "~font-awesome/css/font-awesome.css";
 
+.color-info{
+    color: #5bc0de;
+}
 
-
+.mat-expansion-panel-header
 .mat-expansion-panel-header.mat-expanded,
 .mat-expansion-panel-header.mat-expanded:hover,
 .mat-expansion-panel-header.mat-expanded:focus {
     background-color:#5bc0de;
 }
 
+.mat-expansion-panel-header {
+    background-color:#5bc0de;
+    //color:#5bc0de;
+}
 
 // a.custom-card,
 // a.custom-card:hover {

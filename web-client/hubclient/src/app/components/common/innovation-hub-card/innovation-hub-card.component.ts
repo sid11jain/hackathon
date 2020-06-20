@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Idea, CampaignField, Campaign, Collection, Types } from 'src/app/models/innovation-hub.model';
+import { Idea, CampaignField, Campaign, Collection, Types, Workflow, DEFAULT_CURRENT_STAGE } from 'src/app/models/innovation-hub.model';
 import { FormControl, FormArray, FormGroup } from '@angular/forms';
 import { InnovationsHubService } from 'src/app/services/innovations-hub.service';
 import { SelectOptionConfig, DATE_FORMAT } from 'src/app/models/common/common-utility.model';
@@ -14,47 +14,61 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./innovation-hub-card.component.scss']
 })
 export class InnovationHubCardComponent implements OnInit {
-  constructor(protected modalRef: BsModalRef, protected hubService: InnovationsHubService) {}
+  constructor(protected modalRef: BsModalRef, protected hubService: InnovationsHubService) { }
 
 
   @Input()
   campaign: Campaign;
 
   @Input()
-  providedIdea: Idea ; // Can initialize by default = new Idea();
+  providedIdea: Idea; // Can initialize by default = new Idea();
 
   @Input()
   editMode = true;
+
+  @Input()
+  newIdea = false;
 
   inputType: any = Types;
   ideaForm: FormGroup;
   campaignForm: FormGroup;
   allCampaigns: Campaign[];
-
-
+  allTags: any[];
+  allUsers: any[];
+  allowedWorkflows: any[];
 
   campaignFields: CampaignField[] = [];
   providedIdeaCampaignValues: any = {};
 
+  userOptionConfig = this.hubService.userOptionConfig;
+
+  tagsOptionConfig = this.hubService.tagsOptionConfig;
+
+  workflowOptionConfig = this.hubService.workflowOptionConfig;
+
   loadIdea = new BehaviorSubject<Boolean>(false);
 
   ngOnInit(): void {
+    console.log('New idea', this.newIdea);
     console.log('In idea card', this.campaign);
-    this.setCampaign();
+    this.setInitialData();
+    // this.setCampaign();
     if (this.providedIdea) {
-            this.mapIdeaCampaignValueAsKeyValue(this.providedIdea);
+      this.mapIdeaCampaignValueAsKeyValue(this.providedIdea);
     }
     this.campaignForm = new FormGroup({
       selectedCampaign: new FormControl()
     });
     this.ideaForm = new FormGroup({
-      name: new FormControl(this.providedIdea ? this.providedIdea.name : undefined ),
+      name: new FormControl(this.providedIdea ? this.providedIdea.name : undefined),
       campaignName: new FormControl(this.providedIdea ? this.providedIdea.campaignName : undefined),
       description: new FormControl(this.providedIdea ? this.providedIdea.description : undefined),
       postedOn: new FormControl(
         this.providedIdea ? this.providedIdea.postedOn : new Date()
       ),
-      submittedBy: new FormControl(this.providedIdea ? this.providedIdea.submittedBy : undefined),
+      tags: new FormControl(this.providedIdea ? this.providedIdea.tags : undefined),
+      currentStage: new FormControl(this.providedIdea ? this.providedIdea.currentStage : DEFAULT_CURRENT_STAGE),
+      submittedBy: new FormControl(this.providedIdea ? this.providedIdea.submittedBy : this.hubService.currenUser),
       contributors: new FormControl(this.providedIdea ? this.providedIdea.contributors : undefined),
       campaignValues: new FormArray(
         this.campaignFields.map(
@@ -69,9 +83,11 @@ export class InnovationHubCardComponent implements OnInit {
         )
       )
     });
-    if (!this.editMode){
+    if (!this.editMode) {
       this.ideaForm.disable();
     }
+    console.log('forms ', this.ideaForm.controls.tags);
+
   }
 
 
@@ -109,39 +125,69 @@ export class InnovationHubCardComponent implements OnInit {
     }
   }
 
-  closeModal(){
+  closeModal() {
     this.modalRef.hide();
   }
 
-  addEntity(){
+  addEntity() {
     console.log('Add', this.ideaForm.value);
-    if (this.ideaForm.value.name){
+    if (this.ideaForm.value.name) {
       this.ideaForm.value.campaignName = this.campaign.name;
       this.hubService.submitIdea(this.ideaForm.value).subscribe((resp: any) => {
-        if (resp && resp.error){
+        if (resp && resp.error) {
           alert(this.ideaForm.value.name + '' + resp.error.errorMessage + ' name');
-        } else{
+        } else {
           this.modalRef.hide();
         }
       });
-     }else{
+    } else {
       alert('Mandtaory values not provided');
-     }
+    }
 
   }
 
-  setCampaign(){
+  setCampaign() {
     console.log('idea card campaign', this.campaign);
-    if (this.campaign){
+    if (this.campaign) {
       this.campaignFields = this.campaign.campaignFields;
-      } else{
-        this.hubService.getCollection(Collection.CAMPAIGN).subscribe((resp: any) => {
-          if (resp && resp.data){
-            this.allCampaigns =  JSON.parse(resp.data);
-            console.log('all camp', this.allCampaigns);
-          }
-        });
-      }
- }
+    } else {
+      this.hubService.getCollection(Collection.CAMPAIGN).subscribe((resp: any) => {
+        if (resp && resp.data) {
+          this.allCampaigns = JSON.parse(resp.data);
+          console.log('all camp', this.allCampaigns);
+        }
+      });
+    }
+  }
 
+  setInitialData() {
+    this.hubService.getCollection(Collection.USERS).subscribe((resp: any) => {
+      if (resp && resp.data) {
+        this.allUsers = resp.data;
+        this.allUsers = this.allUsers.filter(user => {
+          return user.username !== this.hubService.currenUser;
+        });
+        console.log('all users', this.allUsers);
+      }
+    });
+    this.hubService.getCollection(Collection.TAGS).subscribe((resp: any) => {
+      if (resp && resp.data) {
+        this.allTags = resp.data;
+        console.log('all tags', this.allTags);
+      }
+    });
+    this.setCampaign();
+    if (this.providedIdea && this.providedIdea.currentStage) {
+      this.hubService.getCollection(Collection.WORKFLOW).subscribe((resp: any) => {
+        if (resp && resp.data) {
+          const allWorkFlows: any[] = JSON.parse(resp.data);
+          console.log('all tags', allWorkFlows);
+          this.allowedWorkflows = allWorkFlows.filter(workflow => {
+            this.providedIdea.currentStage.nextStage.includes(workflow.currentStage);
+          });
+        }
+      });
+    }
+
+  }
 }

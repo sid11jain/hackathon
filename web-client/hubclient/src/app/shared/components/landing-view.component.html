@@ -6,13 +6,67 @@
         <li> All Ideas</li>
         <li> Trending Ideas</li>
         <li> Popular Ideas</li>
+        
+      </ul>
+    
+    <form [formGroup]="ideaFilterForm">
+    <div class="idea-filter-container">    
+        <div class="col-md-3">
+          <label for="ideaName" >Idea Name</label>
+          <input type="text" class="form-control" formControlName="name">
+        </div>
+        <div class="col-md-3 ">
+          <label for="tags">Tags</label>
+          <!-- <hub-input-chips [fieldFormControlName]="'tags'" [additionAllowed]="true"></hub-input-chips> -->
+          <innovation-hub-select-option [fieldFormControlName]="'tags'"
+          [optionList]="allTags"
+          [multipleOptions]="true" [config]="tagsOptionConfig"></innovation-hub-select-option>
+
+          <!-- <input type="text" class="form-control fa fa-search" aria-hidden="true" formControlName="tags" [value]="tags" (keyup.enter)="addTags($event)" (focusout)="addTags($event)" placeholder="&#61442;"> -->
+          <!-- <hub-input-chips [fieldFormControlName]="tags" [selectedChips]="[]" [inputChips]="[]" [additionAllowed]="true"></hub-input-chips> -->
+          
+          <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+        </div>
+        <div class="col-md-3">
+            <label for="contributors">Submitted By</label>
+            <innovation-hub-select-option [fieldFormControlName]="'submittedBy'" [optionList]="allUsers" [config]="userOptionConfig"
+            ></innovation-hub-select-option>
+        </div>
+        <!-- <div class="col-md-3">
+          <label for="contributors">Contributors</label>
+          <innovation-hub-select-option [fieldFormControlName]="'contributors'" [optionList]="allUsers" [config]="userOptionConfig"
+          ></innovation-hub-select-option>
+      </div> -->
+          <!-- <tag-input formControlName="contributors">
+               [identifyBy]="'username'" [displayBy]="'fullName'"
+            <tag-input-dropdown [focusFirstElement]="true" [autocompleteItems]='allUsers$' ></tag-input-dropdown>
+        </tag-input> -->
+
+        <!-- <input formControlName="contributors" [value]="search"
+        ngxTypeahead
+        [taUrl]="usersUrl"
+        [taParams]="'users'"
+        (taSelected)="handleUsersResult($event)"
+      > -->
+
+          <!-- <input type="text" formControlName="contributors" class="form-control"
+            typeahead="user for user in getUsers($viewValue) | filter:$viewValue | limitTo:8"
+            typeahead-on-select="onSelect($item)"> -->
+        <div class="col-md-3">
+            <label for="contributors">Current Stage</label>
+            <innovation-hub-select-option [fieldFormControlName]="'currentStage'"
+            [optionList]="allWorkflows"
+            [config]="workflowSearchOptionConfig"></innovation-hub-select-option>
+        </div>
+    </div>
         <button type="button" title="Add" class="btn btn-info mr-2" (click)="openCampaignComponent(operation.ADD)">
           Add</button>
         <button type="button" title="Export" class="btn btn-info mr-2"
           (click)="openCampaignComponent(operation.EXPORT)"> Export</button>
         <button type="button" title="searchIdeas" class="btn btn-info mr-3" (click)="searchIdeas()">Search</button>
-      </ul>
-    </div>
+    
+  </form>
+</div>
   </nav>
   <div class="filter-and-cards-container">
     <div class="filter-and-cards-section">
@@ -30,12 +84,14 @@
 
             <form formGroupName="{{filterPosition}}" class="control-group">
               <!-- <form formGroupName="{{filter.filterName}}"> -->
-                <div formArrayName="values" *ngFor="let filterValue of filter.values; let valuePosition = index " class="controls span2">
-                    <label class="mat-checkbox">
-                      <input type="checkbox" value="{{filterValue.value}}"
-                        formControlName="{{valuePosition}}" (change)="onFilterCheck(filter, filterPosition, valuePosition, filterValue.value)"> {{filterValue.value}}
-                    </label>
-                </div>
+              <div formArrayName="values" *ngFor="let filterValue of filter.values; let valuePosition = index "
+                class="controls span2">
+                <label class="mat-checkbox">
+                  <input type="checkbox" value="{{filterValue.value}}" formControlName="{{valuePosition}}"
+                    (change)="onFilterCheck(filter, filterPosition, valuePosition, filterValue.value)">
+                  {{filterValue.value}}
+                </label>
+              </div>
               <!-- </form> -->
             </form>
             <!-- <mat-action-row></mat-action-row> -->
@@ -85,3 +141,24 @@
     </label>
   </div>
 </ng-template>
+<!-- 
+<li *ngFor="let item of itemList | filter:formName of input text" > 
+  {{item.name}}
+</li> -->
+
+<!-- <ng-template #inputChips let-chips="chips">
+  <div class="autocomplete">
+    <div class="chips-input-container">
+    <div class="user-chip" *ngFor="let chip of chips">
+      {{chip.value? chip.value : chip}}
+      <span (click)="deleteSelects(user)" class="delete-icon-chip">&#10006;</span>
+    </div>
+
+    <input name="suggestion" type="text" placeholder="User" (click)="suggest()" [(ngModel)]="userSelectsString">
+    </div>
+
+    <div class="autocomplete-items" *ngIf="show">
+      <div *ngFor="let s of suggestions" [ngClass]="isSelected(s) ? 'selected-suggestion' : ''" (click)="selectSuggestion(s)">{{ s.name }}</div>
+    </div>
+</div>
+</ng-template> -->

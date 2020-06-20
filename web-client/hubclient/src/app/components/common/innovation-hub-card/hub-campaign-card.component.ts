@@ -68,7 +68,7 @@ export class HubCampaignCardComponent implements OnInit {
       this.spinner.show();
       this.modalRef.hide();
       const config: ModalOptions = { backdrop: 'static', keyboard: true };
-      const initialState = { campaign: this.campaign };
+      const initialState = { campaign: this.campaign, newIdea: 'true' };
       this.modalService.show(
         InnovationHubCardComponent,
         Object.assign({}, config, { initialState })

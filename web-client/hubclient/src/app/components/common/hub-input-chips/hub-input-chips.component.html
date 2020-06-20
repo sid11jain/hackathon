@@ -1,0 +1,47 @@
+<!-- <div class="autocomplete" #autoComplete>
+    <div class="chips-input-container" >
+        <div class="user-chip" *ngFor="let chip of selectedChips" [formControl]="callingForm">
+            {{chip.value? chip.value : chip}}
+            <span (click)="removeSelectedChips(chip)" class="delete-icon-chip">&#10006;</span>
+        </div>
+
+        <textarea class="scrollabletextbox form-control" name="suggestion"  placeholder="" (click)="suggest()" (keyup.enter)="addChipsIfNot($event)" (focusout)="clearTextBox()" [formControl]="localFormGroup.controls.textInput" >
+            <div class="user-chip" *ngFor="let chip of selectedChips" [formControl]="callingForm">
+                <span (click)="removeSelectedChips(chip)" class="delete-icon-chip">&#10006;</span>
+            </div>
+        </textarea>
+    </div>
+
+    <div class="autocomplete-items" *ngIf="show">
+      
+        <div *ngFor="let suggested of providedInputChips | filter:localFormGroup.controls.textInput.value" [Class.selected-suggestion]="isSelected(suggested)" 
+            (click)="selectSuggestion(suggested)">{{ suggested.value? suggested.value : suggested }}</div>
+    </div>
+</div> -->
+<tag-input [formControl]="callingForm"  (onAdd)="addChipsIfNot($event)">
+    <!-- <auto-complete source="addChipsIfNot($event)"></auto-complete> -->
+    <tag-input-dropdown [autocompleteItems]="providedInputChips">
+    </tag-input-dropdown>
+</tag-input>
+
+<!-- <ngx-tags-input class="form-control input-lg" (onTagsChanged)="addChipsIfNot($event)" [removeLastOnBackspace]="true" [formControl]="callingForm" name="tags"></ngx-tags-input> -->
+
+
+<!-- <div class="autocomplete">
+    <div class="chips-input-container">
+    <div class="user-chip" *ngFor="let user of userSelects">
+      {{user.name}}
+      <span (click)="deleteSelects(user)" class="delete-icon-chip">&#10006;</span>
+    </div>
+
+    <input name="suggestion" type="text" placeholder="User" (click)="suggest()" [(ngModel)]="userSelectsString">
+    </div>
+
+    <div class="autocomplete-items" *ngIf="show">
+      <div *ngFor="let s of suggestions" [ngClass]="isSelected(s) ? 'selected-suggestion' : ''" (click)="selectSuggestion(s)">{{ s.name }}</div>
+    </div>
+</div> -->
+
+
+
+<!-- localFormGroup.controls.textInput -->

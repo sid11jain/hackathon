@@ -146,10 +146,16 @@ public class HubDaoImpl implements IHubDao {
     public List findAllDocuments(String collectionName, Object filters) throws Exception {
         ArrayList<Object> allCollectionDoc = new ArrayList<>();
         BasicDBObject whereQuery = new BasicDBObject();
+        BasicDBObject selectFields = new BasicDBObject();
         MongoCollection<Document> collection = db.getCollection(collectionName);
         if(null != filters){
             whereQuery = BasicDBObject.parse(DBUtility.buildQuery((Map) filters));
         }
+        /*if(StringUtils.equals(IHConstants.USERS_COLLECTION, collectionName)){
+            whereQuery.append(IHConstants.USERS_FIELD_USERNAME,1);
+            whereQuery.append(IHConstants.USERS_FIELD_FULLNAME,1);
+        }*/
+
         // find with whereQuery
         FindIterable<Document> documents = collection.find(whereQuery);
         if(StringUtils.equals(IHConstants.IDEA_COLLECTION, collectionName)){

@@ -43,3 +43,71 @@ export const FirstCampaign = {
       }
   ]
 };
+
+export const user = [
+  {
+      "username" : "admin",
+      "email" : "admin_email",
+      "password" : "$2y$12$OkLkVeg8KwP/FI7HPf0oleSkbln7hkza4ynPSEVOwOCOK9Ee86PIK",
+      "fullName" : "Ajay",
+      "enable" : true,
+      "roles" : [
+          {
+              "id" : "5eeb9394fe28023d787d56ec",
+              "role" : "ADMIN"
+          }
+      ]
+  },
+  {
+      "username" : "sid",
+      "email" : "siddhart.jain@ihsmarkit.com",
+      "password" : "$2y$12$OkLkVeg8KwP/FI7HPf0oleSkbln7hkza4ynPSEVOwOCOK9Ee86PIK",
+      "fullName" : "Siddharth Jain",
+      "enable" : true,
+      "roles" : [
+          {
+              "id" : "5eeb9394fe28023d787d56ec",
+              "role" : "USER"
+          }
+      ]
+  },
+  {
+      "username" : "Ajay",
+      "email" : "ajaykumar.lamba@ihsmarkit.com",
+      "password" : "$2y$12$OkLkVeg8KwP/FI7HPf0oleSkbln7hkza4ynPSEVOwOCOK9Ee86PIK",
+      "fullName" : "Ajay Kumar Lamba",
+      "enable" : true,
+      "roles" : [
+          {
+              "id" : "5eeb9394fe28023d787d56ec",
+              "role" : "USER"
+          }
+      ]
+  },
+  {
+      "username" : "Abhinav",
+      "email" : "abhinav.khattar@ihsmarkit.com",
+      "password" : "$2y$12$OkLkVeg8KwP/FI7HPf0oleSkbln7hkza4ynPSEVOwOCOK9Ee86PIK",
+      "fullName" : "Abhinav Khattar",
+      "enable" : true,
+      "roles" : [
+          {
+              "id" : "5eeb9394fe28023d787d56ec",
+              "role" : "USER"
+          }
+      ]
+  },
+  {
+      "username" : "Rakesh",
+      "email" : "rakesh.mahajan@ihsmarkit.com",
+      "password" : "$2y$12$OkLkVeg8KwP/FI7HPf0oleSkbln7hkza4ynPSEVOwOCOK9Ee86PIK",
+      "fullName" : "Rakesh Mahajan",
+      "enable" : true,
+      "roles" : [
+          {
+              "id" : "5eeb9394fe28023d787d56ec",
+              "role" : "USER"
+          }
+      ]
+  }
+  ];

@@ -91,7 +91,7 @@ public class LandingController {
     @RequestMapping(value=GET_COLLECTION, produces = APPLICATION_JSON, method =  RequestMethod.POST)
     public ResponseEntity<Object> findAllDocuments(@RequestBody String collectionName) throws Exception{
         Object objs=hubService.findAllDocuments(collectionName, null);
-        return new ResponseEntity<>(new HubResponseWrapper(objs), HttpStatus.OK);
+        return new ResponseEntity(new HubResponseWrapper(objs), HttpStatus.OK);
     }
 
     @RequestMapping(value=SEARCH_IDEAS, produces=APPLICATION_JSON)
