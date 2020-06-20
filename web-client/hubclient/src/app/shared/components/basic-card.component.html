@@ -1,3 +1,4 @@
+<div class="athena">
 <div class="grid-list-container">
       <a (click)="switchView(false)" title="Grid View">
             <i class="fa fa-th" aria-hidden="true"></i>
@@ -16,28 +17,26 @@
                   <h10>{{ providedIdea.campaignName }}</h10>
             </div>
             <div class="card-body">
-                  <h12 class="row card-title font-weight-bold">Idea Name: {{providedIdea.name}}
-                  </h12>
-                  <h14 *ngIf="providedIdea && providedIdea.postedOn" class="card-subtitle mb-2 font-weight-bold  ">
+                  <h12>Idea Name: </h12><span>{{providedIdea.name}}</span><br>
+                  <h12 *ngIf="providedIdea && providedIdea.postedOn">
                         Posted On:
                         <span class="font-weight-normal">{{ providedIdea.postedOn | date: 'dd-MM-yyyy'}}</span>
                         <!--  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
-                  </h14>
-                  <p class="card-text text-left text-truncate">Description: {{providedIdea.description}}
-
-                  </p>
+                  </h12><br>
+                  <h12>Description: </h12>
+                  <span>{{providedIdea.description}}</span><br>
                   <!-- removed if clause on campaign fields -->
-                  <ul class="list-group list-group-flush ">
-                        <div *ngFor="let field of providedIdea.campaign.campaignFields; let fieldPosition = index">
+                  <!-- <ul class="list-group list-group-flush "> -->
+                        <!-- <div *ngFor="let field of providedIdea.campaign.campaignFields; let fieldPosition = index"> -->
                               <!-- switch cases for each input type-->
 
-                              <ng-container [ngSwitch]="field.type">
+                              <!-- <ng-container [ngSwitch]="field.type">
                                     <li *ngIf="field.type !== 'text'" class="list-group-item  align-left {{cardBg[providedIdea.name.length % cardColor]}}"
                                           style="border: none">
                                           <label>
                                                 <div *ngSwitchCase="'text'">
 
-                                                </div>
+                                                </div> -->
                                             <!--    <div *ngSwitchCase="'single-option'">
                                                       #{{providedIdeaCampaignValues[providedIdea.name][field.name].value | uppercase}}{{ field.name | lowercase }}
 
@@ -47,11 +46,11 @@
 
                                                 </div>
                                                 -->
-                                          </label>
+                                          <!-- </label>
                                     </li>
                               </ng-container>
                         </div>
-                  </ul>
+                  </ul> -->
             </div>
             </a>
             <div class="basic-footer card-footer">
@@ -71,3 +70,4 @@
 <ng-template id="expandedCard">
       <innovation-hub-card></innovation-hub-card>
 </ng-template>
+</div>

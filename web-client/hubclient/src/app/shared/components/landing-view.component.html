@@ -1,9 +1,10 @@
+<body class="athena">
 <div class="home-page-container">
 
   <nav>
     <div class="menu-container">
       <ul>
-        <li> All Ideas</li>
+        <li style="background-color: #f8cbab;"> All Ideas</li>
         <li> Trending Ideas</li>
         <li> Popular Ideas</li>
         
@@ -12,7 +13,7 @@
     <form [formGroup]="ideaFilterForm">
     <div class="idea-filter-container">    
         <div class="col-md-3">
-          <label for="ideaName" >Idea Name</label>
+          <label for="ideaName" class="athena">Idea Name</label>
           <input type="text" class="form-control" formControlName="name">
         </div>
         <div class="col-md-3 ">
@@ -33,12 +34,13 @@
             [config]="workflowSearchOptionConfig"></innovation-hub-select-option>
         </div>
     </div>
+    <div style="text-align: right; padding-bottom: 10px;">
         <button type="button" title="Add" class="btn btn-info mr-2" (click)="openCampaignComponent(operation.ADD)">
           Add</button>
         <button type="button" title="Export" class="btn btn-info mr-2"
           (click)="openCampaignComponent(operation.EXPORT)"> Export</button>
         <button type="button" title="searchIdeas" class="btn btn-info mr-3" (click)="searchIdeas()">Search</button>
-    
+    </div>
   </form>
 </div>
   </nav>
@@ -107,3 +109,4 @@
     </label>
   </div>
 </ng-template>
+</body>

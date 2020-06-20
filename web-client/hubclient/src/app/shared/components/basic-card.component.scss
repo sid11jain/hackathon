@@ -10,10 +10,17 @@
     text-align:left;
     padding-left: 10px;
     border-bottom: 1px solid #d8d8d8;
+    font-weight: 600;
 }
 
 .card-body{
     width:90%;
+    height: 90%;
+    font-size: medium;
+    text-align: left;
+    h12 {
+        font-weight: 600;
+    }
 }
 
 .basic-card-fields{
@@ -23,6 +30,7 @@
 
 .basic-footer{
     border-top: 1px solid #d8d8d8;
+    text-align: center;
     a{  
         cursor:pointer;
         font-size:24px;

@@ -1,7 +1,8 @@
+<div class="athena">
 <form [formGroup]="ideaCommentsForm">
 
-    <div class="modal-header"><h3>Comments</h3>
-        <button class="btn btn-default mr-2" type="button" (click)="closeCommentModal()">Close</button>
+    <div class="modal-header" style="margin-right: 10px;"><h3>Comments</h3>
+        <button class="btn btn-danger mr-2" type="button" (click)="closeCommentModal()">X</button>
     </div>
     <div class="modal-body">
         <div class="row" *ngFor= "let commentItem of idea.comments">
@@ -14,9 +15,10 @@
        <div class="modal-footer add-new-comment">
        <label> Add new comment</label>
        <textarea class="form-control" formControlName="commentToAdd"></textarea>
-       <button type="button" title="view" class="btn" (click)="saveComment()"> Save</button>
-       <button class="btn btn-default mr-2" type="button" (click)="closeCommentModal()">Close</button>
+       <button type="button" title="view" class="btn btn-info mr-2" (click)="saveComment()"> Save</button>
+       <!-- <button class="btn btn-danger mr-2" type="button" (click)="closeCommentModal()">Close</button> -->
         </div>
     </div>
 
-</form>    
+</form>
+</div>

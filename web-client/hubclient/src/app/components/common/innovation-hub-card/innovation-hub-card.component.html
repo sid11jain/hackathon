@@ -4,19 +4,39 @@
             <!-- w-50  -->
             <div *ngIf="campaign" class="card-header bg-warning">{{campaign.name}}</div>
             <div class="card-body text-info">
-                <h6 class="card-title"> Idea Name
+                <p class="card-text text-info"> Idea Name
                     <input type="text" class="form-control" [value]="providedIdea? providedIdea.name : ''"
                         formControlName="name" />
-                </h6>
-                <h6 *ngIf="providedIdea && providedIdea.postedOn" class="card-subtitle mb-2 ">Posted On
+                </p>
+                <p *ngIf="providedIdea && providedIdea.postedOn" class="card-subtitle mb-2 ">Posted On: 
                     <span>{{ providedIdea.postedOn}}</span>
                     <!--  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
-                </h6>
+                </p>
                 <p class="card-text text-left"> Description
                     <textarea class="form-control" [value]="providedIdea? providedIdea.description : ''"
                         formControlName="description"> 
                     </textarea>
                 </p>
+                <h8 class="card-subtitle mb-2 ">Contributors
+                    <innovation-hub-select-option [fieldFormControlName]="'contributors'"
+                    [optionList]="allUsers"
+                    [selectedOptions]="providedIdea? providedIdea.contributors : []"
+                    [multipleOptions]="true"
+                    [config]="userOptionConfig"></innovation-hub-select-option>
+                </h8>
+                <h8 class="card-subtitle mb-2 ">Tags
+                    <innovation-hub-select-option [fieldFormControlName]="'tags'"
+                    [optionList]="allTags"
+                    [selectedOptions]="providedIdea? providedIdea.tags : []"
+                    [multipleOptions]="true" [config]="tagsOptionConfig"></innovation-hub-select-option>
+                </h8>
+                <h8 *ngIf="!newIdea" class="card-subtitle mb-2 ">Current Stage
+                    <innovation-hub-select-option [fieldFormControlName]="'currentStage'"
+                    [optionList]="allowedWorkflows"
+                    [selectedOptions]="providedIdea? providedIdea.currentStage : []"
+                    [multipleOptions]="false"
+                    [config]="workflowOptionConfig"></innovation-hub-select-option>
+                </h8>
                 <ul *ngIf="campaignFields" class="list-group list-group-flush ">
                     <li class="list-group-item align-left"
                         *ngFor="let field of campaignFields; let fieldPosition = index" formArrayName="campaignValues">
@@ -44,26 +64,7 @@
                         </ng-container>
                     </li>
                 </ul>
-                <h8 class="card-subtitle mb-2 ">Tags
-                        <innovation-hub-select-option [fieldFormControlName]="'tags'"
-                        [optionList]="allTags"
-                        [selectedOptions]="providedIdea? providedIdea.tags : []"
-                        [multipleOptions]="true" [config]="tagsOptionConfig"></innovation-hub-select-option>
-                </h8>
-                <h8 class="card-subtitle mb-2 ">Contributors
-                        <innovation-hub-select-option [fieldFormControlName]="'contributors'"
-                        [optionList]="allUsers"
-                        [selectedOptions]="providedIdea? providedIdea.contributors : []"
-                        [multipleOptions]="true"
-                        [config]="userOptionConfig"></innovation-hub-select-option>
-                </h8>
-                <h8 *ngIf="!newIdea" class="card-subtitle mb-2 ">Current Stage
-                        <innovation-hub-select-option [fieldFormControlName]="'currentStage'"
-                        [optionList]="allowedWorkflows"
-                        [selectedOptions]="providedIdea? providedIdea.currentStage : []"
-                        [multipleOptions]="false"
-                        [config]="workflowOptionConfig"></innovation-hub-select-option>
-                </h8>
+                
             </div>
             <div class="card-footer text-muted"> Likes comment and fav</div>
         </div>
@@ -72,9 +73,9 @@
 <div class="modal-footer">
     <div class="container-fluid">
         <div class="row form-action-row clearfix">
-            <div class="col-md-12">
+            <div class="col-md-12" style="text-align: right;">
                 <button *ngIf="editMode" class="btn btn-info mr-2" type="button" (click)="addEntity()">Add</button>
-                <button class="btn btn-default mr-2" type="button" (click)="closeModal()">Close</button>
+                <button class="btn btn-danger" type="button" (click)="closeModal()">Close</button>
             </div>
         </div>
     </div>

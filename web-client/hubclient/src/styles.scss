@@ -4,6 +4,8 @@
 @import '~bootstrap/scss/bootstrap';
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import "~font-awesome/css/font-awesome.css";
+@import '~@angular/material/theming';
+@import './theme.scss';
 
 .color-info{
     color: #5bc0de;
