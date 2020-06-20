@@ -4,10 +4,8 @@ import { InnovationHubComponent } from 'src/app/components/innovation-hub.compon
 import { InnovationsHubService } from 'src/app/services/innovations-hub.service';
 import {
   Idea,
-  Collection,
   Filter,
-  IDEA_SEARCH_FILTERS,
-  SearchType
+  IDEA_SEARCH_FILTERS
 } from 'src/app/models/innovation-hub.model';
 import { InnovationHubIdeaComponent } from 'src/app/components/innovation-hub-idea.component';
 import { InnovationHubCardComponent } from 'src/app/components/common/innovation-hub-card/innovation-hub-card.component';
@@ -15,7 +13,9 @@ import { HubCampaignCardComponent } from 'src/app/components/common/innovation-h
 import {
   OPERATION,
   FILTER_TYPE,
-  SelectOptionConfig
+  SelectOptionConfig,
+  Collection,
+  SearchType
 } from 'src/app/models/common/common-utility.model';
 import { plainToClass } from 'class-transformer';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
@@ -52,6 +52,8 @@ export class LandingViewComponent implements OnInit {
   userOptionConfig = this.hubService.userOptionConfig;
   tagsOptionConfig = this.hubService.tagsOptionConfig;
   workflowSearchOptionConfig = this.hubService.workflowSearchOptionConfig;
+
+  fieldToExcludeFromFilters = ['expanded'];
 
   constructor(
     private modalService: BsModalService,
@@ -147,13 +149,16 @@ export class LandingViewComponent implements OnInit {
 
   decorateFilterValues() {
     // cloning issue, thus went for filter thing.
-    let filters = this.filtersForm.value.filters.filter(x => x);
+    const filters = this.filtersForm.value.filters.filter(x => x);
+    let enrichedFilters = [];
     // Merging ideaFilters with Campaign filters
     const ideaFilters = this.convertIdeaFormValueToFilters();
     ideaFilters.forEach(ideaFilter => filters.push(ideaFilter));
     console.log('DEcorat dilter start', filters);
     const removeFilters = new Set();
     filters.forEach((filter: any) => {
+      filter = plainToClass(Filter, filter);
+      console.log('Enriched filter', filter);
       if (
         filter.values &&
         Array.isArray(filter.values) &&
@@ -161,17 +166,21 @@ export class LandingViewComponent implements OnInit {
       ) {
         filter.values = filter.values.filter(Boolean);
       }
-      if (!filter.values || filter.values.length === 0) {
+      if ((!filter.values || filter.values.length === 0) && !(filter.valueType === this.filterValueType.DATE)) {
+        console.log('Removing filter', filter);
         removeFilters.add(filter.filterName);
       }
+      this.fieldToExcludeFromFilters.forEach(field => delete filter[field]);
+      enrichedFilters.push(filter);
     });
     console.log('remove filters', removeFilters);
-    filters = filters.filter((filter: any) => {
+    // Can think of removig this call and club the logic in previous forEach
+    enrichedFilters = enrichedFilters.filter((filter: any) => {
       return !removeFilters.has(filter.filterName);
     });
     console.log('Decorated filters', filters);
 
-    return filters;
+    return enrichedFilters;
   }
 
   getUsers(current) {
@@ -227,18 +236,55 @@ export class LandingViewComponent implements OnInit {
     const ideaFilters: any[] = [];
     IDEA_SEARCH_FILTERS.forEach((filter: any) => {
       ideaFilters.push({
+        values: this.setValue(filter),
         filterName: filter.filterName,
         valueType: filter.valueType
           ? filter.valueType
           : this.filterValueType.STRING,
-        values: Array.isArray(this.ideaFilterForm.value[filter.filterName])
-          ? this.ideaFilterForm.value[filter.filterName]
-          : [this.ideaFilterForm.value[filter.filterName]],
+
+        // values: Array.isArray(this.ideaFilterForm.value[filter.filterName])
+        //   ? this.ideaFilterForm.value[filter.filterName]
+        //   : [this.ideaFilterForm.value[filter.filterName]],
         nestedOn: false,
-        searchType: filter.searchType ? filter.searchType : SearchType.LIKE
+        searchType: filter.searchType ? filter.searchType : SearchType.EQUALS,
+        comparisonOp: filter.comparisonOp ? filter.comparisonOp : undefined
       });
     });
     console.log('converted idea', ideaFilters);
+
     return ideaFilters;
+  }
+
+  setValue(filter: any) {
+    // const filter = param;
+    let values;
+    if (!Array.isArray(this.ideaFilterForm.value[filter.filterName])) {
+      values = [this.ideaFilterForm.value[filter.filterName]];
+    } else {
+      values = this.ideaFilterForm.value[filter.filterName];
+    }
+    if (filter.valueType && filter.valueType === this.filterValueType.DATE) {
+      values = this.convertNgDateToDate(
+        values as [],
+        filter.filterName.endsWith('To')
+      );
+      filter.filterName = filter.filterName.endsWith('To')
+        ? filter.filterName.slice(0, -2)
+        : filter.filterName.slice(0, -4);
+    }
+
+    console.log('values', values);
+    return values;
+  }
+
+  convertNgDateToDate(date: any[], toDate: boolean) {
+    if (date && date.length > 0 && date[0]) {
+      const ngDate = date[0];
+      console.log('date : ', date, 'nDate : ', ngDate);
+      ngDate.day = toDate ? ngDate.day + 1 : ngDate.day;
+      // Issue with ng Month, it was providing +1 .
+      return [new Date(ngDate.year, ngDate.month - 1, ngDate.day)];
+    }
+    return date;
   }
 }

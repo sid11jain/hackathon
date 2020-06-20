@@ -39,7 +39,7 @@ export class BasicCardCommentsComponent implements OnInit {
     console.log(this.idea.comments);
   }
   saveComment() {
-    const userSessionName = this.hubService.currenUser;
+    const userSessionName = this.hubService.currentUser;
 
     const pair = new IdValuePair();
     pair.id = USERNAME_COLUMN_ID;
@@ -63,7 +63,7 @@ export class BasicCardCommentsComponent implements OnInit {
 
 
     this.idea.comments.push({
-      "comments:":"","":""
+      'comments:':'','':''
     });
 
     this.idea.commentsCount = this.idea.commentsCount

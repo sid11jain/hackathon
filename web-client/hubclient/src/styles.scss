@@ -23,6 +23,11 @@
     //color:#5bc0de;
 }
 
+.md-icon-button + .md-datepicker-input-container {
+    float: left;
+    margin-top:7px;
+  }
+
 // a.custom-card,
 // a.custom-card:hover {
 //   color: inherit;

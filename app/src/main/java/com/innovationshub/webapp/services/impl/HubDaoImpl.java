@@ -2,6 +2,7 @@ package com.innovationshub.webapp.services.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,9 @@ public class HubDaoImpl implements IHubDao {
             if(null != found.first()){
                 insertedIdea = null;
             }else{
-                insertedIdea = collection.insertOne(Document.parse(idea.toString()));
+                Document newIdea = Document.parse(idea.toString());
+                newIdea.put(IHConstants.IDEA_FIELD_POSTED, new Date());
+                insertedIdea = collection.insertOne(newIdea);
             }
         }
         return insertedIdea;

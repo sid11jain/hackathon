@@ -3,12 +3,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ExportExcelService } from './export-excel.service';
 import {
   CAMPAIGN_VALUES,
-  Collection,
   CampaignField,
   Idea
 } from '../models/innovation-hub.model';
 import { plainToClass } from 'class-transformer';
-import { IdValuePair, SelectOptionConfig } from '../models/common/common-utility.model';
+import { IdValuePair, SelectOptionConfig, Collection } from '../models/common/common-utility.model';
 import { map } from 'rxjs/operators';
 import { of } from 'rxjs';
 
@@ -60,13 +59,14 @@ export class InnovationsHubService {
 
   constructor(private http: HttpClient, private ees: ExportExcelService) {}
 
-  get currenUser(){
+  get currentUser(){
     return sessionStorage.getItem('username');
   }
 
   submitIdea(data: any) {
     const submitUrl = this.url + 'submit-idea';
-    // console.log('submitted data', data);
+    console.log('submitted data', data);
+    // return of(null);
     return this.http.post(submitUrl, { data: JSON.stringify(data) });
   }
 
@@ -149,8 +149,8 @@ export class InnovationsHubService {
   }
 
   searchIdeas(filters: any) {
-    // return of(null);
     console.log('Searched param', filters);
+    // return of(null);
     return this.http.post(this.url + 'search-ideas', { data: filters });
   }
 

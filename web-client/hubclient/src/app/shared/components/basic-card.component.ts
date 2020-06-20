@@ -95,7 +95,7 @@ export class BasicCardComponent implements OnInit {
   }
 
   updateIdea(providedIdea: Idea, attributeType: string) {
-    const userSessionName = this.hubService.currenUser;
+    const userSessionName = this.hubService.currentUser;
     switch (attributeType) {
       case COLUMN_NAME_LIKES: {
         if (

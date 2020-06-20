@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { InnovationsHubService } from 'src/app/services/innovations-hub.service';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Campaign, Collection } from 'src/app/models/innovation-hub.model';
-import { SelectOptionConfig, OPERATION } from 'src/app/models/common/common-utility.model';
+import { Campaign } from 'src/app/models/innovation-hub.model';
+import { SelectOptionConfig, OPERATION, Collection } from 'src/app/models/common/common-utility.model';
 import { InnovationHubCardComponent } from './innovation-hub-card.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 

@@ -11,7 +11,8 @@
       </ul>
     
     <form [formGroup]="ideaFilterForm">
-    <div class="idea-filter-container">    
+    <div class="idea-filter-container">   
+      <div class="row" >
         <div class="col-md-3">
           <label for="ideaName" class="athena">Idea Name</label>
           <input type="text" class="form-control" formControlName="name">
@@ -28,10 +29,47 @@
             ></innovation-hub-select-option>
         </div>       
         <div class="col-md-3">
-            <label for="contributors">Current Stage</label>
+            <label for="currentStage">Current Stage</label>
             <innovation-hub-select-option [fieldFormControlName]="'currentStage'"
             [optionList]="allWorkflows"
             [config]="workflowSearchOptionConfig"></innovation-hub-select-option>
+        </div>
+      </div>
+      <span></span>
+
+      <div class="row">
+          
+        <div class="col-md-3 input-group">
+        <!-- <mat-form-field> -->
+          <!-- <md-input-container>
+            <label>Posted On From</label>
+            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <input class="form-control" matInput [matDatepicker]="datePicker" formControlName="posteOnFrom"> -->
+            <!-- <button mdSuffix [mdDatepickerToggle]="datepicker"></button> -->
+           
+            <!-- <mat-datepicker #datePicker></mat-datepicker> -->
+          <!-- </mat-form-field> -->
+        <!-- </md-input-container> -->
+        <!-- <label>Posted On From</label> -->
+        <div class="input-group-append">
+            <i class="fa fa-calendar" aria-hidden="true" (click)="fromDate.toggle()" type="button"></i>
+          </div>
+        <input class="form-control" placeholder="Posted On From"
+             name="dp" formControlName="postedOnFrom" ngbDatepicker #fromDate="ngbDatepicker">
+                         
+        </div>
+
+        <div class="col-md-3 input-group">
+            <input class="form-control" placeholder="Posted On To"
+            name="dp" formControlName="postedOnTo" ngbDatepicker #toDate="ngbDatepicker">
+            <div class="input-group-append">
+                <i class="fa fa-calendar" aria-hidden="true" (click)="toDate.toggle()" type="button"></i>
+               <!-- <button class="btn btn-outline-secondary calendar" (click)="toDate.toggle()" type="button"></button> -->
+             </div>            
+       </div>
+          
+          <!-- <ngb-datepicker formControlName="posteOnFrom" ></ngb-datepicker>
+          <ngb-datepicker formControlName="posteOnTo" ></ngb-datepicker> -->
         </div>
     </div>
     <div style="text-align: right; padding-bottom: 10px;">

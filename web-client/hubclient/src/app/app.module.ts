@@ -1,13 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, Injectable } from '@angular/core';
-
+import {NgbModule, NgbDatepicker} from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InnovationHubComponent } from './components/innovation-hub.component';
 import { HttpClientModule, HttpInterceptor, HttpRequest, HttpHandler, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule, ɵNgSelectMultipleOption} from '@angular/forms';
 import { InnovationsHubService } from './services/innovations-hub.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { InnovationHubIdeaComponent } from './components/innovation-hub-idea.component';
 import { InnovationHubSelectOptionComponent } from './components/common/innovation-hub-select-option.component';
@@ -31,6 +30,8 @@ import { NgxTagsInputModule } from 'ngx-tags-input';
 import { TagInputModule } from 'ngx-chips';
 import { NgxTypeaheadModule } from 'ngx-typeahead';
 import { BasicAuthHttpInterceptorService } from './services/basic-auth-interceptor.service';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
@@ -72,12 +73,14 @@ export class XhrInterceptor implements HttpInterceptor {
     NgSelectModule,
     BrowserAnimationsModule,
     MatExpansionModule,
-    NgbModule,
     Ng2SearchPipeModule,
     NgxTagsInputModule,
     TagInputModule,
-    NgxTypeaheadModule
-  ],
+    NgxTypeaheadModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+
+    ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
   providers: [InnovationsHubService, ExportExcelService, BsModalService, BsModalRef,
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthHttpInterceptorService, multi: true }],

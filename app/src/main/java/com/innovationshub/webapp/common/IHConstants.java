@@ -47,6 +47,7 @@ public class IHConstants {
     public static final String DESCRIPTION_FIELD = "description";
     public static final String VALUE_FIELD = "value";
 
+    public static final String IDEA_FIELD_POSTED = "postedOn";
     public static final String USERS_FIELD_USERNAME = "username";
     public static final String USERS_FIELD_FULLNAME = "fullName";
 

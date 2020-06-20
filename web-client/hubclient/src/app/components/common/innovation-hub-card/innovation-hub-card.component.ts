@@ -3,8 +3,6 @@ import {
   Idea,
   CampaignField,
   Campaign,
-  Collection,
-  Types,
   Workflow,
   DEFAULT_CURRENT_STAGE
 } from 'src/app/models/innovation-hub.model';
@@ -12,7 +10,9 @@ import { FormControl, FormArray, FormGroup } from '@angular/forms';
 import { InnovationsHubService } from 'src/app/services/innovations-hub.service';
 import {
   SelectOptionConfig,
-  DATE_FORMAT
+  DATE_FORMAT,
+  Types,
+  Collection
 } from 'src/app/models/common/common-utility.model';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -83,7 +83,7 @@ export class InnovationHubCardComponent implements OnInit {
         this.providedIdea ? this.providedIdea.description : undefined
       ),
       postedOn: new FormControl(
-        this.providedIdea ? this.providedIdea.postedOn : new Date()
+        this.providedIdea ? this.providedIdea.postedOn :  undefined// new Date()
       ),
       tags: new FormControl(
         this.providedIdea ? this.providedIdea.tags : undefined
@@ -96,7 +96,7 @@ export class InnovationHubCardComponent implements OnInit {
       submittedBy: new FormControl(
         this.providedIdea
           ? this.providedIdea.submittedBy
-          : this.hubService.currenUser
+          : this.hubService.currentUser
       ),
       contributors: new FormControl(
         this.providedIdea ? this.providedIdea.contributors : undefined
@@ -190,7 +190,7 @@ export class InnovationHubCardComponent implements OnInit {
       if (resp && resp.data) {
         this.allUsers = resp.data;
         this.allUsers = this.allUsers.filter(user => {
-          return user.username !== this.hubService.currenUser;
+          return user.username !== this.hubService.currentUser;
         });
         console.log('all users', this.allUsers);
       }
