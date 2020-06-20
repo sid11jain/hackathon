@@ -28,30 +28,28 @@
     margin-top:7px;
   }
 
-// a.custom-card,
-// a.custom-card:hover {
-//   color: inherit;
-// }
-// /* remove the original arrow */
-// selectOption.input-lg {
-//     -webkit-appearance: none;
-//     -moz-appearance: none;
-//     -o-appearance: none;
-//     /* no standardized syntax available, no ie-friendly solution available */
-//   }
-  
-//   selectOption + i.fa {
-//     float: right;
-//     margin-top: -30px;
-//     margin-right: 5px;
-//     /* this is so when you click on the chevron, your click actually goes on the dropdown menu */
-//     pointer-events: none;
-//     /* everything after this is just to cover up the original arrow */
-//     /* (for browsers that don't support the syntax used above) */
-//     background-color: #fff;
-//     padding-right: 5px;
-//   }
+  .bg-hub-primary{
+      background-color:   #1c77ac;//      #fcf3f0;
+  }
 
-  
-// html, body { height: 100%; }
-// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+  .bg-hub-secondary{
+    background-color: #DCC7AA;
+}
+.bg-hub-success{
+    background-color: #c2dde6;
+}
+.bg-hub-danger{
+    background-color: #5cbdb9;
+}
+.bg-hub-warning{
+    background-color: #e4decd;
+}
+.bg-hub-info{
+    background-color: #a0d2eb;
+}
+.bg-hub-light{
+    background-color: #ffa8B6;
+}
+.bg-hub-subtle{
+    background-color: #cd5554;
+}

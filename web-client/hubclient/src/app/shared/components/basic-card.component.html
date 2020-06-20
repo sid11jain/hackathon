@@ -11,7 +11,7 @@
 <div [class.card-elements]="!deckView" [class.card-deck]="deckView" *ngFor="let providedIdea of datatypeToDisplay; let cardColor = index" >
       <!-- basic-card -->
       <!-- <button class="custom-card btn-block" data-toggle="modal" data-target="#expandedCard" (click)="onCardClick()"> -->
-      <div class="card {{cardBg[providedIdea.name.length % cardColor]}}">
+      <div class="card {{cardBg[providedIdea.name.length % cardBg.length]}}">
             <a href="#" class="custom-card btn btn-lg" role="button" aria-disabled="true" (click)="onCardClick(providedIdea)">
             <div class="card-header text-center">
                   <h10>{{ providedIdea.campaignName }}</h10>

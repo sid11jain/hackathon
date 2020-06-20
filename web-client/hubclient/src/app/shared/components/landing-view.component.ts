@@ -166,6 +166,7 @@ export class LandingViewComponent implements OnInit {
       ) {
         filter.values = filter.values.filter(Boolean);
       }
+      // Shall not remove date even if null as from and to name - both have same filtername and one could be not null
       if ((!filter.values || filter.values.length === 0) && !(filter.valueType === this.filterValueType.DATE)) {
         console.log('Removing filter', filter);
         removeFilters.add(filter.filterName);

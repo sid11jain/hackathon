@@ -36,13 +36,14 @@ export class BasicCardComponent implements OnInit {
   numberOfElements: number;
 
   cardBg = [
-    'bg-primary',
-    'bg-secondary',
-    'bg-success',
-    'bg-danger',
-    'bg-warning',
-    'bg-info',
-    'bg-light',
+    'bg-hub-primary',
+    'bg-hub-secondary',
+    'bg-hub-success',
+    'bg-hub-danger',
+    'bg-hub-warning',
+    'bg-hub-info',
+    'bg-hub-light',
+    'bg-hub-subtle'
   ];
 
   ngOnInit(): void {
