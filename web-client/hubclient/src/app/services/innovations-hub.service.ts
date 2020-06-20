@@ -180,10 +180,11 @@ export class InnovationsHubService {
     return providedIdeaCampaignValues;
   }
 
-  updateCollectionDocument(data: any, attributeName: string) {
-    return this.http.post(this.url + 'update-document-attribute', {
-      data: { data, attributeName }
-    });
+  updateCollectionDocument(data: any, attributeNames: string[]) {
+    return this.http
+      .post(this.url + 'update-document-attribute', {
+        data: {data, attributeNames },
+      }).subscribe();
   }
 
   createFilter() {

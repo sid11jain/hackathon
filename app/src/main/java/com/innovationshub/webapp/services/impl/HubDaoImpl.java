@@ -234,24 +234,20 @@ public class HubDaoImpl implements IHubDao {
     }
 
     @Override
-    public Object updateIdeaDocument(Object idea, String attribute) throws Exception{
+    public Object updateIdeaDocument(Object idea, List<String> attributes) throws Exception{
         MongoCollection<Document> collection = db.getCollection(IHConstants.IDEA_COLLECTION);
         BasicDBObject filterQuery = new BasicDBObject();
-        BasicDBObject updateValues = new BasicDBObject();
+        BasicDBObject setValues = new BasicDBObject();
         Map ideaAsMap = (!Map.class.isAssignableFrom(idea.getClass())?(new ObjectMapper()).readValue((String)idea, Map.class): (Map)idea);
-        filterQuery.put(IHConstants.NAME_FIELD, ideaAsMap.get(IHConstants.NAME_FIELD));   
-        if(IHConstants.LIKES_FIELD.equals(attribute)){          
-            updateValues.put("$set", new BasicDBObject(IHConstants.LIKES_FIELD, ideaAsMap.get(IHConstants.LIKES_FIELD))
-            .append(IHConstants.LIKES_COUNT_FIELD, ideaAsMap.get(IHConstants.LIKES_COUNT_FIELD)));
-        }else if (IHConstants.FAVOURITES_FIELD.equals(attribute)){
-            updateValues.put("$set", new BasicDBObject(IHConstants.FAVOURITES_FIELD, ideaAsMap.get(IHConstants.FAVOURITES_FIELD))
-            .append(IHConstants.FAVOURITES_COUNT_FIELD, ideaAsMap.get(IHConstants.FAVOURITES_COUNT_FIELD)));
-        }else if (IHConstants.COMMENTS_FIELD.equals(attribute)){
-            updateValues.put("$set", new BasicDBObject(IHConstants.COMMENTS_FIELD, ideaAsMap.get(IHConstants.COMMENTS_FIELD))
-            .append(IHConstants.COMMENTS_COUNT_FIELD, ideaAsMap.get(IHConstants.COMMENTS_COUNT_FIELD)));
-        }    
-        
-        collection.updateOne(filterQuery, updateValues);
+        filterQuery.put(IHConstants.NAME_FIELD, ideaAsMap.get(IHConstants.NAME_FIELD));
+
+        BasicDBObject updateValues = new BasicDBObject();
+
+        for(String attribute: attributes){
+            updateValues.put(attribute, ideaAsMap.get(attribute));
+        }
+        setValues.put("$set", updateValues);
+        collection.updateOne(filterQuery, setValues);
         return idea;
 
     }
