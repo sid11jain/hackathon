@@ -1,18 +1,4 @@
-<!-- <div class="modal-header ">
-    <h4 class="modal-title pull-left"></h4>
-    <a class="close pull-right" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
-        <i class="fas fa-times"></i>
-    </a>
-</div> -->
-<div class="modal-body ">
-    <!-- <form [formGroup]="campaignForm">
-        <div *ngIf="!campaign">
-            <innovation-hub-select-option formControlName="selectedCampaign" [fieldFormControlName]="'selectedCampaign'"
-                [optionList]="allCampaigns" [multipleOptions]="false" [config]="configForCampaignSearch">
-            </innovation-hub-select-option>
-        </div>
-
-    </form> -->
+<div class="modal-body ">    
     <form [formGroup]="ideaForm" [disabled]="!editMode">
         <div class="card mx-auto border-info mb-1">
             <!-- w-50  -->

@@ -53,21 +53,6 @@ export class LandingViewComponent implements OnInit {
   tagsOptionConfig = this.hubService.tagsOptionConfig;
   workflowSearchOptionConfig = this.hubService.workflowSearchOptionConfig;
 
-  // dummyChipInput = [
-  //   { id: '001', value: 'mango' },
-  //   { id: '002', value: 'apple' },
-  //   { id: '003', value: 'banana' },
-  //   { id: '004', value: 'pine' },
-  //   { id: '005', value: 'orange' },
-  //   { id: '006', value: 'chery' },
-  //   { id: '007', value: 'watermelon' },
-  //   { id: '008', value: 'grapes' },
-  //   { id: '009', value: 'lemon' },
-  // ];
-
-  // usersUrl = 'http://localhost:8080/get-collection';
-  // search: any;
-
   constructor(
     private modalService: BsModalService,
     private hubService: InnovationsHubService
@@ -94,11 +79,9 @@ export class LandingViewComponent implements OnInit {
             new FormGroup({
               filterName: new FormControl(filter.filterName),
               valueType: new FormControl(this.filterValueType.STRING),
-              // [filter.filterName]: new FormGroup({
               values: new FormArray(
                 filter.values.map(value => new FormControl())
               )
-              // }),
             })
         )
       )
@@ -109,38 +92,6 @@ export class LandingViewComponent implements OnInit {
     IDEA_SEARCH_FILTERS.forEach((filter: any) => {
       this.ideaFilterForm.addControl(filter.filterName, new FormControl());
     });
-
-    // this.filtersForm.controls.contributors;
-
-    // this.ideaFilterForm = new FormGroup({
-    //   filters: new FormArray(
-    //     IDEA_SEARCH_FILTERS.map(
-    //       (filter: any) =>
-    //         new FormGroup({
-    //           filterName: new FormControl(filter.filterName),
-    //           valueType: new FormControl(
-    //             filter.valueType
-    //               ? filter.valueType
-    //               : this.filterValueType.STRING
-    //           ),
-    //           searchType: new FormControl(
-    //             filter.searchType ? filter.searchType : ''
-    //           ),
-    //           // [filter.filterName]: new FormGroup({
-    //           values: new FormControl()
-    //           // }),
-    //         })
-    //     )
-    //   )
-    // });
-
-    // this.ideaFilterForm = new FormGroup({
-    //   name: new FormControl(),
-    //   tags: new FormControl(),
-    //   postedOnFrom: new FormControl(),
-    //   postedOnTo: new FormControl(),
-    //   contributors: new FormControl(),
-    // });
     console.log('filter form ', this.filtersForm);
   }
 
@@ -190,10 +141,8 @@ export class LandingViewComponent implements OnInit {
     } else {
       filterFormValue.filters[filterPosition].values[valuePosition] = null;
     }
-    // filterFormValue.filters[filterPosition][filter.filterName].values[valuePosition] = filter.values[valuePosition].value;
     this.filtersForm.patchValue(filterFormValue);
     console.log('patched filters', this.filtersForm.value);
-    // this.filtersForm.value.filters[0][formName].patchValues(value);
   }
 
   decorateFilterValues() {
@@ -251,32 +200,12 @@ export class LandingViewComponent implements OnInit {
     this.hubService.getCollection(Collection.USERS).subscribe((resp: any) => {
       const usersList = [];
       if (resp && resp.data) {
-        // resp.data.forEach((user: any) => {
-        // This will exclude current user from search list
-        // if (user.username !== this.hubService.currenUser) {
-        // usersList.push({
-        //   username: user.username,
-        //   fullName: user.fullName
-        // });
-        // usersList.push(user.fullName);
-        // this.allUsers.push(user);
-        // }
-        // });
         this.allUsers = resp.data;
       }
       console.log('All users', usersList);
       this.allUsers$ = of(usersList);
       console.log('observable users', this.allUsers$);
     });
-    // this.hubService.getCollection(Collection.USERS).subscribe((resp: any) => {
-    //   if (resp && resp.data) {
-    //     this.allUsers = resp.data;
-    //     this.allUsers = this.allUsers.filter(user => {
-    //       return user.username !== this.hubService.currenUser;
-    //     });
-    //     console.log('all users', this.allUsers);
-    //   }
-    // });
     this.hubService.getCollection(Collection.TAGS).subscribe((resp: any) => {
       if (resp && resp.data) {
         this.allTags = resp.data;
@@ -312,11 +241,4 @@ export class LandingViewComponent implements OnInit {
     console.log('converted idea', ideaFilters);
     return ideaFilters;
   }
-
-  // handleUsersResult(result: any){
-  //   this.search = result;
-  // }
 }
-
-// console.log('value', value);
-// return (value !== null && value !== undefined);

@@ -17,41 +17,15 @@
         </div>
         <div class="col-md-3 ">
           <label for="tags">Tags</label>
-          <!-- <hub-input-chips [fieldFormControlName]="'tags'" [additionAllowed]="true"></hub-input-chips> -->
           <innovation-hub-select-option [fieldFormControlName]="'tags'"
           [optionList]="allTags"
           [multipleOptions]="true" [config]="tagsOptionConfig"></innovation-hub-select-option>
-
-          <!-- <input type="text" class="form-control fa fa-search" aria-hidden="true" formControlName="tags" [value]="tags" (keyup.enter)="addTags($event)" (focusout)="addTags($event)" placeholder="&#61442;"> -->
-          <!-- <hub-input-chips [fieldFormControlName]="tags" [selectedChips]="[]" [inputChips]="[]" [additionAllowed]="true"></hub-input-chips> -->
-          
-          <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
         </div>
         <div class="col-md-3">
             <label for="contributors">Submitted By</label>
             <innovation-hub-select-option [fieldFormControlName]="'submittedBy'" [optionList]="allUsers" [config]="userOptionConfig"
             ></innovation-hub-select-option>
-        </div>
-        <!-- <div class="col-md-3">
-          <label for="contributors">Contributors</label>
-          <innovation-hub-select-option [fieldFormControlName]="'contributors'" [optionList]="allUsers" [config]="userOptionConfig"
-          ></innovation-hub-select-option>
-      </div> -->
-          <!-- <tag-input formControlName="contributors">
-               [identifyBy]="'username'" [displayBy]="'fullName'"
-            <tag-input-dropdown [focusFirstElement]="true" [autocompleteItems]='allUsers$' ></tag-input-dropdown>
-        </tag-input> -->
-
-        <!-- <input formControlName="contributors" [value]="search"
-        ngxTypeahead
-        [taUrl]="usersUrl"
-        [taParams]="'users'"
-        (taSelected)="handleUsersResult($event)"
-      > -->
-
-          <!-- <input type="text" formControlName="contributors" class="form-control"
-            typeahead="user for user in getUsers($viewValue) | filter:$viewValue | limitTo:8"
-            typeahead-on-select="onSelect($item)"> -->
+        </div>       
         <div class="col-md-3">
             <label for="contributors">Current Stage</label>
             <innovation-hub-select-option [fieldFormControlName]="'currentStage'"
@@ -75,15 +49,11 @@
           <mat-expansion-panel *ngFor="let filter of allFilters; let filterPosition = index"
             [expanded]="filter.expanded" (opened)="setStep(0)" hideToggle [disabled]="disableFilters"
             formArrayName="filters">
-            <mat-expansion-panel-header>
-              <!-- <mat-panel-title>
-              {{filter.filterName}}
-            </mat-panel-title> -->
+            <mat-expansion-panel-header>            
               {{filter.filterName}}
             </mat-expansion-panel-header>
 
             <form formGroupName="{{filterPosition}}" class="control-group">
-              <!-- <form formGroupName="{{filter.filterName}}"> -->
               <div formArrayName="values" *ngFor="let filterValue of filter.values; let valuePosition = index "
                 class="controls span2">
                 <label class="mat-checkbox">
@@ -92,9 +62,7 @@
                   {{filterValue.value}}
                 </label>
               </div>
-              <!-- </form> -->
             </form>
-            <!-- <mat-action-row></mat-action-row> -->
           </mat-expansion-panel>
         </mat-accordion>
       </form>
@@ -133,32 +101,9 @@
 </ng-template>
 
 <ng-template #filterTemplate let-filter="filter">
-  <!-- <ng-container *ngTemplateOutlet="filterTemplate; context: {filter: filter}"></ng-container> -->
-
   <div *ngFor="let filterValue of filter.values" class="controls span2">
     <label class="checkbox">
       <input type="checkbox" value="filterValue.value" id="filterValue.id"> {{filterValue.value}}
     </label>
   </div>
 </ng-template>
-<!-- 
-<li *ngFor="let item of itemList | filter:formName of input text" > 
-  {{item.name}}
-</li> -->
-
-<!-- <ng-template #inputChips let-chips="chips">
-  <div class="autocomplete">
-    <div class="chips-input-container">
-    <div class="user-chip" *ngFor="let chip of chips">
-      {{chip.value? chip.value : chip}}
-      <span (click)="deleteSelects(user)" class="delete-icon-chip">&#10006;</span>
-    </div>
-
-    <input name="suggestion" type="text" placeholder="User" (click)="suggest()" [(ngModel)]="userSelectsString">
-    </div>
-
-    <div class="autocomplete-items" *ngIf="show">
-      <div *ngFor="let s of suggestions" [ngClass]="isSelected(s) ? 'selected-suggestion' : ''" (click)="selectSuggestion(s)">{{ s.name }}</div>
-    </div>
-</div>
-</ng-template> -->
