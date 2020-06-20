@@ -2,7 +2,6 @@ package com.innovationshub.webapp.controllers;
 
 import static com.innovationshub.webapp.common.IHConstants.APPLICATION_JSON;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,9 +108,11 @@ public class LandingController {
     public ResponseEntity<Object> updateIdeaDocument(@RequestBody HubRequestWrapper data) throws Exception{
         Object updatedIdea= null;
         if(data!=null && Map.class.isAssignableFrom(data.getData().getClass())){
-            Map dataAsMap=(Map)data.getData();
-            List<String> attributeNames = (List<String>)dataAsMap.get("attributeNames");
-            updatedIdea = hubService.updateIdeaDocument(dataAsMap.get("data"), attributeNames);
+            Map objectAsMap = (Map)data;
+            Object idea = objectAsMap.get("data");
+            String attributeName = (String)objectAsMap.get("attributeName");
+                
+            updatedIdea = hubService.updateIdeaDocument(idea, attributeName);
         } 
         return new ResponseEntity<>(new HubResponseWrapper(updatedIdea), HttpStatus.OK);
     }

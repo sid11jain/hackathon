@@ -1,8 +1,8 @@
 <div class="grid-list-container">
-      <a (click)="switchView(false)" title="Grid View">
+      <a (click)="switchView(false)">
             <i class="fa fa-th" aria-hidden="true"></i>
       </a>
-      <a (click)="switchView(true)" title="List View">
+      <a (click)="switchView(true)">
             <i class="fa fa-list" aria-hidden="true"></i>
       </a>
   </div>
@@ -16,14 +16,14 @@
                   <h10>{{ providedIdea.campaignName }}</h10>
             </div>
             <div class="card-body">
-                  <h12 class="row card-title font-weight-bold">Idea Name: {{providedIdea.name}}
+                  <h12 class="row card-title font-weight-bold"> {{providedIdea.name}}
                   </h12>
                   <h14 *ngIf="providedIdea && providedIdea.postedOn" class="card-subtitle mb-2 font-weight-bold  ">
-                        Posted On:
+                        Posted On
                         <span class="font-weight-normal">{{ providedIdea.postedOn | date: 'dd-MM-yyyy'}}</span>
                         <!--  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
                   </h14>
-                  <p class="card-text text-left text-truncate">Description: {{providedIdea.description}}
+                  <p class="card-text text-left text-truncate">{{providedIdea.description}}
 
                   </p>
                   <!-- removed if clause on campaign fields -->
@@ -55,15 +55,14 @@
             </div>
             </a>
             <div class="basic-footer card-footer">
-                  <a title="Likes" (click)="updateIdea(providedIdea, 'likes')"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <span class="badge">{{providedIdea.likesCount}}</span></a>
-                  <a title="Comments" (click)="updateIdea(providedIdea, 'comments')"><i class="fa fa-comments" aria-hidden="true"></i>
-                        <span class="badge">{{providedIdea.commentsCount}}</span></a>
-                  <a title="Favourites" (click)="updateIdea(providedIdea, 'favourites')"><i class="fa fa-heart" aria-hidden="true"></i>
-                        <span class="badge">{{providedIdea.favouritesCount}}</span></a>
+                  <a title="Likes" (click)="updateIdea(providedIdea, 'likes')"><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
+                  <a title="Comments" (click)="updateIdea(providedIdea, 'comments')"><i class="fa fa-comments" aria-hidden="true"></i></a>
+                  <a title="Favourites" (click)="updateIdea(providedIdea, 'favourites')"><i class="fa fa-heart" aria-hidden="true"></i></a>
                   <a title="Edit" (click)="updateIdea(providedIdea, 'edit')"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-            </div>    
+            </div>
+      
       </div>
+<!-- </button> -->
 
 
 </div>

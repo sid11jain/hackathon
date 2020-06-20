@@ -117,7 +117,7 @@ public class HubServiceImpl implements IHubService {
     }
 
     @Override
-    public Object updateIdeaDocument(Object idea, List<String> attributes) throws Exception{
-        return iHubDao.updateIdeaDocument(idea, attributes);
+    public Object updateIdeaDocument(Object idea, String attribute) throws Exception{
+        return iHubDao.updateIdeaDocument(idea, attribute);
     }
 }

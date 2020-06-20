@@ -1,5 +1,3 @@
-import { IdValuePair } from './common/common-utility.model';
-
 export const CAMPAIGN_VALUES = 'campaignValues';
 export const DEFAULT_CURRENT_STAGE = 'initiated';
 
@@ -34,19 +32,6 @@ export const IDEA_SEARCH_FILTERS = [
 ];
 
 
-
-
-export const COLUMN_NAME_COMMENTS_COUNT = 'commentsCount';
-export const COLUMN_NAME_LIKES_COUNT = 'likesCount';
-export const COLUMN_NAME_FAVOURITES_COUNT = 'favouritesCount';
-
-
-export const COLUMN_NAME_COMMENTS = 'comments';
-export const COLUMN_NAME_LIKES = 'likes';
-export const COLUMN_NAME_FAVOURITES = 'favourites';
-export const COMMENT_COLUMN_ID = 'comment';
-export const USERNAME_COLUMN_ID = 'username';
-export const COMMENTED_ON_COLUMN_ID = 'commentedOn';
 
 export enum Collection {
     CAMPAIGN = 'campaign',
@@ -102,9 +87,8 @@ export class Idea {
     campaign: Campaign;
     // workflow audit data structure
     comments: any[];
-    commentsCount: number;
     likes: any[];
-    likesCount: number;
+    likeCount: number;
     favourites: any[];
     favouritesCount: number;
 }

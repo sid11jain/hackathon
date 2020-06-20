@@ -1,22 +1,3 @@
-<form [formGroup]="ideaCommentsForm">
-
-    <div class="modal-header"><h3>Comments</h3>
-        <button class="btn btn-default mr-2" type="button" (click)="closeCommentModal()">Close</button>
-    </div>
-    <div class="modal-body">
-        <div class="row" *ngFor= "let commentItem of idea.comments">
-            <div>
-            <span>{{commentItem.id.id}}</span>
-            <span>{{commentItem.id.value}}</span>
-            
-            </div>
-         </div>
-       <div class="modal-footer add-new-comment">
-       <label> Add new comment</label>
-       <textarea class="form-control" formControlName="commentToAdd"></textarea>
-       <button type="button" title="view" class="btn" (click)="saveComment()"> Save</button>
-       <button class="btn btn-default mr-2" type="button" (click)="closeCommentModal()">Close</button>
-        </div>
-    </div>
-
-</form>    
+<div>will show all commentd along with user
+and a text box to enter text and save via save button
+</div>
