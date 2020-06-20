@@ -85,6 +85,7 @@ public class IHConstants {
     public static final String FILTER_NAME = "filterName";
     public static final String VALUE_TYPE = "valueType";
     public static final String NESTED_ON = "nestedOn";
+    public static final String NESTED_FIELD = "nestedField";
     public static final String SEARCH_TYPE = "searchType";
     public static final String LIKE_SEARCH = "like";
     public static final String COMPARISON_OP = "comparisonOp";
