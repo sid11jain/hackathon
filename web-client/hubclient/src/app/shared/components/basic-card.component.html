@@ -27,7 +27,6 @@
                         <span class="font-weight-normal">{{ providedIdea.postedOn | date: 'dd-MM-yyyy'}}</span>
                         <!--  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
                   </h12><br>
-                  <h12>Description: </h12>
                   <h12>Current Stage: </h12><span>{{providedIdea.currentStage}}</span>
                   <!-- <h12>Description: </h12> -->
                   <p *ngIf="!deckView"><h12>Description: </h12>{{(providedIdea.description.length > 100) ?  (providedIdea.description | slice:0:100) + '...' : providedIdea.description}}</p>
