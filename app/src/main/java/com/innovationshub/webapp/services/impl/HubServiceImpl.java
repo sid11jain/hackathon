@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.bson.Document;
-import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -117,8 +116,8 @@ public class HubServiceImpl implements IHubService {
     }
 
     @Override
-    public Object updateIdeaDocument(Object idea, List<String> attributes) throws Exception{
-        return iHubDao.updateIdeaDocument(idea, attributes);
+    public Object updateIdeaDocument(Object datatypeToUpdate, List<String> attributes, String collectionName) throws Exception{
+        return iHubDao.updateIdeaDocument(datatypeToUpdate, attributes, collectionName);
     }
 
     @Override

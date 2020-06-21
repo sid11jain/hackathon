@@ -45,7 +45,7 @@ public interface IHubDao {
      */
     public long deleteAllIdeasForName(String ideaName);
 
-    Object updateIdeaDocument(Object idea, List<String> attribute) throws Exception;
+    Object updateIdeaDocument(Object datatypeToUpdate, List<String> attribute, String collectionName) throws Exception;
 
     /** This is an unchecked method which will insert the document irrespective of fact whether the document already exists in the collection or not.
      * Please use it carefully.

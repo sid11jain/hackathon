@@ -29,7 +29,7 @@ public interface IHubService {
 
     List exportAllIdeasForCampaign(String campaignName);
 
-    Object updateIdeaDocument(Object idea, List<String> attributes) throws Exception;
+    Object updateIdeaDocument(Object datatypeToUpdate, List<String> attributes, String collectionName) throws Exception;
 
     int addDocument(String collectionName, Object documents) throws Exception;
 }

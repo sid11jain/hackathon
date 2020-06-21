@@ -1,13 +1,10 @@
 package com.innovationshub.webapp.services.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.print.Doc;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
@@ -239,11 +236,11 @@ public class HubDaoImpl implements IHubDao {
     }
 
     @Override
-    public Object updateIdeaDocument(Object idea, List<String> attributes) throws Exception{
-        MongoCollection<Document> collection = db.getCollection(IHConstants.IDEA_COLLECTION);
+    public Object updateIdeaDocument(Object datatypeToUpdate, List<String> attributes, String collectionName) throws Exception{
+        MongoCollection<Document> collection = db.getCollection(collectionName);
         BasicDBObject filterQuery = new BasicDBObject();
         BasicDBObject setValues = new BasicDBObject();
-        Map ideaAsMap = (!Map.class.isAssignableFrom(idea.getClass())?(new ObjectMapper()).readValue((String)idea, Map.class): (Map)idea);
+        Map ideaAsMap = (!Map.class.isAssignableFrom(datatypeToUpdate.getClass())?(new ObjectMapper()).readValue((String) datatypeToUpdate, Map.class): (Map) datatypeToUpdate);
         filterQuery.put(IHConstants.NAME_FIELD, ideaAsMap.get(IHConstants.NAME_FIELD));
 
         BasicDBObject updateValues = new BasicDBObject();
@@ -253,7 +250,7 @@ public class HubDaoImpl implements IHubDao {
         }
         setValues.put("$set", updateValues);
         collection.updateOne(filterQuery, setValues);
-        return idea;
+        return datatypeToUpdate;
 
     }
 
