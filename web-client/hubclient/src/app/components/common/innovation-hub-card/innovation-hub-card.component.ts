@@ -34,7 +34,7 @@ import { Route } from '@angular/compiler/src/core';
   templateUrl: './innovation-hub-card.component.html',
   styleUrls: ['./innovation-hub-card.component.scss'],
 })
-export class InnovationHubCardComponent implements OnInit{
+export class InnovationHubCardComponent implements OnInit {
   constructor(
     protected modalRef: BsModalRef,
     protected modalService: BsModalService,
@@ -51,10 +51,10 @@ export class InnovationHubCardComponent implements OnInit{
   @Input()
   editMode = true;
 
-   @Input()
-   newIdea = false;
+  @Input()
+  newIdea = false;
 
-//  @Input() fromEditIconClick = false;
+  //  @Input() fromEditIconClick = false;
 
   inputType: any = Types;
   ideaForm: FormGroup;
@@ -62,7 +62,8 @@ export class InnovationHubCardComponent implements OnInit{
   allCampaigns: Campaign[];
   allTags: any[];
   allUsers: any[];
-  allowedWorkflows: any[];
+  allowedWorkflows: any[] = [];
+  allWorkflows: any[];
 
   campaignFields: CampaignField[] = [];
   providedIdeaCampaignValues: any = {};
@@ -75,7 +76,7 @@ export class InnovationHubCardComponent implements OnInit{
 
   loadIdea = new BehaviorSubject<Boolean>(false);
 
-   // modalSubscription: Subscription = new Subscription();
+  // modalSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
     console.log('New idea', this.newIdea);
@@ -106,12 +107,12 @@ export class InnovationHubCardComponent implements OnInit{
       tags: new FormControl(
         this.providedIdea ? this.providedIdea.tags : undefined
       ),
-      currentStage: new FormControl(
-        {value: this.providedIdea
+      currentStage: new FormControl({
+        value: this.providedIdea
           ? this.providedIdea.currentStage
           : DEFAULT_CURRENT_STAGE,
-        disabled: !this.currentStageEditable()}
-      ),
+        disabled: !this.currentStageEditable(),
+      }),
       submittedBy: new FormControl(
         this.providedIdea
           ? this.providedIdea.submittedBy
@@ -124,12 +125,13 @@ export class InnovationHubCardComponent implements OnInit{
         this.campaignFields.map(
           (field) =>
             new FormGroup({
-              [field.name]: new FormControl(
-                { value: field.type === 'text' && this.providedIdeaCampaignValues
-                  ? this.providedIdeaCampaignValues[field.name]
-                  : undefined,
-                  disabled: !this.newIdea}
-              ),
+              [field.name]: new FormControl({
+                value:
+                  field.type === 'text' && this.providedIdeaCampaignValues
+                    ? this.providedIdeaCampaignValues[field.name]
+                    : undefined,
+                disabled: !this.newIdea,
+              }),
             })
         )
       ),
@@ -137,17 +139,9 @@ export class InnovationHubCardComponent implements OnInit{
     if (!this.editMode) {
       this.ideaForm.disable();
     }
-    console.log('forms ', this.ideaForm.controls.tags);
-    // this.modalSubscription = this.modalService.onHide.subscribe(x => {
-    //   console.log('modal closing', x);
-    //   // window.location.reload(true);
-    // }
-    //   );
+    console.log('forms ', this.ideaForm.value);
   }
 
-  // ngOnDestroy(){
-  //   this.modalSubscription.unsubscribe();
-  // }
   getIdea() {
     if (this.ideaForm.value.name) {
       this.hubService.getIdea(this.ideaForm.value);
@@ -214,39 +208,71 @@ export class InnovationHubCardComponent implements OnInit{
   }
 
   setInitialData() {
-    this.hubService.getCollection(Collection.USERS).subscribe((resp: any) => {
-      if (resp && resp.data) {
-        this.allUsers = resp.data;
-        this.allUsers = this.allUsers.filter((user) => {
-          return user.username !== this.hubService.currentUser;
-        });
-        console.log('all users', this.allUsers);
-      }
+    this.allTags = this.hubService.allTags;
+    this.allUsers = this.hubService.allUsers.filter((user) => {
+      return user.username !== this.hubService.currentUser;
     });
-    this.hubService.getCollection(Collection.TAGS).subscribe((resp: any) => {
-      if (resp && resp.data) {
-        this.allTags = resp.data;
-        console.log('all tags', this.allTags);
-      }
-    });
-    this.setCampaign();
-    if (this.providedIdea && this.providedIdea.currentStage) {
-      this.hubService
-        .getCollection(Collection.WORKFLOW)
-        .subscribe((resp: any) => {
-          if (resp && resp.data) {
-            const allWorkFlows: any[] = resp.data;
-            console.log('all workflows', allWorkFlows);
-            if (this.providedIdea.currentStage.nextStage && this.providedIdea.currentStage.nextStage.length > 0){
-            this.allowedWorkflows = allWorkFlows.filter((workflow) => {
-              this.providedIdea.currentStage.nextStage.includes(
-                workflow.currentStage
-              );
-            });
-          }
-          }
-        });
+
+    if (this.providedIdea.currentStage) {
+      const selectedCurrentStage: any = this.hubService.resolveWorkflow(this.providedIdea.currentStage);
+      this.allowedWorkflows.push(selectedCurrentStage);
+      this.hubService.allWorkflows.filter((workflow) => {
+           if (selectedCurrentStage.nextStage.includes(
+          workflow.currentStage
+        )){
+          this.allowedWorkflows.push(workflow);
+        }
+      });
+      // this.allowedWorkflows = Object.assign({}, ...this.allowedWorkflows, selectedCurrentStage);
+      // this.allowedWorkflows.push(selectedCurrentStage[0]);
+    } else{
+      // Defaulting to initiated state for ideas not having any stage.
+      this.allowedWorkflows = [this.hubService.resolveWorkflow(DEFAULT_CURRENT_STAGE)];
     }
+
+    this.setCampaign();
+
+
+    // this.hubService.getCollection(Collection.USERS).subscribe((resp: any) => {
+    //   if (resp && resp.data) {
+    //     this.allUsers = resp.data;
+    //     this.allUsers = this.allUsers.filter((user) => {
+    //       return user.username !== this.hubService.currentUser;
+    //     });
+    //     console.log('all users', this.allUsers);
+    //   }
+    // });
+    // this.hubService.getCollection(Collection.TAGS).subscribe((resp: any) => {
+    //   if (resp && resp.data) {
+    //     this.allTags = resp.data;
+    //     console.log('all tags', this.allTags);
+    //   }
+    // });
+    // if (this.providedIdea && this.providedIdea.currentStage) {
+    // this.hubService
+    //   .getCollection(Collection.WORKFLOW)
+    //   .subscribe((resp: any) => {
+    //     if (resp && resp.data) {
+    //       this.allWorkflows = resp.data;
+    //       if (this.providedIdea.currentStage
+    //         //  &&
+    //         // this.providedIdea.currentStage.nextStage &&
+    //         // this.providedIdea.currentStage.nextStage.length > 0
+    //       ) {
+    //         const selectedCurrentStage: any[] = this.hubService.resolveWorkflow(this.providedIdea.currentStage);
+    //         this.allowedWorkflows = this.allWorkflows.filter((workflow) => {
+    //              return selectedCurrentStage[0].nextStage.includes(
+    //             workflow.currentStage
+    //           );
+    //         });
+    //         this.allowedWorkflows.push(selectedCurrentStage);
+    //       } else{
+    //         // Defaulting to initiated state for ideas not having any stage.
+    //         this.allowedWorkflows = this.hubService.resolveWorkflow(DEFAULT_CURRENT_STAGE);
+    //       }
+    //     }
+    //   });
+    // }
   }
 
   updateEntity() {
@@ -260,7 +286,7 @@ export class InnovationHubCardComponent implements OnInit{
           if (
             this.allTags.filter((existingTag) => existingTag.name === tag)
               .length === 0
-          ){
+          ) {
             addedTags.push(new Tags(tag));
             return true;
           }
@@ -274,31 +300,39 @@ export class InnovationHubCardComponent implements OnInit{
       }
 
       this.hubService
-        .updateCollectionDocument(this.ideaForm.value, [
-          COLUMN_NAME_IDEA_TAG,
-          COLUMN_NAME_IDEA_DESCRIPTION,
-          COLUMN_NAME_IDEA_CONTRIBUTORS,
-          COLUMN_NAME_CURRENT_STAGE,
-        ], Collection.IDEA)
+        .updateCollectionDocument(
+          this.ideaForm.value,
+          [
+            COLUMN_NAME_IDEA_TAG,
+            COLUMN_NAME_IDEA_DESCRIPTION,
+            COLUMN_NAME_IDEA_CONTRIBUTORS,
+            COLUMN_NAME_CURRENT_STAGE,
+          ],
+          Collection.IDEA
+        )
         .subscribe((x) => {
           this.hideModal();
         });
     }
   }
 
-currentStageEditable(){
-return !this.newIdea && this.hubService.currentUserRoles === Roles.ADMIN;
-}
-
-  onModalHide() {
-    // check if not from close button , then navigate to landing - for a refreshed screen.
-    // this.router.navigate(['']);
-    // this.hubService.getCollection(Collection.IDEA).subscribe(x => x);
-  // /  console.log('Hiding modal');
-//    window.location.reload(true) ;
+  currentStageEditable() {
+    // Enabling form only when creating idea or if user is admin.
+    // The enabling at idea creation id handled by disabling it at UI.
+    return this.newIdea || this.hubService.currentUserRoles === Roles.ADMIN;
   }
 
-  hideModal(){
+  // resolveWorkflow(currentStage: any) {
+  //   if (this.allWorkflows && this.allWorkflows.length > 0) {
+  //     return this.allWorkflows.filter(
+  //       (workflow) => workflow.currentStage === currentStage
+  //     );
+  //   }
+  // }
+
+  onModalHide() {}
+
+  hideModal() {
     this.modalRef.hide();
     // Modal onHide subscription is not working properly. Going with this basic approach for now.
     window.location.reload(true);

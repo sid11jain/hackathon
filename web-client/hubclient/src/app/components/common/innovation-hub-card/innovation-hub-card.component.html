@@ -61,7 +61,7 @@
                 <h8 *ngIf="!newIdea" class="card-subtitle mb-2 ">Current Stage
                     <innovation-hub-select-option [fieldFormControlName]="'currentStage'"
                     [optionList]="allowedWorkflows"
-                    [selectedOptions]="providedIdea? providedIdea.currentStage : []"
+                    [selectedOptions]="providedIdea && providedIdea.currentStage ? providedIdea.currentStage : ''"
                     [multipleOptions]="false"
                     [config]="workflowOptionConfig"></innovation-hub-select-option>
                 </h8>

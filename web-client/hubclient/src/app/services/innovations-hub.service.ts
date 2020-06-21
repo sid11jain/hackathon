@@ -22,6 +22,10 @@ import { of } from 'rxjs';
   providedIn: 'root',
 })
 export class InnovationsHubService {
+_allTags: any[];
+_allUsers: any[];
+_allWorkflows: any[];
+
   public userOptionConfig: SelectOptionConfig = {
     multipleOptions: true,
     searchable: true,
@@ -73,7 +77,28 @@ export class InnovationsHubService {
   private url = 'http://localhost:8080/';
   getExportUrl = this.url + 'export-campaign-ideas';
 
-  constructor(private http: HttpClient, private ees: ExportExcelService) {}
+  constructor(private http: HttpClient, private ees: ExportExcelService) {
+    this.getCollection(Collection.TAGS).subscribe((resp: any) => {
+      if (resp && resp.data) {
+        this._allTags = resp.data;
+        // console.log('all tags', this.allTags);
+      }
+    });
+
+    this.getCollection(Collection.WORKFLOW)
+      .subscribe((resp: any) => {
+        if (resp && resp.data) {
+          this._allWorkflows = resp.data;
+        }
+      });
+
+    this.getCollection(Collection.USERS).subscribe((resp: any) => {
+        if (resp && resp.data) {
+          this._allUsers = resp.data;
+         // console.log('all users', this.allUsers);
+        }
+      });
+  }
 
   get currentUser() {
     return sessionStorage.getItem(Users.USERNAME);
@@ -83,11 +108,27 @@ export class InnovationsHubService {
     return sessionStorage.getItem(Users.ROLES);
   }
 
+  get isCurrentUserAdmin(){
+    return sessionStorage.getItem(Users.ROLES) === Roles.ADMIN;
+  }
+
+  get allTags(){
+    return this._allTags;
+  }
+
+  get allUsers(){
+    return this._allUsers;
+  }
+
+  get allWorkflows(){
+    return this._allWorkflows;
+  }
+
   submitIdea(data: any) {
     const submitUrl = this.url + 'submit-idea';
     console.log('submitted data', data);
-    // return of(null);
-    return this.http.post(submitUrl, { data: JSON.stringify(data) });
+    return of(null);
+    // return this.http.post(submitUrl, { data: JSON.stringify(data) });
   }
 
   getCampaign(campaginCriteria: any) {
@@ -219,6 +260,14 @@ export class InnovationsHubService {
     return this.http.post(addDocumentUrl, {
       data: { collection: collectionName, documents },
     });
+  }
+
+  resolveWorkflow(currentStage: any) {
+    if (currentStage && this._allWorkflows && this._allWorkflows.length > 0) {
+      return this._allWorkflows.filter(
+        (workflow) => workflow.currentStage === currentStage
+      )[0];
+    }
   }
 
   createFilter() {

@@ -40,20 +40,8 @@
       <div class="row" style="padding-left:16px;">
           
         <div class="col-md-6">
-        <!-- <mat-form-field> -->
-          <!-- <md-input-container>
-            <label>Posted On From</label>
-            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
-            <input class="form-control" matInput [matDatepicker]="datePicker" formControlName="posteOnFrom"> -->
-            <!-- <button mdSuffix [mdDatepickerToggle]="datepicker"></button> -->
-           
-            <!-- <mat-datepicker #datePicker></mat-datepicker> -->
-          <!-- </mat-form-field> -->
-        <!-- </md-input-container> -->
-        <!-- <label>Posted On From</label> -->
-      <!--  <div class="input-group-append"></div>-->
+      
             <i class="fa fa-calendar" aria-hidden="true" (click)="fromDate.toggle()" type="button" style="padding:7px;"></i>
-      <!--    </div>-->
         <input class="form-control" placeholder="Posted On From"
              name="dp" formControlName="postedOnFrom" ngbDatepicker #fromDate="ngbDatepicker">
                          
@@ -63,14 +51,8 @@
           <i class="fa fa-calendar" aria-hidden="true" (click)="toDate.toggle()" type="button" style="padding:7px;"></i>
             <input class="form-control" placeholder="Posted On To"
             name="dp" formControlName="postedOnTo" ngbDatepicker #toDate="ngbDatepicker">
-      <!--      <div class="input-group-append">-->
-        <!--   <i class="fa fa-calendar" aria-hidden="true" (click)="toDate.toggle()" type="button"></i>
-         -->           <!-- <button class="btn btn-outline-secondary calendar" (click)="toDate.toggle()" type="button"></button> -->
-         <!--    </div>     -->       
-       </div>
           
-          <!-- <ngb-datepicker formControlName="posteOnFrom" ></ngb-datepicker>
-          <ngb-datepicker formControlName="posteOnTo" ></ngb-datepicker> -->
+       </div>              
         </div>
     </div>
     <div style="padding-bottom: 5px; padding-left: 15px;">
@@ -89,7 +71,7 @@
 
       <button type="button" title="Add" class="btn btn-info btn-lg" (click)="openCampaignComponent(operation.ADD)" style="margin-left: 10px; margin-right:5px">
           Add</button>
-      <button type="button" title="Export" class="btn btn-info btn-lg"
+      <button *ngIf="hubService.isCurrentUserAdmin" type="button" title="Export" class="btn btn-info btn-lg"
           (click)="openCampaignComponent(operation.EXPORT)" style="margin-left: 5px; margin-right:5px"> Export</button>
       <button type="button" title="searchIdeas" class="btn btn-info btn-lg" (click)="searchIdeas()" style="margin-left: 5px;">Search</button>
 
