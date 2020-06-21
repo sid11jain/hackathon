@@ -6,9 +6,9 @@
             <div class="card-body text-info">
                 <p class="card-text text-info"> Idea Name
                     <input type="text" class="form-control" [value]="providedIdea? providedIdea.name : ''"
-                        formControlName="name" disabled="fromEditIconClick"/>
-                        <!-- <input type="text" class="form-control" [value]="providedIdea? providedIdea.name : ''"
-                        formControlName="name" *ngIf="!fromEditIconClick"/> -->
+                        formControlName="name" *ngIf="fromEditIconClick" disabled>
+                        <input type="text" class="form-control" [value]="providedIdea? providedIdea.name : ''"
+                        formControlName="name" *ngIf="!fromEditIconClick"/>
                 </p>
                 <p *ngIf="providedIdea && providedIdea.postedOn" class="card-subtitle mb-2 ">Posted On: 
                     <span>{{ providedIdea.postedOn | date: 'dd-MM-yyyy' }}</span>
