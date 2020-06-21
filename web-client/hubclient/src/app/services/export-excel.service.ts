@@ -82,7 +82,7 @@ export class ExportExcelService {
         worksheet.addRow([]);
 
         // Adding footer row
-        const footerRow = worksheet.addRow(['Idea data exported from Innovations Hub at ' + date]);
+        const footerRow = worksheet.addRow(['Idea data exported from Innovation Hub on ' + date]);
         footerRow.getCell(1).fill = {
             type: 'pattern',
             pattern: 'solid',
