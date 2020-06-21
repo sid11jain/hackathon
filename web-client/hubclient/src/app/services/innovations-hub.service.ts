@@ -4,32 +4,45 @@ import { ExportExcelService } from './export-excel.service';
 import {
   CAMPAIGN_VALUES,
   CampaignField,
-  Idea
+  Idea,
 } from '../models/innovation-hub.model';
 import { plainToClass } from 'class-transformer';
-import { IdValuePair, SelectOptionConfig, Collection } from '../models/common/common-utility.model';
+import {
+  IdValuePair,
+  SelectOptionConfig,
+  Collection,
+} from '../models/common/common-utility.model';
 import { map } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class InnovationsHubService {
-
- public userOptionConfig: SelectOptionConfig = {
+  public userOptionConfig: SelectOptionConfig = {
     multipleOptions: true,
     searchable: true,
     clearable: true,
     bindLabel: 'fullName',
-    bindValue: 'username'
+    bindValue: 'username',
   };
 
- public tagsOptionConfig: SelectOptionConfig = {
+  public tagsOptionConfig: SelectOptionConfig = {
     multipleOptions: true,
     searchable: true,
     clearable: true,
     bindLabel: 'name',
-    bindValue: 'name'
+    bindValue: 'name',
+    addTags: true,
+  };
+
+  public tagsSearchOptionConfig: SelectOptionConfig = {
+    multipleOptions: true,
+    searchable: true,
+    clearable: true,
+    bindLabel: 'name',
+    bindValue: 'name',
+    addTags: false,
   };
 
   public workflowOptionConfig: SelectOptionConfig = {
@@ -37,7 +50,7 @@ export class InnovationsHubService {
     searchable: true,
     clearable: true,
     bindLabel: 'description',
-    bindValue: 'currentStage'
+    bindValue: 'currentStage',
   };
 
   public workflowSearchOptionConfig: SelectOptionConfig = {
@@ -45,11 +58,11 @@ export class InnovationsHubService {
     searchable: true,
     clearable: true,
     bindLabel: 'description',
-    bindValue: 'currentStage'
+    bindValue: 'currentStage',
   };
 
   headers = new HttpHeaders({
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   });
 
   fieldToExcludeForExcelExport = [Collection.CAMPAIGN, '_id'];
@@ -59,7 +72,7 @@ export class InnovationsHubService {
 
   constructor(private http: HttpClient, private ees: ExportExcelService) {}
 
-  get currentUser(){
+  get currentUser() {
     return sessionStorage.getItem('username');
   }
 
@@ -110,7 +123,7 @@ export class InnovationsHubService {
         const reportData = {
           title: 'List of ideas for campaign',
           data: dataForExcel,
-          headers: Object.keys(header)
+          headers: Object.keys(header),
         };
         this.ees.exportExcel(reportData);
       });
@@ -123,7 +136,7 @@ export class InnovationsHubService {
       idea = Object.assign({}, idea, ...campaignValues);
       delete idea[CAMPAIGN_VALUES];
       // Removing the campaign object and id also.
-      this.fieldToExcludeForExcelExport.forEach(field => delete idea[field]);
+      this.fieldToExcludeForExcelExport.forEach((field) => delete idea[field]);
       Object.entries(idea).forEach(([field, fieldValue]: [any, any]) => {
         if (fieldValue && fieldValue.id && fieldValue.value) {
           idea[field] = fieldValue.value;
@@ -131,7 +144,7 @@ export class InnovationsHubService {
           // For now only iterating one level, later this can be recursive with concating the values.
           console.log('Array field', field, ': value : ', fieldValue);
           const fieldValueOnly = [];
-          fieldValue.forEach(attribute => {
+          fieldValue.forEach((attribute) => {
             console.log('Array value', attribute);
             if (attribute && attribute.id && attribute.value) {
               fieldValueOnly.push(attribute.value);
@@ -167,8 +180,8 @@ export class InnovationsHubService {
     // console.log('mapCampInput', providedIdea, campaignFields);
     if (providedIdea) {
       const keyValue = [];
-      providedIdea.campaignValues.map(ideaCampaignValue => {
-        campaignFields.map(field => {
+      providedIdea.campaignValues.map((ideaCampaignValue) => {
+        campaignFields.map((field) => {
           if (ideaCampaignValue[field.name]) {
             keyValue.push({ [field.name]: ideaCampaignValue[field.name] });
           }
@@ -180,11 +193,25 @@ export class InnovationsHubService {
     return providedIdeaCampaignValues;
   }
 
+  // This shall also take collection name
   updateCollectionDocument(data: any, attributeNames: string[]) {
-    return this.http
-      .post(this.url + 'update-document-attribute', {
-        data: {data, attributeNames },
-      });
+    console.log(' idea to update', data);
+    // Subscribing it here .. so that caller need not bother about same
+
+   // return of(null);
+    return this.http.post(this.url + 'update-document-attribute', {
+      data: { data, attributeNames },
+    });
+  }
+
+  addDocuments(collectionName: string, documents: any) {
+    const addDocumentUrl = this.url + 'add-document';
+    console.log('Added collection', collectionName);
+    console.log('Added documents : ', documents);
+    // return of(null);
+    return this.http.post(addDocumentUrl, {
+      data: { collection: collectionName, documents },
+    });
   }
 
   createFilter() {
@@ -192,28 +219,28 @@ export class InnovationsHubService {
       {
         filterName: 'name',
         valueType: 'string',
-        values: ['Idea']
+        values: ['Idea'],
       },
       {
         filterName: 'Technology',
         valueType: 'string',
-        values: ['Java', 'Python', 'Angular']
+        values: ['Java', 'Python', 'Angular'],
       },
       {
         filterName: 'Department',
         valueType: 'string',
-        values: ['IT']
+        values: ['IT'],
       },
       {
         filterName: 'Business Case',
         valueType: 'string',
-        values: ['Platform for innovations']
+        values: ['Platform for innovations'],
       },
       {
         filterName: 'Theme',
         valueType: 'string',
-        values: ['Dark']
-      }
+        values: ['Dark'],
+      },
     ];
     return filters;
   }
@@ -226,33 +253,33 @@ export class InnovationsHubService {
         values: [
           {
             id: 'Java',
-            value: 'Java'
+            value: 'Java',
           },
           {
             id: 'Python',
-            value: 'Python'
+            value: 'Python',
           },
           {
             id: 'Angular',
-            value: 'Angular'
+            value: 'Angular',
           },
           {
             id: 'Mongo-DB',
-            value: 'Mongo-DB'
+            value: 'Mongo-DB',
           },
           {
             id: 'AWS',
-            value: 'AWS'
+            value: 'AWS',
           },
           {
             id: 'Docker',
-            value: 'Docker'
+            value: 'Docker',
           },
           {
             id: 'Spring',
-            value: 'Spring'
-          }
-        ]
+            value: 'Spring',
+          },
+        ],
       },
       {
         filterName: 'Department',
@@ -260,21 +287,21 @@ export class InnovationsHubService {
         values: [
           {
             id: 'Finance',
-            value: 'Finance'
+            value: 'Finance',
           },
           {
             id: 'HR',
-            value: 'HR'
+            value: 'HR',
           },
           {
             id: 'Admin',
-            value: 'Admin'
+            value: 'Admin',
           },
           {
             id: 'IT',
-            value: 'IT'
-          }
-        ]
+            value: 'IT',
+          },
+        ],
       },
       {
         filterName: 'Workouts',
@@ -282,25 +309,25 @@ export class InnovationsHubService {
         values: [
           {
             id: 'Home Workouts',
-            value: 'Home Workouts'
+            value: 'Home Workouts',
           },
           {
             id: 'Outdoor Activity',
-            value: 'Outdoor Activity'
+            value: 'Outdoor Activity',
           },
           {
             id: 'Gym Workouts',
-            value: 'Gym Workouts'
+            value: 'Gym Workouts',
           },
           {
             id: 'Aerobics',
-            value: 'Aerobics'
+            value: 'Aerobics',
           },
           {
             id: 'Yoga',
-            value: 'Yoga'
-          }
-        ]
+            value: 'Yoga',
+          },
+        ],
       },
       {
         filterName: 'Theme',
@@ -308,18 +335,18 @@ export class InnovationsHubService {
         values: [
           {
             id: 'Dark',
-            value: 'Dark'
+            value: 'Dark',
           },
           {
             id: 'Light',
-            value: 'Light'
+            value: 'Light',
           },
           {
             id: 'Bright',
-            value: 'Bright'
-          }
-        ]
-      }
+            value: 'Bright',
+          },
+        ],
+      },
     ];
 
     return filters;

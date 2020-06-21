@@ -1,4 +1,4 @@
-<div class="modal-body ">    
+<div class="modal-body " (onHide)="onModalHide()">    
     <form [formGroup]="ideaForm" [disabled]="!editMode">
         <div class="card mx-auto border-info mb-1">
             <!-- w-50  -->
@@ -6,12 +6,12 @@
             <div class="card-body text-info">
                 <p class="card-text text-info"> Idea Name
                     <input type="text" class="form-control" [value]="providedIdea? providedIdea.name : ''"
-                        formControlName="name" *ngIf="fromEditIconClick" disabled/>
-                        <input type="text" class="form-control" [value]="providedIdea? providedIdea.name : ''"
-                        formControlName="name" *ngIf="!fromEditIconClick"/>
+                        formControlName="name" disabled="fromEditIconClick"/>
+                        <!-- <input type="text" class="form-control" [value]="providedIdea? providedIdea.name : ''"
+                        formControlName="name" *ngIf="!fromEditIconClick"/> -->
                 </p>
                 <p *ngIf="providedIdea && providedIdea.postedOn" class="card-subtitle mb-2 ">Posted On: 
-                    <span>{{ providedIdea.postedOn}}</span>
+                    <span>{{ providedIdea.postedOn | date: 'dd-MM-yyyy' }}</span>
                     <!--  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
                 </p>
                 <p class="card-text text-left"> Description

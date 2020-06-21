@@ -4,6 +4,7 @@ export class SelectOptionConfig {
   clearable: boolean;
   bindValue?: any;
   bindLabel?: any;
+  addTags?: boolean;
 }
 
 

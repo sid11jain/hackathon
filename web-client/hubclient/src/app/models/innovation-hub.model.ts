@@ -31,6 +31,7 @@ export const IDEA_SEARCH_FILTERS = [
 export const COLUMN_NAME_IDEA_TAG = 'tag';
 export const COLUMN_NAME_IDEA_DESCRIPTION = 'description';
 export const COLUMN_NAME_IDEA_CONTRIBUTORS = 'contributors';
+export const COLUMN_NAME_CURRENT_STAGE = 'currentStage';
 export const COLUMN_NAME_BUSINESS_CASE = 'businessCase';
 export const COLUMN_NAME_COMMENTS_COUNT = 'commentsCount';
 export const COLUMN_NAME_LIKES_COUNT = 'likesCount';
@@ -95,6 +96,16 @@ export class Filter {
   values: any[];
   expanded ? = false; // Used for expansion panel. Being excluded before sending final filters to server.
   nestedOn = true;
+  nestedField ? = '';
   searchType: SearchType = SearchType.EQUALS;
   comparisonOp: ComparisonOperators = ComparisonOperators.OP_EQ;
+}
+
+export class Tags{
+  name: string;
+  createdOn: any;
+
+  constructor(name: any){
+    this.name = name;
+  }
 }

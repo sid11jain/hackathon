@@ -39,6 +39,8 @@ public class LandingController {
     private static final String EXPORT_CAMPAIGN_IDEAS = "/export-campaign-ideas";
     private static final String SEARCH_IDEAS = "/search-ideas";
     private static final String UPDATE_DOCUMENT_ATTRIBUTE="/update-document-attribute";
+    private static final String ADD_DOCUMENT="/add-document";
+
 
     @Autowired
     private IHubService hubService;
@@ -114,5 +116,21 @@ public class LandingController {
             updatedIdea = hubService.updateIdeaDocument(dataAsMap.get("data"), attributeNames);
         } 
         return new ResponseEntity<>(new HubResponseWrapper(updatedIdea), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = ADD_DOCUMENT, produces = APPLICATION_JSON, method =  RequestMethod.POST)
+    public ResponseEntity<Object> addDocument(@RequestBody HubRequestWrapper data) throws Exception {
+        int addedDocument = 0;
+        if (data != null && Map.class.isAssignableFrom(data.getData().getClass())) {
+            Map dataAsMap = (Map) data.getData();
+            String collectionToInsertData = (String) dataAsMap.get(IHConstants.COLLECTION);
+            Object documentsToInsert = dataAsMap.get(IHConstants.DOCUMENTS);
+
+            addedDocument = hubService.addDocument(collectionToInsertData, documentsToInsert);
+        }
+        return new ResponseEntity<>(addedDocument > 0?
+                new HubResponseWrapper(addedDocument) :
+                new HubResponseWrapper(addedDocument, new HubError(IHConstants.ERROR_CREATING_ENTITY, IHConstants.ERROR_CREATING_ENTITY_MESSAGE, null)),
+                HttpStatus.OK);
     }
 }

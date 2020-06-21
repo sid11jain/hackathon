@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class IHConstants {
 
+    public static final String COLLECTION = "collection";
+    public static final String DOCUMENTS = "documents";
+
     /**
      * Collection name for Campaign.
      */
@@ -46,6 +49,11 @@ public class IHConstants {
     public static final String CAMPAIGN_FIELD = "campaign";
     public static final String DESCRIPTION_FIELD = "description";
     public static final String VALUE_FIELD = "value";
+
+    /** A common property to use when creating any entity document. This is to cater the issue with Mongo date search - as we have provide explicit date object - different from received json.
+     *
+     */
+    public static final String FIELD_CREATED_ON = "createdOn";
 
     public static final String IDEA_FIELD_POSTED = "postedOn";
     public static final String USERS_FIELD_USERNAME = "username";
@@ -105,6 +113,10 @@ public class IHConstants {
     public static final String COMMENTS_COUNT_FIELD="commentsCount";
 
     public static final int ENTITY_ALREADY_EXIST = 101;
+    public static final int ERROR_CREATING_ENTITY = 102;
+
 
     public static final String ENTITY_ALREADY_EXIST_MESSAGE = "is already present. Please choose another";
+    public static final String ERROR_CREATING_ENTITY_MESSAGE = " cannot be added";
+
 }

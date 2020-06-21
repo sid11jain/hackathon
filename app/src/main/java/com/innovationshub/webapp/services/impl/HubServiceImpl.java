@@ -120,4 +120,10 @@ public class HubServiceImpl implements IHubService {
     public Object updateIdeaDocument(Object idea, List<String> attributes) throws Exception{
         return iHubDao.updateIdeaDocument(idea, attributes);
     }
+
+    @Override
+    public int addDocument(String collectionName, Object documents) throws Exception {
+        return iHubDao.addDocument(collectionName, documents);
+    }
+
 }

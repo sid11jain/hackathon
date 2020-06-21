@@ -31,7 +31,5 @@ public interface IHubService {
 
     Object updateIdeaDocument(Object idea, List<String> attributes) throws Exception;
 
-
-
-
+    int addDocument(String collectionName, Object documents) throws Exception;
 }

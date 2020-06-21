@@ -47,4 +47,15 @@ public interface IHubDao {
 
     Object updateIdeaDocument(Object idea, List<String> attribute) throws Exception;
 
+    /** This is an unchecked method which will insert the document irrespective of fact whether the document already exists in the collection or not.
+     * Please use it carefully.
+     *
+     * @param collectionName
+     * @param document
+     * @return
+     * @throws Exception
+     */
+    int addDocument(String collectionName, Object documents) throws Exception;
+
+
 }

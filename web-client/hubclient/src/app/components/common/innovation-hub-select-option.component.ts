@@ -70,7 +70,7 @@ export class InnovationHubSelectOptionComponent
 
   defaultBindLabel = 'value';
   events: any[] = [];
-  
+
   singleOptionConfig: SelectOptionConfig = {
     multipleOptions: false,
     searchable: false,
@@ -127,23 +127,4 @@ export class InnovationHubSelectOptionComponent
     this.selectedOptions = [];
     this.callingForm.patchValue(this.selectedOptions);
   }
-
-//   onSubmit() {
-//     // console.log('event', event);
-//     const selectedValues = [];
-//     this.callingForm
-//       // .get(this.fieldFormControlName)
-//       .value.map((selectedId) =>
-//         selectedValues.push(
-//           this.optionList.filter((option) => option.id === selectedId)
-//         )
-//       );
-//     console.log('beore pathing', this.callingForm);
-//     this.callingForm.patchValue(selectedValues);
-//     console.log('after pathing', this.callingForm);
-//   }
-
-//   compareIds(id1: IdValuePair, id2: IdValuePair){
-// return id1 && id2 && id1.id === id2.id;
-//   }
 }

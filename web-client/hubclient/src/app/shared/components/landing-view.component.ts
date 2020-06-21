@@ -51,7 +51,7 @@ export class LandingViewComponent implements OnInit {
   allWorkflows: any[] = [];
 
   userOptionConfig = this.hubService.userOptionConfig;
-  tagsOptionConfig = this.hubService.tagsOptionConfig;
+  tagsSearchOptionConfig = this.hubService.tagsSearchOptionConfig;
   workflowSearchOptionConfig = this.hubService.workflowSearchOptionConfig;
 
   fieldToExcludeFromFilters = ['expanded'];

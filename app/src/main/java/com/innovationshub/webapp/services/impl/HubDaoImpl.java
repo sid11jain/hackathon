@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.print.Doc;
+
 import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -253,5 +255,36 @@ public class HubDaoImpl implements IHubDao {
         collection.updateOne(filterQuery, setValues);
         return idea;
 
+    }
+
+    @Override
+    public int addDocument(String collectionName, Object documents) throws Exception {
+        int added = 0;
+        MongoCollection<Document> collection = db.getCollection(collectionName);
+        List<Document> docsToInsert = new ArrayList<>();
+        if (null != documents) {
+            if (List.class.isAssignableFrom(documents.getClass())) {
+                List insertDocumets = (List) documents;
+                if (null != insertDocumets && insertDocumets.size() > 0) {
+                    for (Map document : (List<Map>) documents) {
+                        document.put(IHConstants.FIELD_CREATED_ON, new Date());
+                        docsToInsert.add( new Document(document));
+                    }
+                }
+            } else {
+                docsToInsert.add( new Document((Map) documents));
+            }
+        }
+        try {
+            if (docsToInsert.size() > 0) {
+                //Document newDocument = Document.parse(documents.toString());
+                //newDocument.put(IHConstants.FIELD_CREATED_ON, new Date());
+                collection.insertMany(docsToInsert);
+                added = docsToInsert.size();
+            }
+        } catch (Exception e) {
+            // swallowing the exception for now
+        }
+        return added;
     }
 }
