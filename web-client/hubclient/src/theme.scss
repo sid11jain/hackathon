@@ -223,8 +223,8 @@ $athena-theme: (
 
   .cards-container{
     width: calc(100% - 200px);
-    overflow-y:scroll;
-    // height:500px;
+    overflow-y:auto;
+    height:100vh;
     padding-bottom: 50px;
     }
   }
