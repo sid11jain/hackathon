@@ -6,9 +6,15 @@ export class SelectOptionConfig {
   bindLabel?: any;
 }
 
-export class IdValuePair {
-  id: any;
-  value: any;
+
+export class NameIdValuePair{
+    name: any;
+    idValuePair: IdValuePair;
+}
+
+export class IdValuePair{
+    id: any;
+    value: any;
 }
 
 export enum OPERATION {

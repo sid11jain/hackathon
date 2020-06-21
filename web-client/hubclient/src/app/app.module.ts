@@ -32,6 +32,7 @@ import { NgxTypeaheadModule } from 'ngx-typeahead';
 import { BasicAuthHttpInterceptorService } from './services/basic-auth-interceptor.service';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { CardFooterComponent } from './shared/components/card-footer.component';
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
@@ -59,7 +60,8 @@ export class XhrInterceptor implements HttpInterceptor {
     HeaderComponent,
     FooterComponent,
     BasicCardCommentsComponent,
-    HubInputChipsComponent
+    HubInputChipsComponent,
+    CardFooterComponent
   ],
   imports: [
     BrowserModule,

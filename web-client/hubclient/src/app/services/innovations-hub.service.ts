@@ -184,7 +184,7 @@ export class InnovationsHubService {
     return this.http
       .post(this.url + 'update-document-attribute', {
         data: {data, attributeNames },
-      }).subscribe();
+      });
   }
 
   createFilter() {

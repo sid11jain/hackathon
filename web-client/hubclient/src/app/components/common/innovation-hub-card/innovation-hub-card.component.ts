@@ -4,7 +4,11 @@ import {
   CampaignField,
   Campaign,
   Workflow,
-  DEFAULT_CURRENT_STAGE
+  DEFAULT_CURRENT_STAGE,
+  COLUMN_NAME_IDEA_TAG,
+  COLUMN_NAME_IDEA_DESCRIPTION,
+  COLUMN_NAME_IDEA_CONTRIBUTORS,
+  COLUMN_NAME_BUSINESS_CASE
 } from 'src/app/models/innovation-hub.model';
 import { FormControl, FormArray, FormGroup } from '@angular/forms';
 import { InnovationsHubService } from 'src/app/services/innovations-hub.service';
@@ -41,6 +45,8 @@ export class InnovationHubCardComponent implements OnInit {
 
   @Input()
   newIdea = false;
+
+  @Input() fromEditIconClick = false;
 
   inputType: any = Types;
   ideaForm: FormGroup;
@@ -162,6 +168,7 @@ export class InnovationHubCardComponent implements OnInit {
           );
         } else {
           this.modalRef.hide();
+          this.hubService.getCollection(Collection.IDEA).subscribe();
         }
       });
     } else {
@@ -217,5 +224,19 @@ export class InnovationHubCardComponent implements OnInit {
           }
         });
     }
+  }
+
+  updateEntity(){
+    if (this.ideaForm.value.name) {
+      this.hubService
+        .updateCollectionDocument(this.ideaForm.value, [
+          COLUMN_NAME_IDEA_TAG,
+          COLUMN_NAME_IDEA_DESCRIPTION,
+          COLUMN_NAME_IDEA_CONTRIBUTORS,
+          COLUMN_NAME_BUSINESS_CASE
+        ])
+        .subscribe();
+    }
+
   }
 }

@@ -6,7 +6,9 @@
             <div class="card-body text-info">
                 <p class="card-text text-info"> Idea Name
                     <input type="text" class="form-control" [value]="providedIdea? providedIdea.name : ''"
-                        formControlName="name" />
+                        formControlName="name" *ngIf="fromEditIconClick" disabled/>
+                        <input type="text" class="form-control" [value]="providedIdea? providedIdea.name : ''"
+                        formControlName="name" *ngIf="!fromEditIconClick"/>
                 </p>
                 <p *ngIf="providedIdea && providedIdea.postedOn" class="card-subtitle mb-2 ">Posted On: 
                     <span>{{ providedIdea.postedOn}}</span>
@@ -66,7 +68,7 @@
                 </ul>
                 
             </div>
-            <div class="card-footer text-muted"> Likes comment and fav</div>
+            <app-card-footer *ngIf="fromEditIconClick || !editMode" [providedIdea]="providedIdea" [showEditOption]="false"></app-card-footer>
         </div>
     </form>
 </div>
@@ -74,7 +76,9 @@
     <div class="container-fluid">
         <div class="row form-action-row clearfix">
             <div class="col-md-12" style="text-align: right;">
-                <button *ngIf="editMode" class="btn btn-info mr-2" type="button" (click)="addEntity()">Add</button>
+                <button *ngIf="editMode && !fromEditIconClick" class="btn btn-info mr-2" type="button" (click)="addEntity()">Add</button>
+                <button *ngIf="editMode && fromEditIconClick" class="btn btn-info mr-2" type="button" (click)="updateEntity()">Save</button>
+                
                 <button class="btn btn-danger" type="button" (click)="closeModal()">Close</button>
             </div>
         </div>

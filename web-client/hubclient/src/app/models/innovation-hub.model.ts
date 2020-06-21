@@ -27,17 +27,22 @@ export const IDEA_SEARCH_FILTERS = [
     }
   ];
 
+
+export const COLUMN_NAME_IDEA_TAG = 'tag';
+export const COLUMN_NAME_IDEA_DESCRIPTION = 'description';
+export const COLUMN_NAME_IDEA_CONTRIBUTORS = 'contributors';
+export const COLUMN_NAME_BUSINESS_CASE = 'businessCase';
 export const COLUMN_NAME_COMMENTS_COUNT = 'commentsCount';
 export const COLUMN_NAME_LIKES_COUNT = 'likesCount';
 export const COLUMN_NAME_FAVOURITES_COUNT = 'favouritesCount';
-
-
 export const COLUMN_NAME_COMMENTS = 'comments';
 export const COLUMN_NAME_LIKES = 'likes';
 export const COLUMN_NAME_FAVOURITES = 'favourites';
 export const COMMENT_COLUMN_ID = 'comment';
 export const USERNAME_COLUMN_ID = 'username';
 export const COMMENTED_ON_COLUMN_ID = 'commentedOn';
+export const COMMENTED_BY_COLUMN_ID = 'commentedBy';
+export const COMMENT_DATE_COLUMN_ID = 'commentDate';
 
 export class Campaign {
   name: string;
@@ -76,7 +81,7 @@ export class Idea {
     currentStage: Workflow;
     campaign: Campaign;
     // workflow audit data structure
-    comments: any[];
+    comments: CampaignField[];
     commentsCount: number;
     likes: any[];
     likesCount: number;
