@@ -15,7 +15,8 @@ import {
   FILTER_TYPE,
   SelectOptionConfig,
   Collection,
-  SearchType
+  SearchType,
+  ComparisonOperators
 } from 'src/app/models/common/common-utility.model';
 import { plainToClass } from 'class-transformer';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
@@ -242,7 +243,7 @@ export class LandingViewComponent implements OnInit {
         //   : [this.ideaFilterForm.value[filter.filterName]],
         nestedOn: false,
         searchType: filter.searchType ? filter.searchType : SearchType.EQUALS,
-        comparisonOp: filter.comparisonOp ? filter.comparisonOp : undefined
+        comparisonOp: filter.comparisonOp ? filter.comparisonOp : ComparisonOperators.OP_EQ
       });
     });
     console.log('converted idea', ideaFilters);
