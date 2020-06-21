@@ -4,9 +4,9 @@
   <nav>
     <div class="menu-container">
       <ul>
-        <li style="background-color: #f8cbab;"> All Ideas</li>
-        <li> Trending Ideas</li>
-        <li> Popular Ideas</li>
+        <li style="background-color: #f8cbab;"><a href='#'>All Ideas</a></li>
+        <li><a href='#'>Trending Ideas</a> </li>
+        <li><a href='#'>Popular Ideas</a> </li>
         
       </ul>
     
@@ -37,9 +37,9 @@
       </div>
       <span></span>
 
-      <div class="row">
+      <div class="row" style="padding-left:16px;">
           
-        <div class="col-md-3 input-group">
+        <div class="col-md-6">
         <!-- <mat-form-field> -->
           <!-- <md-input-container>
             <label>Posted On From</label>
@@ -51,28 +51,29 @@
           <!-- </mat-form-field> -->
         <!-- </md-input-container> -->
         <!-- <label>Posted On From</label> -->
-        <div class="input-group-append">
-            <i class="fa fa-calendar" aria-hidden="true" (click)="fromDate.toggle()" type="button"></i>
-          </div>
+      <!--  <div class="input-group-append"></div>-->
+            <i class="fa fa-calendar" aria-hidden="true" (click)="fromDate.toggle()" type="button" style="padding:7px;"></i>
+      <!--    </div>-->
         <input class="form-control" placeholder="Posted On From"
              name="dp" formControlName="postedOnFrom" ngbDatepicker #fromDate="ngbDatepicker">
                          
         </div>
 
-        <div class="col-md-3 input-group">
+        <div class="col-md-6">
+          <i class="fa fa-calendar" aria-hidden="true" (click)="toDate.toggle()" type="button" style="padding:7px;"></i>
             <input class="form-control" placeholder="Posted On To"
             name="dp" formControlName="postedOnTo" ngbDatepicker #toDate="ngbDatepicker">
-            <div class="input-group-append">
-                <i class="fa fa-calendar" aria-hidden="true" (click)="toDate.toggle()" type="button"></i>
-               <!-- <button class="btn btn-outline-secondary calendar" (click)="toDate.toggle()" type="button"></button> -->
-             </div>            
+      <!--      <div class="input-group-append">-->
+        <!--   <i class="fa fa-calendar" aria-hidden="true" (click)="toDate.toggle()" type="button"></i>
+         -->           <!-- <button class="btn btn-outline-secondary calendar" (click)="toDate.toggle()" type="button"></button> -->
+         <!--    </div>     -->       
        </div>
           
           <!-- <ngb-datepicker formControlName="posteOnFrom" ></ngb-datepicker>
           <ngb-datepicker formControlName="posteOnTo" ></ngb-datepicker> -->
         </div>
     </div>
-    <div style="text-align: right; padding-bottom: 10px;">
+    <div style="text-align: right; padding-bottom: 5px;">
         <button type="button" title="Add" class="btn btn-info mr-2" (click)="openCampaignComponent(operation.ADD)">
           Add</button>
         <button type="button" title="Export" class="btn btn-info mr-2"
@@ -85,6 +86,7 @@
   <div class="filter-and-cards-container">
     <div class="filter-and-cards-section">
       <form *ngIf="filtersForm" [formGroup]="filtersForm" class="filters-container">
+        <div style="background-color: rgba(82, 168, 236, 0.8); text-align: center;"><h2 style="margin:0px;"><B>Filters</B></h2></div>
         <mat-accordion [multi]="true">
           <mat-expansion-panel *ngFor="let filter of allFilters; let filterPosition = index"
             [expanded]="filter.expanded" (opened)="setStep(0)" hideToggle [disabled]="disableFilters"
