@@ -209,9 +209,11 @@ export class InnovationHubCardComponent implements OnInit {
 
   setInitialData() {
     this.allTags = this.hubService.allTags;
-    this.allUsers = this.hubService.allUsers.filter((user) => {
-      return user.username !== this.hubService.currentUser;
-    });
+    // Skipping the filtering of current user from list - its causing issue at dropdown when current user is contributor.
+    this.allUsers = this.hubService.allUsers;
+    // this.allUsers = this.hubService.allUsers.filter((user) => {
+    //   return user.username !== this.hubService.currentUser;
+    // });
 
     if (this.providedIdea.currentStage) {
       const selectedCurrentStage: any = this.hubService.resolveWorkflow(this.providedIdea.currentStage);
@@ -223,8 +225,7 @@ export class InnovationHubCardComponent implements OnInit {
           this.allowedWorkflows.push(workflow);
         }
       });
-      // this.allowedWorkflows = Object.assign({}, ...this.allowedWorkflows, selectedCurrentStage);
-      // this.allowedWorkflows.push(selectedCurrentStage[0]);
+
     } else{
       // Defaulting to initiated state for ideas not having any stage.
       this.allowedWorkflows = [this.hubService.resolveWorkflow(DEFAULT_CURRENT_STAGE)];
@@ -232,47 +233,6 @@ export class InnovationHubCardComponent implements OnInit {
 
     this.setCampaign();
 
-
-    // this.hubService.getCollection(Collection.USERS).subscribe((resp: any) => {
-    //   if (resp && resp.data) {
-    //     this.allUsers = resp.data;
-    //     this.allUsers = this.allUsers.filter((user) => {
-    //       return user.username !== this.hubService.currentUser;
-    //     });
-    //     console.log('all users', this.allUsers);
-    //   }
-    // });
-    // this.hubService.getCollection(Collection.TAGS).subscribe((resp: any) => {
-    //   if (resp && resp.data) {
-    //     this.allTags = resp.data;
-    //     console.log('all tags', this.allTags);
-    //   }
-    // });
-    // if (this.providedIdea && this.providedIdea.currentStage) {
-    // this.hubService
-    //   .getCollection(Collection.WORKFLOW)
-    //   .subscribe((resp: any) => {
-    //     if (resp && resp.data) {
-    //       this.allWorkflows = resp.data;
-    //       if (this.providedIdea.currentStage
-    //         //  &&
-    //         // this.providedIdea.currentStage.nextStage &&
-    //         // this.providedIdea.currentStage.nextStage.length > 0
-    //       ) {
-    //         const selectedCurrentStage: any[] = this.hubService.resolveWorkflow(this.providedIdea.currentStage);
-    //         this.allowedWorkflows = this.allWorkflows.filter((workflow) => {
-    //              return selectedCurrentStage[0].nextStage.includes(
-    //             workflow.currentStage
-    //           );
-    //         });
-    //         this.allowedWorkflows.push(selectedCurrentStage);
-    //       } else{
-    //         // Defaulting to initiated state for ideas not having any stage.
-    //         this.allowedWorkflows = this.hubService.resolveWorkflow(DEFAULT_CURRENT_STAGE);
-    //       }
-    //     }
-    //   });
-    // }
   }
 
   updateEntity() {
