@@ -150,7 +150,7 @@ export class LandingViewComponent implements OnInit {
   decorateFilterValues() {
     // cloning issue, thus went for filter thing.
     const filters = this.filtersForm.value.filters.filter(x => x);
-    let enrichedFilters = [];
+    const enrichedFilters = [];
     // Merging ideaFilters with Campaign filters
     const ideaFilters = this.convertIdeaFormValueToFilters();
     ideaFilters.forEach(ideaFilter => filters.push(ideaFilter));
@@ -158,6 +158,8 @@ export class LandingViewComponent implements OnInit {
     const removeFilters = new Set();
     filters.forEach((filter: any) => {
       filter = plainToClass(Filter, filter);
+      this.fieldToExcludeFromFilters.forEach(field => delete filter[field]);
+
       console.log('Enriched filter', filter);
       if (
         filter.values &&
@@ -166,20 +168,12 @@ export class LandingViewComponent implements OnInit {
       ) {
         filter.values = filter.values.filter(Boolean);
       }
-      // Shall not remove date even if null as from and to name - both have same filtername and one could be not null
-      if ((!filter.values || filter.values.length === 0) && !(filter.valueType === this.filterValueType.DATE)) {
-        console.log('Removing filter', filter);
-        removeFilters.add(filter.filterName);
+      if (filter.values && filter.values.length > 0 && filter.values[0]) {
+        enrichedFilters.push(filter);
       }
-      this.fieldToExcludeFromFilters.forEach(field => delete filter[field]);
-      enrichedFilters.push(filter);
     });
-    console.log('remove filters', removeFilters);
-    // Can think of removig this call and club the logic in previous forEach
-    enrichedFilters = enrichedFilters.filter((filter: any) => {
-      return !removeFilters.has(filter.filterName);
-    });
-    console.log('Decorated filters', filters);
+
+    console.log('Decorated filters', enrichedFilters);
 
     return enrichedFilters;
   }
