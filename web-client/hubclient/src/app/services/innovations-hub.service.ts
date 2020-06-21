@@ -194,13 +194,13 @@ export class InnovationsHubService {
   }
 
   // This shall also take collection name
-  updateCollectionDocument(data: any, attributeNames: string[]) {
+  updateCollectionDocument(data: any, attributeNames: string[], collectionName: string) {
     console.log(' idea to update', data);
     // Subscribing it here .. so that caller need not bother about same
 
    // return of(null);
     return this.http.post(this.url + 'update-document-attribute', {
-      data: { data, attributeNames },
+      data: { data, attributeNames, collectionName },
     });
   }
 

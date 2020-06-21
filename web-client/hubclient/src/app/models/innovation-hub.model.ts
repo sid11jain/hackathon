@@ -82,7 +82,7 @@ export class Idea {
     currentStage: Workflow;
     campaign: Campaign;
     // workflow audit data structure
-    comments: CampaignField[];
+    comments: any[];
     commentsCount: number;
     likes: any[];
     likesCount: number;

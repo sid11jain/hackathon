@@ -4,6 +4,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { InnovationsHubService } from 'src/app/services/innovations-hub.service';
 import { BasicCardCommentsComponent } from './basic-card-comments.component';
 import { InnovationHubCardComponent } from 'src/app/components/common/innovation-hub-card/innovation-hub-card.component';
+import { Collection } from 'src/app/models/common/common-utility.model';
 
 @Component({
     selector: 'app-card-footer',
@@ -54,7 +55,7 @@ export class CardFooterComponent implements OnInit{
             this.hubService.updateCollectionDocument(providedIdea, [
               COLUMN_NAME_LIKES,
               COLUMN_NAME_LIKES_COUNT,
-            ]).subscribe();
+            ], Collection.IDEA).subscribe();
             break;
           }
           case COLUMN_NAME_COMMENTS: {
@@ -87,7 +88,7 @@ export class CardFooterComponent implements OnInit{
             this.hubService.updateCollectionDocument(providedIdea, [
               COLUMN_NAME_FAVOURITES,
               COLUMN_NAME_FAVOURITES_COUNT,
-            ]).subscribe();
+            ], Collection.IDEA).subscribe();
             break;
           }
           case 'edit': {

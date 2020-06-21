@@ -11,11 +11,16 @@ export class SelectOptionConfig {
 export class NameIdValuePair{
     name: any;
     idValuePair: IdValuePair;
+    
 }
 
 export class IdValuePair{
     id: any;
     value: any;
+    constructor(id: any, value: any){
+      this.id = id;
+      this.value = value;
+    }
 }
 
 export enum OPERATION {

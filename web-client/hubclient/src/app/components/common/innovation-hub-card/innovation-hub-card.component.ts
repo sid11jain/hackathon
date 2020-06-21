@@ -267,7 +267,7 @@ export class InnovationHubCardComponent implements OnInit {
           COLUMN_NAME_IDEA_DESCRIPTION,
           COLUMN_NAME_IDEA_CONTRIBUTORS,
           COLUMN_NAME_CURRENT_STAGE,
-        ])
+        ], Collection.IDEA)
         .subscribe((x) => {
           this.modalRef.hide();
         });

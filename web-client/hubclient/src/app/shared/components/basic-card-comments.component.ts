@@ -39,82 +39,34 @@ export class BasicCardCommentsComponent implements OnInit {
     this.ideaCommentsForm = new FormGroup({
       commentToAdd: new FormControl('Write a comment...'),
     });
-
-    const keyValue = [];
-    const commentedBy = new IdValuePair();
-    commentedBy.id = USERNAME_COLUMN_ID;
-    commentedBy.value = this.hubService.currentUser;
-
-
-    const comment = new IdValuePair();
-    comment.id = COMMENT_COLUMN_ID;
-    comment.value = this.ideaCommentsForm.value.commentToAdd;
-
-    const commentedOn = new IdValuePair();
-    commentedOn.id = COMMENT_DATE_COLUMN_ID;
-    commentedOn.value = new Date();
-
-    let arr = [commentedBy, comment, commentedOn];
-    console.log("idvalue pair:" +JSON.stringify(arr));
-   
-    const a = new NameIdValuePair();
-    a.name = COMMENTED_BY_COLUMN_ID;
-    a.idValuePair = new IdValuePair();
-    a.idValuePair.id = USERNAME_COLUMN_ID;
-    a.idValuePair.value = this.hubService.currentUser;
-
-
-    const b = new NameIdValuePair();
-    b.name = COMMENT_COLUMN_ID;
-    b.idValuePair = new IdValuePair();
-    b.idValuePair.id = COMMENT_COLUMN_ID;
-    b.idValuePair.value =  this.ideaCommentsForm.value.commentToAdd;
-
-    const c = new NameIdValuePair();
-    c.name = COMMENTED_ON_COLUMN_ID;
-    c.idValuePair = new IdValuePair();
-    c.idValuePair.id = COMMENT_DATE_COLUMN_ID;
-    c.idValuePair.value =  this.ideaCommentsForm.value.commentToAdd;
-
-    console.log("name id value pair stringify: " +JSON.stringify([a,b,c]));
   }
 
   saveComment() {
     const userSessionName = this.hubService.currentUser;
 
-    const commentedBy = new IdValuePair();
+    const commentedBy = new IdValuePair(USERNAME_COLUMN_ID, userSessionName);
     commentedBy.id = USERNAME_COLUMN_ID;
     commentedBy.value = userSessionName;
 
-
-    const comment = new IdValuePair();
+    const comment = new IdValuePair(COMMENT_COLUMN_ID, this.ideaCommentsForm.value.commentToAdd);
     comment.id = COMMENT_COLUMN_ID;
     comment.value = this.ideaCommentsForm.value.commentToAdd;
 
-    const commentedOn = new IdValuePair();
+    const commentedOn = new IdValuePair(COMMENT_DATE_COLUMN_ID, new Date());
     commentedOn.id = COMMENT_DATE_COLUMN_ID;
     commentedOn.value = new Date();
 
-    console.log(JSON.stringify([commentedBy, comment, commentedOn]));
+    this.idea.comments = this.idea.comments ? this.idea.comments : [];
 
-    
-    //const commentAttribute = this.getNameIdValuePair(COMMENT_COLUMN_ID, commentPair);
+    this.idea.comments = [
+      {
+        'commentedBy': commentedBy,
+        'comments': comment,
+        'commentedOn': commentedOn,
+      },
+    ];
 
-    //const commentedOnPair = new IdValuePair();
-    //commentedOnPair.id = COMMENTED_ON_COLUMN_ID;
-    //commentedOnPair.value = new Date();
-
-    //const commentedOnAttribute = this.getNameIdValuePair(COMMENTED_ON_COLUMN_ID, commentedOnPair);
-
-
-    //this.idea.comments = this.idea.comments ? this.idea.comments : [];
-
-
-    //this.idea.comments.push()
-
-    
-
-
+    console.log("comments print: " + this.idea.comments);
 
     this.hubService.getCollection(Collection.USERS).subscribe((resp: any) => {
       if (resp && resp.data) {
@@ -122,20 +74,17 @@ export class BasicCardCommentsComponent implements OnInit {
       }
     });
 
-    //const pairToPush = new IdValuePair();
-  //  pairToPush.id = pair;
-  //  pairToPush.value = [commentPair , commentedOnPair];
-
-
-  //  this.idea.comments.push({
-  //    "comments:":"","":""
-  //  });
-
     this.idea.commentsCount = this.idea.commentsCount
       ? this.idea.commentsCount + 1
       : 0 + 1;
-    this.hubService.updateCollectionDocument(this.idea, [COLUMN_NAME_COMMENTS, COLUMN_NAME_COMMENTS_COUNT])
-    .subscribe();
+    this.hubService
+      .updateCollectionDocument(
+        this.idea,
+        [COLUMN_NAME_COMMENTS, COLUMN_NAME_COMMENTS_COUNT],
+        Collection.IDEA
+      )
+      .subscribe();
+    this.modalRef.hide();
 
   }
 
