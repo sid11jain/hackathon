@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import {
   Idea,
   CampaignField,
@@ -19,8 +19,9 @@ import {
   DATE_FORMAT,
   Types,
   Collection,
+  Roles,
 } from 'src/app/models/common/common-utility.model';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { formatDate } from '@angular/common';
 import { plainToClass } from 'class-transformer';
@@ -33,7 +34,7 @@ import { Route } from '@angular/compiler/src/core';
   templateUrl: './innovation-hub-card.component.html',
   styleUrls: ['./innovation-hub-card.component.scss'],
 })
-export class InnovationHubCardComponent implements OnInit {
+export class InnovationHubCardComponent implements OnInit{
   constructor(
     protected modalRef: BsModalRef,
     protected modalService: BsModalService,
@@ -50,10 +51,10 @@ export class InnovationHubCardComponent implements OnInit {
   @Input()
   editMode = true;
 
-  @Input()
-  newIdea = false;
+   @Input()
+   newIdea = false;
 
-  @Input() fromEditIconClick = false;
+//  @Input() fromEditIconClick = false;
 
   inputType: any = Types;
   ideaForm: FormGroup;
@@ -67,16 +68,20 @@ export class InnovationHubCardComponent implements OnInit {
   providedIdeaCampaignValues: any = {};
 
   userOptionConfig = this.hubService.userOptionConfig;
-
   tagsOptionConfig = this.hubService.tagsOptionConfig;
-
   workflowOptionConfig = this.hubService.workflowOptionConfig;
 
+  campaignEndingIn: number;
+
   loadIdea = new BehaviorSubject<Boolean>(false);
+
+   // modalSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
     console.log('New idea', this.newIdea);
     console.log('In idea card', this.campaign);
+    console.log('In idea card', this.providedIdea);
+
     this.setInitialData();
     // this.setCampaign();
     if (this.providedIdea) {
@@ -102,9 +107,10 @@ export class InnovationHubCardComponent implements OnInit {
         this.providedIdea ? this.providedIdea.tags : undefined
       ),
       currentStage: new FormControl(
-        this.providedIdea
+        {value: this.providedIdea
           ? this.providedIdea.currentStage
-          : DEFAULT_CURRENT_STAGE
+          : DEFAULT_CURRENT_STAGE,
+        disabled: !this.currentStageEditable()}
       ),
       submittedBy: new FormControl(
         this.providedIdea
@@ -119,9 +125,10 @@ export class InnovationHubCardComponent implements OnInit {
           (field) =>
             new FormGroup({
               [field.name]: new FormControl(
-                field.type === 'text' && this.providedIdeaCampaignValues
+                { value: field.type === 'text' && this.providedIdeaCampaignValues
                   ? this.providedIdeaCampaignValues[field.name]
-                  : undefined
+                  : undefined,
+                  disabled: !this.newIdea}
               ),
             })
         )
@@ -131,13 +138,16 @@ export class InnovationHubCardComponent implements OnInit {
       this.ideaForm.disable();
     }
     console.log('forms ', this.ideaForm.controls.tags);
-    this.modalService.onHide.subscribe(x => {
-      console.log('modal closing', x);
-      // window.location.reload(true)
-    }
-      );
+    // this.modalSubscription = this.modalService.onHide.subscribe(x => {
+    //   console.log('modal closing', x);
+    //   // window.location.reload(true);
+    // }
+    //   );
   }
 
+  // ngOnDestroy(){
+  //   this.modalSubscription.unsubscribe();
+  // }
   getIdea() {
     if (this.ideaForm.value.name) {
       this.hubService.getIdea(this.ideaForm.value);
@@ -166,7 +176,7 @@ export class InnovationHubCardComponent implements OnInit {
   }
 
   closeModal() {
-    this.modalRef.hide();
+    this.hideModal();
   }
 
   addEntity() {
@@ -179,7 +189,7 @@ export class InnovationHubCardComponent implements OnInit {
             this.ideaForm.value.name + '' + resp.error.errorMessage + ' name'
           );
         } else {
-          this.modalRef.hide();
+          this.hideModal();
         }
       });
     } else {
@@ -225,13 +235,15 @@ export class InnovationHubCardComponent implements OnInit {
         .getCollection(Collection.WORKFLOW)
         .subscribe((resp: any) => {
           if (resp && resp.data) {
-            const allWorkFlows: any[] = JSON.parse(resp.data);
-            console.log('all tags', allWorkFlows);
+            const allWorkFlows: any[] = resp.data;
+            console.log('all workflows', allWorkFlows);
+            if (this.providedIdea.currentStage.nextStage && this.providedIdea.currentStage.nextStage.length > 0){
             this.allowedWorkflows = allWorkFlows.filter((workflow) => {
               this.providedIdea.currentStage.nextStage.includes(
                 workflow.currentStage
               );
             });
+          }
           }
         });
     }
@@ -269,10 +281,14 @@ export class InnovationHubCardComponent implements OnInit {
           COLUMN_NAME_CURRENT_STAGE,
         ], Collection.IDEA)
         .subscribe((x) => {
-          this.modalRef.hide();
+          this.hideModal();
         });
     }
   }
+
+currentStageEditable(){
+return !this.newIdea && this.hubService.currentUserRoles === Roles.ADMIN;
+}
 
   onModalHide() {
     // check if not from close button , then navigate to landing - for a refreshed screen.
@@ -280,5 +296,11 @@ export class InnovationHubCardComponent implements OnInit {
     // this.hubService.getCollection(Collection.IDEA).subscribe(x => x);
   // /  console.log('Hiding modal');
 //    window.location.reload(true) ;
+  }
+
+  hideModal(){
+    this.modalRef.hide();
+    // Modal onHide subscription is not working properly. Going with this basic approach for now.
+    window.location.reload(true);
   }
 }

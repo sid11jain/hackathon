@@ -4,7 +4,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { InnovationsHubService } from 'src/app/services/innovations-hub.service';
 import { BasicCardCommentsComponent } from './basic-card-comments.component';
 import { InnovationHubCardComponent } from 'src/app/components/common/innovation-hub-card/innovation-hub-card.component';
-import { Collection } from 'src/app/models/common/common-utility.model';
+import { Collection, Roles } from 'src/app/models/common/common-utility.model';
 
 @Component({
     selector: 'app-card-footer',
@@ -27,7 +27,7 @@ export class CardFooterComponent implements OnInit{
 
 
     ngOnInit(): void {
-      this.showEdit = this.showEditOption && this.hubService && this.hubService.currentUser === this.providedIdea.submittedBy;
+      this.showEdit = this.showEditOption && this.hubService && (this.hubService.currentUser === this.providedIdea.submittedBy || this.hubService.currentUserRoles === Roles.ADMIN);
     }
 
     updateIdea(providedIdea: Idea, attributeType: string) {

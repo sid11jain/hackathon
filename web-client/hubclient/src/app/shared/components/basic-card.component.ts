@@ -84,4 +84,19 @@ export class BasicCardComponent implements OnInit {
       }
     }
   }
+
+  calculateCampaignEndingDays(endingDate: any) {
+    if (endingDate){
+    const todaysDate = new Date();
+    const endDate = new Date(Date.parse(endingDate));
+
+    // endDate.setDate(endDate.getDate());
+    const differenceInTime = endDate.getTime() - todaysDate.getTime();
+    // To calculate the no. of days between two dates
+    const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
+    return differenceInDays + 1;
+  }
+    return 'some days';
+}
+
 }

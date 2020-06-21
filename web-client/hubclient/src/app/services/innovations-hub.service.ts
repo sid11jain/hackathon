@@ -11,6 +11,9 @@ import {
   IdValuePair,
   SelectOptionConfig,
   Collection,
+
+  Users,
+  Roles,
 } from '../models/common/common-utility.model';
 import { map } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -73,7 +76,11 @@ export class InnovationsHubService {
   constructor(private http: HttpClient, private ees: ExportExcelService) {}
 
   get currentUser() {
-    return sessionStorage.getItem('username');
+    return sessionStorage.getItem(Users.USERNAME);
+  }
+
+  get currentUserRoles(){
+    return sessionStorage.getItem(Users.ROLES);
   }
 
   submitIdea(data: any) {

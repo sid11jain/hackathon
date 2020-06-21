@@ -5,6 +5,7 @@ import { map, catchError } from 'rxjs/operators';
 import { exception } from 'console';
 import { throwError } from 'rxjs';
 import { error } from 'protractor';
+import { Users } from '../models/common/common-utility.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +20,9 @@ export class AuthenticationService {
       .pipe(
         map(userData => {
           if (userData.loginSuccessful) {
-            sessionStorage.setItem('username', username);
-            sessionStorage.setItem('token', userData.token);
-            sessionStorage.setItem('roles', userData.roles);
+            sessionStorage.setItem(Users.USERNAME, username);
+            sessionStorage.setItem(Users.TOKEN, userData.token);
+            sessionStorage.setItem(Users.ROLES, userData.roles);
             // Roles can be accessed by iterating roles array
             const role = userData.roles[0];
             return userData;
@@ -31,14 +32,14 @@ export class AuthenticationService {
   }
 
   isUserLoggedIn() {
-    const username = sessionStorage.getItem('username');
-    const token = sessionStorage.getItem('token');
+    const username = sessionStorage.getItem(Users.USERNAME);
+    const token = sessionStorage.getItem(Users.TOKEN);
     return !(username === null || token === null);
   }
 
   logOut() {
-    sessionStorage.removeItem('username');
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('roles');
+    sessionStorage.removeItem(Users.USERNAME);
+    sessionStorage.removeItem(Users.TOKEN);
+    sessionStorage.removeItem(Users.ROLES);
   }
 }

@@ -28,7 +28,7 @@ export const IDEA_SEARCH_FILTERS = [
   ];
 
 
-export const COLUMN_NAME_IDEA_TAG = 'tag';
+export const COLUMN_NAME_IDEA_TAG = 'tags';
 export const COLUMN_NAME_IDEA_DESCRIPTION = 'description';
 export const COLUMN_NAME_IDEA_CONTRIBUTORS = 'contributors';
 export const COLUMN_NAME_CURRENT_STAGE = 'currentStage';

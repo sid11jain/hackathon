@@ -1,35 +1,32 @@
-<div class="modal-body " (onHide)="onModalHide()">    
-    <form [formGroup]="ideaForm" [disabled]="!editMode">
+<div class="modal-body ">    
+    <form [formGroup]="ideaForm">
         <div class="card mx-auto border-info mb-1">
             <!-- w-50  -->
             <div *ngIf="campaign" class="card-header bg-warning">{{campaign.name}}</div>
             <div class="card-body text-info">
                 <p class="card-text text-info"> Idea Name
                     <input type="text" class="form-control" [value]="providedIdea? providedIdea.name : ''"
-                        formControlName="name" *ngIf="fromEditIconClick" disabled>
-                        <input type="text" class="form-control" [value]="providedIdea? providedIdea.name : ''"
-                        formControlName="name" *ngIf="!fromEditIconClick"/>
+                        formControlName="name" [attr.disabled]="!newIdea? true : null"/>
+                        <!-- <input type="text" class="form-control" [value]="providedIdea? providedIdea.name : ''"
+                        formControlName="name" *ngIf="!fromEditIconClick"/> -->
                 </p>
                 <p *ngIf="providedIdea && providedIdea.postedOn" class="card-subtitle mb-2 ">Posted On: 
-                    <span>{{ providedIdea.postedOn | date: 'dd-MM-yyyy' }}</span>
-                <!-- <p *ngIf="providedIdea && providedIdea.postedOn">Posted On: 
-                    <span style="color: rgba(0, 0, 0, 0.747); font-weight: 500;">{{ providedIdea.postedOn | date: 'dd-MM-yyyy'}}</span> -->
-                    <!--  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
+                    <span>{{ providedIdea.postedOn | date: 'dd-MM-yyyy' }}</span>               
                 </p>
                 <p class="card-text text-left"> Description
                     <textarea class="form-control" [value]="providedIdea? providedIdea.description : ''"
-                        formControlName="description"> 
+                        formControlName="description" [attr.disabled]="!newIdea? true : null"> 
                     </textarea>
-                </p>
-                <ul *ngIf="campaignFields" class="list-group list-group-flush ">
+                </p>                
+                <ul *ngIf="campaignFields" class="list-group list-group-flush">
                     <li class="list-group-item align-left"
-                        *ngFor="let field of campaignFields; let fieldPosition = index" formArrayName="campaignValues">
+                        *ngFor="let field of campaignFields; let fieldPosition = index" formArrayName="campaignValues" >
                         <!-- switch cases for each input type-->
 
                         <ng-container [ngSwitch]="field.type" formGroupName="{{fieldPosition}}">
                             <label> {{ field.name }}</label>
                             <div *ngSwitchCase="inputType.TEXT">
-                                <input type="text" class="form-control"
+                                <input type="text" class="form-control" [attr.disabled]="!editMode? true : null"
                                     [value]="providedIdeaCampaignValues? providedIdeaCampaignValues[field.name] : ''"
                                     formControlName={{field.name}} />
                             </div>
@@ -37,13 +34,13 @@
                                 <innovation-hub-select-option [fieldFormControlName]="field.name"
                                     [optionList]="field.allowedValues"
                                     [selectedOptions]="providedIdeaCampaignValues? providedIdeaCampaignValues[field.name] : []"
-                                    [multipleOptions]="false"></innovation-hub-select-option>
+                                    [multipleOptions]="false" [disabled]="!editMode" ></innovation-hub-select-option>
                             </div>
                             <div *ngSwitchCase="inputType.MULTI_OPTION">
                                 <innovation-hub-select-option [fieldFormControlName]="field.name"
                                     [optionList]="field.allowedValues"
                                     [selectedOptions]="providedIdeaCampaignValues? providedIdeaCampaignValues[field.name] : []"
-                                    [multipleOptions]="true"></innovation-hub-select-option>
+                                    [multipleOptions]="true" [disabled]="!editMode" ></innovation-hub-select-option>
                             </div>
                         </ng-container>
                     </li>
@@ -69,7 +66,7 @@
                     [config]="workflowOptionConfig"></innovation-hub-select-option>
                 </h8>
             </div>
-            <app-card-footer *ngIf="fromEditIconClick || !editMode" [providedIdea]="providedIdea" [showEditOption]="false"></app-card-footer>
+            <app-card-footer *ngIf="!newIdea || !editMode" [providedIdea]="providedIdea" [showEditOption]="false"></app-card-footer>
         </div>
     </form>
 </div>
@@ -77,8 +74,8 @@
     <div class="container-fluid">
         <div class="row form-action-row clearfix">
             <div class="col-md-12" style="text-align: right;">
-                <button *ngIf="editMode && !fromEditIconClick" class="btn btn-info mr-2" type="button" (click)="addEntity()">Add</button>
-                <button *ngIf="editMode && fromEditIconClick" class="btn btn-info mr-2" type="button" (click)="updateEntity()">Save</button>
+                <button *ngIf="editMode && newIdea" class="btn btn-info mr-2" type="button" (click)="addEntity()">Add</button>
+                <button *ngIf="editMode && !newIdea" class="btn btn-info mr-2" type="button" (click)="updateEntity()">Save</button>
                 
                 <button class="btn btn-danger" type="button" (click)="closeModal()">Close</button>
             </div>

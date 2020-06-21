@@ -1,3 +1,14 @@
+export enum Users {
+  USERNAME = 'username',
+  ROLES = 'roles',
+  TOKEN = 'token',
+}
+
+export enum Roles{
+  ADMIN= 'ADMIN',
+  BUSINESS= 'BUSINESS'
+}
+
 export class SelectOptionConfig {
   multipleOptions: boolean;
   searchable: boolean;
@@ -11,7 +22,7 @@ export class SelectOptionConfig {
 export class NameIdValuePair{
     name: any;
     idValuePair: IdValuePair;
-    
+
 }
 
 export class IdValuePair{
@@ -26,19 +37,19 @@ export class IdValuePair{
 export enum OPERATION {
   ADD = 'add',
   EXPORT = 'export',
-  VIEW = 'view'
+  VIEW = 'view',
 }
 
 export enum FILTER_TYPE {
   STRING = 'string',
-  DATE = 'date'
+  DATE = 'date',
 }
 
 export const DATE_FORMAT = 'dd-MM-yyyy';
 
 export enum SearchType {
   EQUALS = 'equals',
-  LIKE = 'like'
+  LIKE = 'like',
 }
 
 export enum ComparisonOperators {
@@ -48,18 +59,18 @@ export enum ComparisonOperators {
   OP_EQ = 'EQ',
   OP_NEQ = 'NEQ',
   OP_IN = 'IN',
-  OP_NIN = 'NIN'
+  OP_NIN = 'NIN',
 }
 
 // Add valueType for date
 export const IDEA_SEARCH_FILTERS = [
   {
     filterName: 'name',
-    searchType: SearchType.LIKE
+    searchType: SearchType.LIKE,
   },
   {
     filterName: 'tags',
-    searchType: SearchType.LIKE
+    searchType: SearchType.LIKE,
   },
   // { filterName: 'contributors' },
   { filterName: 'submittedBy' },
@@ -67,13 +78,13 @@ export const IDEA_SEARCH_FILTERS = [
   {
     filterName: 'postedOnFrom',
     valueType: FILTER_TYPE.DATE,
-    comparisonOp: ComparisonOperators.OP_GTE
+    comparisonOp: ComparisonOperators.OP_GTE,
   },
   {
     filterName: 'postedOnTo',
     valueType: FILTER_TYPE.DATE,
-    comparisonOp: ComparisonOperators.OP_LTE
-  }
+    comparisonOp: ComparisonOperators.OP_LTE,
+  },
 ];
 
 export enum Collection {
@@ -81,7 +92,7 @@ export enum Collection {
   IDEA = 'idea',
   USERS = 'users',
   WORKFLOW = 'workflow',
-  TAGS = 'tags'
+  TAGS = 'tags',
 }
 export enum Types {
   TEXT = 'text',
@@ -89,5 +100,5 @@ export enum Types {
   MULTI_OPTION = 'multiple-option',
   RADIO = 'radio',
   DATE = 'date',
-  DOCUMENT = 'doc'
+  DOCUMENT = 'doc',
 }
