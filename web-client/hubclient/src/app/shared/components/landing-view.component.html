@@ -3,12 +3,12 @@
 
   <nav>
     <div class="menu-container">
-      <ul>
+      <!-- <ul>
         <li style="background-color: #f8cbab;"><a href='#'>All Ideas</a></li>
         <li><a href='#'>Trending Ideas</a> </li>
         <li><a href='#'>Popular Ideas</a> </li>
         
-      </ul>
+      </ul> -->
     
     <form [formGroup]="ideaFilterForm">
     <div class="idea-filter-container">   
@@ -73,12 +73,26 @@
           <ngb-datepicker formControlName="posteOnTo" ></ngb-datepicker> -->
         </div>
     </div>
-    <div style="text-align: right; padding-bottom: 5px;">
-        <button type="button" title="Add" class="btn btn-info mr-2" (click)="openCampaignComponent(operation.ADD)">
+    <div style="padding-bottom: 5px; padding-left: 15px;">
+
+      <div class="btn-group btn-group-toggle" data-toggle="buttons" style="text-align: left; width: 75%;">
+        <label class="btn btn-success btn-lg active">
+          <input type="radio" name="ideas" id="allIdeas" autocomplete="off" checked>All Ideas
+        </label>
+        <label class="btn btn-success btn-lg">
+          <input type="radio" name="ideas" id="trendingIdeas" autocomplete="off" checked>Trending Ideas
+        </label>
+        <label class="btn btn-success btn-lg">
+          <input type="radio" name="ideas" id="popularIdeas" autocomplete="off" checked>Popular Ideas
+        </label>
+      </div>
+
+      <button type="button" title="Add" class="btn btn-info btn-lg" (click)="openCampaignComponent(operation.ADD)" style="margin-left: 10px; margin-right:5px">
           Add</button>
-        <button type="button" title="Export" class="btn btn-info mr-2"
-          (click)="openCampaignComponent(operation.EXPORT)"> Export</button>
-        <button type="button" title="searchIdeas" class="btn btn-info mr-3" (click)="searchIdeas()">Search</button>
+      <button type="button" title="Export" class="btn btn-info btn-lg"
+          (click)="openCampaignComponent(operation.EXPORT)" style="margin-left: 5px; margin-right:5px"> Export</button>
+      <button type="button" title="searchIdeas" class="btn btn-info btn-lg" (click)="searchIdeas()" style="margin-left: 5px;">Search</button>
+
     </div>
   </form>
 </div>
@@ -86,8 +100,12 @@
   <div class="filter-and-cards-container">
     <div class="filter-and-cards-section">
       <form *ngIf="filtersForm" [formGroup]="filtersForm" class="filters-container">
-        <div style="background-color: rgba(82, 168, 236, 0.8); text-align: center;"><h2 style="margin:0px;"><B>Filters</B></h2></div>
         <mat-accordion [multi]="true">
+          <mat-expansion-panel hideToggle style="pointer-events: none;">
+            <mat-expansion-panel-header style="background-color: #008000; color: white; font-weight: 600; font-size: medium;">            
+              Filters
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
           <mat-expansion-panel *ngFor="let filter of allFilters; let filterPosition = index"
             [expanded]="filter.expanded" (opened)="setStep(0)" hideToggle [disabled]="disableFilters"
             formArrayName="filters">

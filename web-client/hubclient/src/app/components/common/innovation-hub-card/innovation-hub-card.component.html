@@ -12,6 +12,8 @@
                 </p>
                 <p *ngIf="providedIdea && providedIdea.postedOn" class="card-subtitle mb-2 ">Posted On: 
                     <span>{{ providedIdea.postedOn | date: 'dd-MM-yyyy' }}</span>
+                <!-- <p *ngIf="providedIdea && providedIdea.postedOn">Posted On: 
+                    <span style="color: rgba(0, 0, 0, 0.747); font-weight: 500;">{{ providedIdea.postedOn | date: 'dd-MM-yyyy'}}</span> -->
                     <!--  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
                 </p>
                 <p class="card-text text-left"> Description
@@ -19,26 +21,6 @@
                         formControlName="description"> 
                     </textarea>
                 </p>
-                <h8 class="card-subtitle mb-2 ">Contributors
-                    <innovation-hub-select-option [fieldFormControlName]="'contributors'"
-                    [optionList]="allUsers"
-                    [selectedOptions]="providedIdea? providedIdea.contributors : []"
-                    [multipleOptions]="true"
-                    [config]="userOptionConfig"></innovation-hub-select-option>
-                </h8>
-                <h8 class="card-subtitle mb-2 ">Tags
-                    <innovation-hub-select-option [fieldFormControlName]="'tags'"
-                    [optionList]="allTags"
-                    [selectedOptions]="providedIdea? providedIdea.tags : []"
-                    [multipleOptions]="true" [config]="tagsOptionConfig"></innovation-hub-select-option>
-                </h8>
-                <h8 *ngIf="!newIdea" class="card-subtitle mb-2 ">Current Stage
-                    <innovation-hub-select-option [fieldFormControlName]="'currentStage'"
-                    [optionList]="allowedWorkflows"
-                    [selectedOptions]="providedIdea? providedIdea.currentStage : []"
-                    [multipleOptions]="false"
-                    [config]="workflowOptionConfig"></innovation-hub-select-option>
-                </h8>
                 <ul *ngIf="campaignFields" class="list-group list-group-flush ">
                     <li class="list-group-item align-left"
                         *ngFor="let field of campaignFields; let fieldPosition = index" formArrayName="campaignValues">
@@ -66,7 +48,26 @@
                         </ng-container>
                     </li>
                 </ul>
-                
+                <h8 class="card-subtitle mb-2 ">Contributors
+                    <innovation-hub-select-option [fieldFormControlName]="'contributors'"
+                    [optionList]="allUsers"
+                    [selectedOptions]="providedIdea? providedIdea.contributors : []"
+                    [multipleOptions]="true"
+                    [config]="userOptionConfig"></innovation-hub-select-option>
+                </h8>
+                <h8 class="card-subtitle mb-2 ">Tags
+                    <innovation-hub-select-option [fieldFormControlName]="'tags'"
+                    [optionList]="allTags"
+                    [selectedOptions]="providedIdea? providedIdea.tags : []"
+                    [multipleOptions]="true" [config]="tagsOptionConfig"></innovation-hub-select-option>
+                </h8>
+                <h8 *ngIf="!newIdea" class="card-subtitle mb-2 ">Current Stage
+                    <innovation-hub-select-option [fieldFormControlName]="'currentStage'"
+                    [optionList]="allowedWorkflows"
+                    [selectedOptions]="providedIdea? providedIdea.currentStage : []"
+                    [multipleOptions]="false"
+                    [config]="workflowOptionConfig"></innovation-hub-select-option>
+                </h8>
             </div>
             <app-card-footer *ngIf="fromEditIconClick || !editMode" [providedIdea]="providedIdea" [showEditOption]="false"></app-card-footer>
         </div>

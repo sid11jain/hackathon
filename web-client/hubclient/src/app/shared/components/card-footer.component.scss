@@ -1,6 +1,7 @@
 .basic-footer{
     border-top: 1px solid #d8d8d8;
     padding:8px;
+    text-align: center;
     a{  
         cursor:pointer;
         font-size:24px;
@@ -9,12 +10,11 @@
         
     }
     a:active, a:hover {
-        color: blueviolet; 
+        color: rgb(223, 43, 11); 
       }
     span.badge{
         position: relative;
         top: -10px;
         left: -10px;
-
     }
 }

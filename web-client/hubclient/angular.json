@@ -29,7 +29,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "src/theme.scss"
+              "src/theme.scss",
+              "src/assets/fonts/fonts.scss"
             ],
             "scripts": []
           },

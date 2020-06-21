@@ -7,56 +7,32 @@
             <i class="fa fa-list" aria-hidden="true"></i>
       </a>
   </div>
+<div class="card-container">
 <!-- card-deck, card-columns -->
-<div [class.card-elements]="!deckView" [class.card-deck]="deckView" *ngFor="let providedIdea of datatypeToDisplay; let cardColor = index" >
+<div [class.card-elements]="!deckView" [class.card-deck]="deckView" *ngFor="let providedIdea of datatypeToDisplay; let cardColor = index">
       <!-- basic-card -->
       <!-- <button class="custom-card btn-block" data-toggle="modal" data-target="#expandedCard" (click)="onCardClick()"> -->
       <div class="card {{cardBg[providedIdea.name.length % cardBg.length]}}">
             <a href="#" class="custom-card btn btn-lg" role="button" aria-disabled="true" (click)="onCardClick(providedIdea)">
-            <div class="card-header text-center">
-                  <h10>{{ providedIdea.campaignName }}</h10>
+            <div class="card-header">
+                  <h10>{{ (providedIdea.campaignName.length > 20) ? (providedIdea.campaignName | slice:0:20) + '...': providedIdea.campaignName }}</h10>
             </div>
-            <div class="card-body">
-                  <h12>Idea Name: </h12><span>{{providedIdea.name}}</span><br>
+            <div [class.card-body]="!deckView" [class.card-body-list-view]="deckView">
+                  <h12>Idea Name: </h12><span>{{(providedIdea.name.length > 20) ?  (providedIdea.name | slice:0:20) + '...' : providedIdea.name }}</span><br>
                   <h12 *ngIf="providedIdea && providedIdea.postedOn">
                         Posted On:
                         <span class="font-weight-normal">{{ providedIdea.postedOn | date: 'dd-MM-yyyy'}}</span>
                         <!--  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
                   </h12><br>
                   <h12>Description: </h12>
-                  <span>{{providedIdea.description}}</span><br>
-                  <!-- removed if clause on campaign fields -->
-                  <!-- <ul class="list-group list-group-flush "> -->
-                        <!-- <div *ngFor="let field of providedIdea.campaign.campaignFields; let fieldPosition = index"> -->
-                              <!-- switch cases for each input type-->
-
-                              <!-- <ng-container [ngSwitch]="field.type">
-                                    <li *ngIf="field.type !== 'text'" class="list-group-item  align-left {{cardBg[providedIdea.name.length % cardColor]}}"
-                                          style="border: none">
-                                          <label>
-                                                <div *ngSwitchCase="'text'">
-
-                                                </div> -->
-                                            <!--    <div *ngSwitchCase="'single-option'">
-                                                      #{{providedIdeaCampaignValues[providedIdea.name][field.name].value | uppercase}}{{ field.name | lowercase }}
-
-                                                </div>
-                                                <div *ngSwitchCase="'multiple-option'">
-                                                      #{{providedIdeaCampaignValues[providedIdea.name][field.name][0].value | uppercase}}..{{ field.name | lowercase }}
-
-                                                </div>
-                                                -->
-                                          <!-- </label>
-                                    </li>
-                              </ng-container>
-                        </div>
-                  </ul> -->
+                  <p>{{(providedIdea.description.length > 100) ?  (providedIdea.description | slice:0:100) + '...' : providedIdea.description}}</p>
+                  <h12>Campaign ending in: </h12><span>21 days</span>
+                  <!-- <span>{{providedIdea.campaign.endDate}}</span> -->
             </div>
             </a>
-            <app-card-footer [providedIdea]="providedIdea" [showEditOption]="true"></app-card-footer>
+            <app-card-footer [providedIdea]="providedIdea" [showEditOption]="true" style="position: bottom;"></app-card-footer>
       </div>
-
-
+</div>
 </div>
 
 <ng-template id="expandedCard">

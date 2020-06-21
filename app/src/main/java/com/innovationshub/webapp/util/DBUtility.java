@@ -155,6 +155,6 @@ public class DBUtility {
                 && filter.get(IHConstants.NESTED_ON) != null
                 && filter.get(IHConstants.SEARCH_TYPE) != null
                 && filter.get(IHConstants.COMPARISON_OP) != null
-                && filter.get(IHConstants.NESTED_FIELD) != null;
+                && (!(Boolean) filter.get(IHConstants.NESTED_ON) || filter.get(IHConstants.NESTED_FIELD) != null);
     }
 }
