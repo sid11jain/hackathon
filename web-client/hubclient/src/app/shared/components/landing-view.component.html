@@ -40,17 +40,17 @@
       <div class="row" style="padding-left:16px;">
           
         <div class="col-md-6">
-      
+          <!-- (dateSelect)="ngDateInput($event, false)" -->
             <i class="fa fa-calendar" aria-hidden="true" (click)="fromDate.toggle()" type="button" style="padding:7px;"></i>
-        <input class="form-control" placeholder="Posted On From"
-             name="dp" formControlName="postedOnFrom" ngbDatepicker #fromDate="ngbDatepicker">
+        <input class="form-control" placeholder="Posted On From" 
+             name="dp" formControlName="postedOnFrom" ngbDatepicker #fromDate="ngbDatepicker" readonly>
                          
         </div>
 
         <div class="col-md-6">
           <i class="fa fa-calendar" aria-hidden="true" (click)="toDate.toggle()" type="button" style="padding:7px;"></i>
             <input class="form-control" placeholder="Posted On To"
-            name="dp" formControlName="postedOnTo" ngbDatepicker #toDate="ngbDatepicker">
+            name="dp" formControlName="postedOnTo" ngbDatepicker #toDate="ngbDatepicker" readonly>
           
        </div>              
         </div>

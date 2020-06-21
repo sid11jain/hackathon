@@ -11,7 +11,7 @@ import { InnovationHubCardComponent } from 'src/app/components/common/innovation
 export class BasicCardComponent implements OnInit {
   constructor(
     private modalService: BsModalService,
-    private hubService: InnovationsHubService
+    public hubService: InnovationsHubService
   ) {}
 
   @Input() datatypeToDisplay: any[];

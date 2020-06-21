@@ -301,6 +301,20 @@ _allWorkflows: any[];
     return filters;
   }
 
+
+  convertNgDateToDate(date: any[], toDate: boolean) {
+    if (date && date.length > 0 && date[0]) {
+      const ngDate = date[0];
+      console.log('date : ', date, 'nDate : ', ngDate);
+      ngDate.day = toDate ? ngDate.day + 1 : ngDate.day;
+      console.log('nDate : ', ngDate);
+      // Issue with ng Month, it was providing +1 and day - providing - 1 .
+      return [new Date(ngDate.year, ngDate.month - 1, ngDate.day + 1)];
+    }
+    return date;
+  }
+
+
   createFilterIdValue() {
     const filters = [
       {

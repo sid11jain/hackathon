@@ -58,7 +58,7 @@ export class LandingViewComponent implements OnInit {
 
   constructor(
     private modalService: BsModalService,
-    private hubService: InnovationsHubService
+    public hubService: InnovationsHubService
   ) {}
 
   ngOnInit(): void {
@@ -175,6 +175,7 @@ export class LandingViewComponent implements OnInit {
     });
 
     console.log('Decorated filters', enrichedFilters);
+    console.log('original idea filters', IDEA_SEARCH_FILTERS);
 
     return enrichedFilters;
   }
@@ -230,7 +231,9 @@ export class LandingViewComponent implements OnInit {
   convertIdeaFormValueToFilters() {
     console.log('idea form values ', this.ideaFilterForm.value);
     const ideaFilters: any[] = [];
-    IDEA_SEARCH_FILTERS.forEach((filter: any) => {
+    IDEA_SEARCH_FILTERS.forEach((orgFilter: any) => {
+      // Direct object reference was changing original filters filterName. Shallow cloning here.
+      const filter = Object.assign({}, orgFilter);
       ideaFilters.push({
         values: this.setValue(filter),
         filterName: filter.filterName,
@@ -260,27 +263,29 @@ export class LandingViewComponent implements OnInit {
       values = this.ideaFilterForm.value[filter.filterName];
     }
     if (filter.valueType && filter.valueType === this.filterValueType.DATE) {
-      values = this.convertNgDateToDate(
+      console.log('DAte value before enrich', values);
+      values = this.hubService.convertNgDateToDate(
         values as [],
         filter.filterName.endsWith('To')
       );
       filter.filterName = filter.filterName.endsWith('To')
         ? filter.filterName.slice(0, -2)
-        : filter.filterName.slice(0, -4);
+        : (filter.filterName.endsWith('From') ? filter.filterName.slice(0, -4) : filter.filterName);
     }
 
     console.log('values', values);
     return values;
   }
 
-  convertNgDateToDate(date: any[], toDate: boolean) {
-    if (date && date.length > 0 && date[0]) {
-      const ngDate = date[0];
-      console.log('date : ', date, 'nDate : ', ngDate);
-      ngDate.day = toDate ? ngDate.day + 1 : ngDate.day;
-      // Issue with ng Month, it was providing +1 .
-      return [new Date(ngDate.year, ngDate.month - 1, ngDate.day)];
-    }
-    return date;
-  }
+  // ngDateInput(event: any, toDate: boolean){
+  //   console.log('Ng Date', event);
+  //   if (toDate){
+  //     this.ideaFilterForm.patchValue({postedOnTo: event});
+  //   }else{
+  //     this.ideaFilterForm.patchValue({postedOnFrom: event});
+  //   }
+
+  //   console.log('idea filter after ', this.ideaFilterForm);
+  // }
+
 }
