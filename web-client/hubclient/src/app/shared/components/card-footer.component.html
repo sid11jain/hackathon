@@ -1,9 +1,9 @@
 <div class="basic-footer card-footer">
     <a title="Likes" (click)="updateIdea(providedIdea, 'likes')"><i class="fa fa-thumbs-up highlight" aria-hidden="true"></i>
-          <span class="badge">{{providedIdea.likesCount}}</span></a>
+          <span class="badge">{{providedIdea.likesCount?providedIdea.likesCount:0}}</span></a>
     <a title="Comments" (click)="updateIdea(providedIdea, 'comments')"><i class="fa fa-comments" aria-hidden="true"></i>
-          <span class="badge">{{providedIdea.commentsCount}}</span></a>
+          <span class="badge">{{providedIdea.commentsCount?providedIdea.commentsCount:0}}</span></a>
     <a title="Favourites" (click)="updateIdea(providedIdea, 'favourites')"><i class="fa fa-heart" aria-hidden="true"></i>
-          <span class="badge">{{providedIdea.favouritesCount}}</span></a>
+          <span class="badge">{{providedIdea.favouritesCount?providedIdea.favouritesCount:0}}</span></a>
     <a title="Edit" *ngIf="showEdit" (click)="updateIdea(providedIdea, 'edit')"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 </div>

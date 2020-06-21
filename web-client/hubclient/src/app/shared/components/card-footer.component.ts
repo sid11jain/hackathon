@@ -16,7 +16,7 @@ export class CardFooterComponent implements OnInit{
 
     @Input() providedIdea: Idea;
 
-    @Input() showEditOption=false;
+    @Input() showEditOption = false;
 
     showEdit = false;
 
@@ -27,7 +27,7 @@ export class CardFooterComponent implements OnInit{
 
 
     ngOnInit(): void {
-      this.showEdit = this.showEditOption || this.hubService && this.hubService.currentUser === this.providedIdea.submittedBy;
+      this.showEdit = this.showEditOption && this.hubService && this.hubService.currentUser === this.providedIdea.submittedBy;
     }
 
     updateIdea(providedIdea: Idea, attributeType: string) {
@@ -111,7 +111,6 @@ export class CardFooterComponent implements OnInit{
                 (userName) => userSessionName !== userName
               );
             }
-            alert(userList);
             break;
           }
         }
