@@ -204,23 +204,17 @@ export class LandingViewComponent implements OnInit {
     }
 
     const ideaFilters = this.convertIdeaFormValueToFilters();
-    console.log('idea filters', ideaFilters);
-    console.log('selected filters', this.selectedSearchFilters);
-    console.log('tabStaticFilters filters', tabStaticFilters);
-
-    // Call remove null values filter
-
-    // const dynamicFilters = this.decorateFilterValues();
     let allFilters = [];
-    allFilters.push(...ideaFilters);
-    allFilters.push(...this.selectedSearchFilters);
-    allFilters.push(...tabStaticFilters);
-    // Object.assign(ideaFilters, this.selectedSearchFilters, tabStaticFilters);
-    // if (tabStaticFilters) {
-    //   tabStaticFilters.forEach((row) => dynamicFilters.push(row));
-    // }
+    if (ideaFilters){
+      allFilters.push(...ideaFilters);
+    }
+    if (this.selectedSearchFilters){
+      allFilters.push(...this.selectedSearchFilters);
+    }
+    if (tabStaticFilters){
+      allFilters.push(...tabStaticFilters);
+    }
 
-    console.log('Searched filters', allFilters);
     allFilters = this.removeNullFilters(allFilters);
     this.hubService
       .searchIdeas({ filters: allFilters})
@@ -231,62 +225,6 @@ export class LandingViewComponent implements OnInit {
         this.ideasLoaded = true;
         console.log('All IDeas', this.ideas);
       });
-  }
-  setStep(any) {}
-
-  // A very messy and bad logic. Has to move such things to template and better cattering
-  onFilterCheck(
-    filter?: any,
-    filterPosition?: any,
-    valuePosition?: any,
-    value?: any
-  ) {
-    console.log('values ', this.filtersForm);
-    const filterFormValue = this.filtersForm.value as any;
-    filter as Filter;
-    console.log('check ', filter.values[valuePosition]);
-    const filterValueSelected =
-      filterFormValue.filters[filterPosition].values[valuePosition];
-    if (filterValueSelected) {
-      filterFormValue.filters[filterPosition].values[valuePosition] =
-        filter.values[valuePosition].value;
-    } else {
-      filterFormValue.filters[filterPosition].values[valuePosition] = null;
-    }
-    this.filtersForm.patchValue(filterFormValue);
-    console.log('patched filters', this.filtersForm.value);
-  }
-
-  decorateFilterValues() {
-    // cloning issue, thus went for filter thing.
-    const filters = this.filtersForm.value.filters.filter(x => x);
-    const enrichedFilters = [];
-    // Merging ideaFilters with Campaign filters
-    const ideaFilters = this.convertIdeaFormValueToFilters();
-    ideaFilters.forEach(ideaFilter => filters.push(ideaFilter));
-    console.log('DEcorat dilter start', filters);
-    const removeFilters = new Set();
-    filters.forEach((filter: any) => {
-      filter = plainToClass(Filter, filter);
-      this.fieldToExcludeFromFilters.forEach(field => delete filter[field]);
-
-      console.log('Enriched filter', filter);
-      if (
-        filter.values &&
-        Array.isArray(filter.values) &&
-        filter.values.length > 0
-      ) {
-        filter.values = filter.values.filter(Boolean);
-      }
-      if (filter.values && filter.values.length > 0 && filter.values[0]) {
-        enrichedFilters.push(filter);
-      }
-    });
-
-    console.log('Decorated filters', enrichedFilters);
-    console.log('original idea filters', IDEA_SEARCH_FILTERS);
-
-    return enrichedFilters;
   }
 
   removeNullFilters(filters: any[]){
@@ -373,11 +311,8 @@ export class LandingViewComponent implements OnInit {
         valueType: filter.valueType
           ? filter.valueType
           : this.filterValueType.STRING,
-
-        // values: Array.isArray(this.ideaFilterForm.value[filter.filterName])
-        //   ? this.ideaFilterForm.value[filter.filterName]
-        //   : [this.ideaFilterForm.value[filter.filterName]],
         nestedOn: false,
+        nestedField: '',
         searchType: filter.searchType ? filter.searchType : SearchType.EQUALS,
         comparisonOp: filter.comparisonOp ? filter.comparisonOp : ComparisonOperators.OP_EQ
       });
