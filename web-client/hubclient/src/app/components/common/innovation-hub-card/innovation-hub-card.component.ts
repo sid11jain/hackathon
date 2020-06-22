@@ -142,7 +142,7 @@ export class InnovationHubCardComponent implements OnInit {
     if (!this.editMode) {
       this.ideaForm.disable();
     }
-    if (!this.currentStageEditable()) {
+    if (!this.currentStageEditable() || (this.providedIdea && this.noNextStage(this.providedIdea.currentStage))) {
       this.ideaForm.controls.currentStage.disable();
     }
   }
@@ -236,7 +236,7 @@ export class InnovationHubCardComponent implements OnInit {
   }
 
   updateEntity() {
-    if (!this.ideaForm.valid){
+    if (!this.ideaForm.valid) {
       alert('Mandtaory values not provided');
       return;
     }
@@ -291,5 +291,17 @@ export class InnovationHubCardComponent implements OnInit {
     if (needRefersh) {
       window.location.reload(true);
     }
+  }
+
+  noNextStage(currentStage: any) {
+    const currentWorkflow: any = this.hubService.resolveWorkflow(currentStage);
+    if (
+      currentWorkflow &&
+      currentWorkflow.nextStage &&
+      currentWorkflow.nextStage.length === 0
+    ) {
+      return true;
+    }
+    return false;
   }
 }
