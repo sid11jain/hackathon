@@ -13,7 +13,7 @@
       <!-- basic-card -->
       <!-- <button class="custom-card btn-block" data-toggle="modal" data-target="#expandedCard" (click)="onCardClick()"> -->
       <div class="card {{cardBg[providedIdea.name.length % cardBg.length]}}">
-            <a href="#" class="custom-card btn btn-lg" role="button" aria-disabled="true" (click)="onCardClick(providedIdea)">
+            <a class="custom-card btn btn-lg" role="button" aria-disabled="true" (click)="onCardClick(providedIdea)">
             <div class="card-header">
                   <h12 *ngIf="!deckView">{{ (providedIdea.campaignName.length > 20) ? (providedIdea.campaignName | slice:0:20) + '...': providedIdea.campaignName }}</h12>
                   <h12 *ngIf="deckView">{{ (providedIdea.campaignName.length > 100) ? (providedIdea.campaignName | slice:0:100) + '...': providedIdea.campaignName }}</h12>

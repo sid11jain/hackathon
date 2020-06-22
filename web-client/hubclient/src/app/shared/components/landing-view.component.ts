@@ -53,7 +53,7 @@ export class LandingViewComponent implements OnInit {
 
   fieldToExcludeFromFilters = ['expanded'];
 
-  appendActiveClass = 'all';
+  appendActiveClass = '';
 
   constructor(
     private modalService: BsModalService,
@@ -88,7 +88,7 @@ export class LandingViewComponent implements OnInit {
       this.ideaFilterForm.addControl(filter.filterName, new FormControl());
     });
     console.log('filter form ', this.filtersForm);
-    this.routeToScreen('all');
+    this.routeToScreen('');
   }
 
   routeToScreen(tabRequestType: string){

@@ -58,16 +58,17 @@
     <div style="padding-bottom: 5px; padding-left: 15px;">
 
       <div class="btn-group btn-group-toggle" data-toggle="buttons" style="text-align: left; width: 75%;">
-        <label class="btn btn-success btn-lg" (click)="routeToScreen('all')" [ngClass]="appendActiveClass==='all'?'active':''">
+        <label class="btn btn-success btn-lg" (click)="routeToScreen('')" [ngClass]="appendActiveClass===''?'active':''">
+          <i class="fa fa-shopping-cart fa-lg" aria-hidden="true" style="padding-right: 5px;"></i>
           <input type="radio" name="ideas" id="allIdeas" autocomplete="off" checked>All Ideas
         </label>
         <label class="btn btn-success btn-lg" (click)="routeToScreen('trending')" [ngClass]="appendActiveClass==='trending'?'active':''">
+          <i class="fa fa-bar-chart fa-lg" aria-hidden="true" style="padding-right: 5px;"></i>
           <input type="radio" name="ideas" id="trendingIdeas" autocomplete="off">Trending Ideas
         </label>
         <label class="btn btn-success btn-lg" (click)="routeToScreen('popular')" [ngClass]="appendActiveClass==='popular'?'active':''">
-    <!--        <button  class="btn btn-success btn-lg"  style="display: none;">Popular Ideas </button>
-            <a href='popularIdeas' name="ideas" id="popularIdeas" >Popular Ideas</a> 
-     -->   <input type="radio" name="ideas" id="popularIdeas" autocomplete="off">Popular Ideas
+          <i class="fa fa-line-chart fa-lg" aria-hidden="true" style="padding-right: 5px;"></i>
+          <input type="radio" name="ideas" id="popularIdeas" autocomplete="off">Popular Ideas
       </label>
       </div>
 
