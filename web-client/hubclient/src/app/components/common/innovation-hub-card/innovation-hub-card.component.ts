@@ -215,7 +215,7 @@ export class InnovationHubCardComponent implements OnInit {
     //   return user.username !== this.hubService.currentUser;
     // });
 
-    if (this.providedIdea.currentStage) {
+    if (this.providedIdea && this.providedIdea.currentStage) {
       const selectedCurrentStage: any = this.hubService.resolveWorkflow(this.providedIdea.currentStage);
       this.allowedWorkflows.push(selectedCurrentStage);
       this.hubService.allWorkflows.filter((workflow) => {
