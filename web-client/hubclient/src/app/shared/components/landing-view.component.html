@@ -58,15 +58,17 @@
     <div style="padding-bottom: 5px; padding-left: 15px;">
 
       <div class="btn-group btn-group-toggle" data-toggle="buttons" style="text-align: left; width: 75%;">
-        <label class="btn btn-success btn-lg active">
+        <label class="btn btn-success btn-lg" (click)="routeToScreen('all')" [ngClass]="appendActiveClass==='all'?'active':''">
           <input type="radio" name="ideas" id="allIdeas" autocomplete="off" checked>All Ideas
         </label>
-        <label class="btn btn-success btn-lg">
-          <input type="radio" name="ideas" id="trendingIdeas" autocomplete="off" checked>Trending Ideas
+        <label class="btn btn-success btn-lg" (click)="routeToScreen('trending')" [ngClass]="appendActiveClass==='trending'?'active':''">
+          <input type="radio" name="ideas" id="trendingIdeas" autocomplete="off">Trending Ideas
         </label>
-        <label class="btn btn-success btn-lg">
-          <input type="radio" name="ideas" id="popularIdeas" autocomplete="off" checked>Popular Ideas
-        </label>
+        <label class="btn btn-success btn-lg" (click)="routeToScreen('popular')" [ngClass]="appendActiveClass==='popular'?'active':''">
+    <!--        <button  class="btn btn-success btn-lg"  style="display: none;">Popular Ideas </button>
+            <a href='popularIdeas' name="ideas" id="popularIdeas" >Popular Ideas</a> 
+     -->   <input type="radio" name="ideas" id="popularIdeas" autocomplete="off">Popular Ideas
+      </label>
       </div>
 
       <button type="button" title="Add" class="btn btn-info btn-lg" (click)="openCampaignComponent(operation.ADD)" style="margin-left: 10px; margin-right:5px">

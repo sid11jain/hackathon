@@ -19,12 +19,6 @@ export class SelectOptionConfig {
 }
 
 
-export class NameIdValuePair{
-    name: any;
-    idValuePair: IdValuePair;
-
-}
-
 export class IdValuePair{
     id: any;
     value: any;

@@ -33,6 +33,7 @@ import { BasicAuthHttpInterceptorService } from './services/basic-auth-intercept
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CardFooterComponent } from './shared/components/card-footer.component';
+import { UsernameToFullNamePipe } from './shared/components/username-to-fullname.pipe';
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
@@ -61,7 +62,8 @@ export class XhrInterceptor implements HttpInterceptor {
     FooterComponent,
     BasicCardCommentsComponent,
     HubInputChipsComponent,
-    CardFooterComponent
+    CardFooterComponent,
+    UsernameToFullNamePipe
   ],
   imports: [
     BrowserModule,

@@ -1,19 +1,17 @@
 import { OnInit, Component } from '@angular/core';
-import { BsModalService, ModalOptions, BsModalRef } from 'ngx-bootstrap/modal';
-import { InnovationHubComponent } from 'src/app/components/innovation-hub.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { InnovationsHubService } from 'src/app/services/innovations-hub.service';
 import {
-  Idea,
   Filter,
-  IDEA_SEARCH_FILTERS
+  IDEA_SEARCH_FILTERS,
+  COLUMN_NAME_COMMENTS_COUNT,
+  COLUMN_NAME_LIKES_COUNT,
+  COLUMN_NAME_FAVOURITES_COUNT
 } from 'src/app/models/innovation-hub.model';
-import { InnovationHubIdeaComponent } from 'src/app/components/innovation-hub-idea.component';
-import { InnovationHubCardComponent } from 'src/app/components/common/innovation-hub-card/innovation-hub-card.component';
 import { HubCampaignCardComponent } from 'src/app/components/common/innovation-hub-card/hub-campaign-card.component';
 import {
   OPERATION,
   FILTER_TYPE,
-  SelectOptionConfig,
   Collection,
   SearchType,
   ComparisonOperators
@@ -22,7 +20,6 @@ import { plainToClass } from 'class-transformer';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
 import { user } from 'src/app/models/sample/sample-campaign';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -56,6 +53,8 @@ export class LandingViewComponent implements OnInit {
 
   fieldToExcludeFromFilters = ['expanded'];
 
+  appendActiveClass = 'all';
+
   constructor(
     private modalService: BsModalService,
     public hubService: InnovationsHubService
@@ -63,13 +62,6 @@ export class LandingViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.setInitialData();
-    this.hubService.getAllIdeas().subscribe((resp: any) => {
-      if (resp && resp.data) {
-        this.ideas = resp.data as [];
-      }
-      this.ideasLoaded = true;
-      console.log('All IDeas', this.ideas);
-    });
 
     this.allFilters = plainToClass(
       Filter,
@@ -96,6 +88,73 @@ export class LandingViewComponent implements OnInit {
       this.ideaFilterForm.addControl(filter.filterName, new FormControl());
     });
     console.log('filter form ', this.filtersForm);
+    this.routeToScreen('all');
+  }
+
+  routeToScreen(tabRequestType: string){
+    if (tabRequestType === 'popular') {
+      const commentCountFilter = this.createFiltersForLandingPage(
+        COLUMN_NAME_COMMENTS_COUNT,
+        ComparisonOperators.OP_GTE,
+        ['1']
+      );
+      const likesCountFilter = this.createFiltersForLandingPage(
+        COLUMN_NAME_LIKES_COUNT,
+        ComparisonOperators.OP_GTE,
+        ['2']
+      );
+      const favouritesCountFilter = this.createFiltersForLandingPage(
+        COLUMN_NAME_FAVOURITES_COUNT,
+        ComparisonOperators.OP_GTE,
+        ['1']
+      );
+      this.appendActiveClass = tabRequestType;
+      this.searchIdeasForTabs([commentCountFilter, likesCountFilter, favouritesCountFilter]);
+    } else if (tabRequestType === 'trending') {
+      const commentCountFilter = this.createFiltersForLandingPage(
+        COLUMN_NAME_COMMENTS_COUNT,
+        ComparisonOperators.OP_GTE,
+        ['3']
+      );
+      const likesCountFilter = this.createFiltersForLandingPage(
+        COLUMN_NAME_LIKES_COUNT,
+        ComparisonOperators.OP_GTE,
+        ['2']
+      );
+      this.appendActiveClass = tabRequestType;
+      this.searchIdeasForTabs([commentCountFilter, likesCountFilter]);
+    } else{
+      this.appendActiveClass = tabRequestType;
+      this.hubService.getAllIdeas().subscribe((resp: any) => {
+        if (resp && resp.data) {
+          this.ideas = resp.data as [];
+        }
+        this.ideasLoaded = true;
+        console.log('All IDeas', this.ideas);
+      });
+    }
+  }
+
+   createFiltersForLandingPage(filterName, comparisonOp, values){
+    const filter = new Filter();
+    filter.filterName = filterName;
+    filter.comparisonOp = comparisonOp;
+    filter.values = values;
+    filter.nestedOn = false;
+    filter.valueType = 'numeric';
+    return filter;
+  }
+
+  searchIdeasForTabs(searchFilters: any[]){
+    const filters = {filters: searchFilters};
+
+    this.hubService.searchIdeas(filters).subscribe((resp: any) => {
+      if (resp && resp.data) {
+        this.ideas = resp.data as [];
+      }
+      this.ideasLoaded = true;
+      console.log('Trendig Ideas', this.ideas);
+    });
   }
 
   openCampaignComponent(operationInput: OPERATION) {

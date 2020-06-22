@@ -1,8 +1,13 @@
-
-.comment-block{
-    border-bottom: 1px solid lightgrey;
+.comment-body{
+    padding:0.50rem;
+    .posted{
+        padding-top:5px;
+    }
 }
+.comment-block{
+    border-bottom: 1px  lightgrey;
+    }
 
-.button{
-    border: 1px solid lightgrey;
+.add-new-comment{
+    border-top:none; ;
 }

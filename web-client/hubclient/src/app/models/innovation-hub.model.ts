@@ -109,3 +109,9 @@ export class Tags{
     this.name = name;
   }
 }
+
+export class User {
+  username: string;
+  fullName: string;
+  email: string;
+}

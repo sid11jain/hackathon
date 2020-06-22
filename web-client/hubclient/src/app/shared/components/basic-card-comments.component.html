@@ -1,25 +1,21 @@
 <div class="athena">
 <form [formGroup]="ideaCommentsForm">
+  <div class="modal-content">  
     <div class="modal-header" style="margin-right: 10px;"><h3>Comments</h3>
         <button class="btn btn-danger mr-2" type="button" (click)="closeCommentModal()">X</button>
     </div>
-    <div class="modal-body" >
-        <div class="row comment-block" *ngFor= "let commentItem of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
-            <div>     
-             
-            <div class="column">comments</div>  
-            <div class="column">comment line 2 </div>
-            <div class="column">
-            <span class="">comment lin e3</span>
-        </div>   
-            
-            </div>
-         </div>
+    <div class="modal-body comment-body">
+        <div class="comment-block" *ngFor= "let commentItem of this.idea.comments">    
+            <div class="column" *ngIf ="commentItem['commentedBy']"><B>{{commentItem['commentedBy'].value | usernameToFullName:allUsers? allUsers:[]}}</B></div>  
+            <div class="column" *ngIf ="commentItem['comment']">{{commentItem['comment'].value}} </div>
+            <div class="column posted" *ngIf ="commentItem['commentedOn']"><h6>Posted On: {{commentItem['commentedOn'].value | date:'medium'}}</h6></div>   
+        </div>
+    </div>   
        <div class="modal-footer add-new-comment">
        <textarea class="form-control" onfocus="this.value=''" formControlName="commentToAdd"></textarea>
        <button type="button" title="view" class="btn btn-info mr-2" (click)="saveComment()"> Save</button>
        <button class="btn btn-danger mr-2" (click)="closeCommentModal()">Close</button>
-        </div>
     </div>
+   </div> 
 </form>
 </div>
