@@ -183,7 +183,7 @@ export class InnovationHubCardComponent implements OnInit {
             this.ideaForm.value.name + '' + resp.error.errorMessage + ' name'
           );
         } else {
-          this.hideModal();
+          this.hideModal(true);
         }
       });
     } else {
@@ -271,7 +271,7 @@ export class InnovationHubCardComponent implements OnInit {
           Collection.IDEA
         )
         .subscribe((x) => {
-          this.hideModal();
+          this.hideModal(true);
         });
     }
   }
@@ -292,9 +292,11 @@ export class InnovationHubCardComponent implements OnInit {
 
   onModalHide() {}
 
-  hideModal() {
+  hideModal(needRefersh?: boolean) {
     this.modalRef.hide();
     // Modal onHide subscription is not working properly. Going with this basic approach for now.
+    if (needRefersh){
     window.location.reload(true);
+    }
   }
 }

@@ -1,9 +1,9 @@
 <div class="athena">
     <div class="modal-header">
         <h3>Please select a campaign</h3>
-        <a class="close pull-right" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
-            <i class="fas fa-times"></i>
-        </a>
+        <button class="btn btn-danger" type="button" data-dismiss="modal" aria-label="Close" (click)="closeModal()">X
+            <!-- <i class="fas fa-times"></i> -->
+    </button>
     </div>
     <div class="modal-body">
         <form [formGroup]="campaignForm">
