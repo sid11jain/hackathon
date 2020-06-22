@@ -31,7 +31,7 @@
                   <!-- <h12>Description: </h12> -->
                   <p *ngIf="!deckView"><h12>Description: </h12>{{(providedIdea.description.length > 100) ?  (providedIdea.description | slice:0:100) + '...' : providedIdea.description}}</p>
                   <p *ngIf="deckView"><h12>Description: </h12>{{(providedIdea.description.length > 500) ?  (providedIdea.description | slice:0:500) + '...' : providedIdea.description}}</p>
-                  <h12>Campaign ending in: </h12><span>{{calculateCampaignEndingDays(providedIdea.campaign.endDate)}} days</span>
+                  <h12>Campaign {{calculateCampaignEndingDays(providedIdea.campaign.endDate)}} </h12>
                   <!-- <span>{{providedIdea.campaign.endDate}}</span> -->
             </div>
             </a>

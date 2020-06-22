@@ -12,7 +12,7 @@ import {
   COLUMN_NAME_CURRENT_STAGE,
   Tags,
 } from 'src/app/models/innovation-hub.model';
-import { FormControl, FormArray, FormGroup } from '@angular/forms';
+import { FormControl, FormArray, FormGroup, Validators } from '@angular/forms';
 import { InnovationsHubService } from 'src/app/services/innovations-hub.service';
 import {
   SelectOptionConfig,
@@ -98,6 +98,8 @@ export class InnovationHubCardComponent implements OnInit {
       campaignName: new FormControl(
         this.providedIdea ? this.providedIdea.campaignName : undefined
       ),
+      campaignStartDate: new FormControl(),
+      campaignEndDate: new FormControl(),
       description: new FormControl(
         this.providedIdea ? this.providedIdea.description : undefined
       ),
@@ -107,12 +109,13 @@ export class InnovationHubCardComponent implements OnInit {
       tags: new FormControl(
         this.providedIdea ? this.providedIdea.tags : undefined
       ),
-      currentStage: new FormControl({
-        value: this.providedIdea
+      currentStage: new FormControl(
+        this.providedIdea
           ? this.providedIdea.currentStage
           : DEFAULT_CURRENT_STAGE,
-        disabled: !this.currentStageEditable(),
-      }),
+        Validators.required
+        // disabled: !this.currentStageEditable()
+      ),
       submittedBy: new FormControl(
         this.providedIdea
           ? this.providedIdea.submittedBy
@@ -139,7 +142,9 @@ export class InnovationHubCardComponent implements OnInit {
     if (!this.editMode) {
       this.ideaForm.disable();
     }
-    console.log('forms ', this.ideaForm.value);
+    if (!this.currentStageEditable()) {
+      this.ideaForm.controls.currentStage.disable();
+    }
   }
 
   getIdea() {
@@ -159,7 +164,6 @@ export class InnovationHubCardComponent implements OnInit {
         });
       });
       this.providedIdeaCampaignValues = Object.assign({}, ...keyValue);
-      console.log('LAst11', this.providedIdeaCampaignValues);
     }
   }
 
@@ -174,9 +178,10 @@ export class InnovationHubCardComponent implements OnInit {
   }
 
   addEntity() {
-    console.log('Add', this.ideaForm.value);
     if (this.ideaForm.value.name) {
       this.ideaForm.value.campaignName = this.campaign.name;
+      this.ideaForm.value.campaignStartDate = this.campaign.startDate;
+      this.ideaForm.value.campaignEndDate = this.campaign.endDate;
       this.hubService.submitIdea(this.ideaForm.value).subscribe((resp: any) => {
         if (resp && resp.error) {
           alert(
@@ -192,7 +197,6 @@ export class InnovationHubCardComponent implements OnInit {
   }
 
   setCampaign() {
-    console.log('idea card campaign', this.campaign);
     if (this.campaign) {
       this.campaignFields = this.campaign.campaignFields;
     } else {
@@ -201,7 +205,6 @@ export class InnovationHubCardComponent implements OnInit {
         .subscribe((resp: any) => {
           if (resp && resp.data) {
             this.allCampaigns = JSON.parse(resp.data);
-            console.log('all camp', this.allCampaigns);
           }
         });
     }
@@ -211,37 +214,36 @@ export class InnovationHubCardComponent implements OnInit {
     this.allTags = this.hubService.allTags;
     // Skipping the filtering of current user from list - its causing issue at dropdown when current user is contributor.
     this.allUsers = this.hubService.allUsers;
-    // this.allUsers = this.hubService.allUsers.filter((user) => {
-    //   return user.username !== this.hubService.currentUser;
-    // });
 
     if (this.providedIdea && this.providedIdea.currentStage) {
-      const selectedCurrentStage: any = this.hubService.resolveWorkflow(this.providedIdea.currentStage);
+      const selectedCurrentStage: any = this.hubService.resolveWorkflow(
+        this.providedIdea.currentStage
+      );
       this.allowedWorkflows.push(selectedCurrentStage);
       this.hubService.allWorkflows.filter((workflow) => {
-           if (selectedCurrentStage.nextStage.includes(
-          workflow.currentStage
-        )){
+        if (selectedCurrentStage.nextStage.includes(workflow.currentStage)) {
           this.allowedWorkflows.push(workflow);
         }
       });
-
-    } else{
+    } else {
       // Defaulting to initiated state for ideas not having any stage.
-      this.allowedWorkflows = [this.hubService.resolveWorkflow(DEFAULT_CURRENT_STAGE)];
+      this.allowedWorkflows = [
+        this.hubService.resolveWorkflow(DEFAULT_CURRENT_STAGE),
+      ];
     }
 
     this.setCampaign();
-
   }
 
   updateEntity() {
+    if (!this.ideaForm.valid){
+      alert('Mandtaory values not provided');
+      return;
+    }
     if (this.ideaForm.value.name) {
       const addedTags = [];
       if (this.ideaForm.value.tags) {
         const selectedTags = this.ideaForm.value.tags as [];
-        console.log('All tags : ', this.allTags);
-        console.log('Selected tags: ', selectedTags);
         selectedTags.filter((tag: any) => {
           if (
             this.allTags.filter((existingTag) => existingTag.name === tag)
@@ -264,7 +266,6 @@ export class InnovationHubCardComponent implements OnInit {
           this.ideaForm.value,
           [
             COLUMN_NAME_IDEA_TAG,
-            COLUMN_NAME_IDEA_DESCRIPTION,
             COLUMN_NAME_IDEA_CONTRIBUTORS,
             COLUMN_NAME_CURRENT_STAGE,
           ],
@@ -282,21 +283,13 @@ export class InnovationHubCardComponent implements OnInit {
     return this.newIdea || this.hubService.currentUserRoles === Roles.ADMIN;
   }
 
-  // resolveWorkflow(currentStage: any) {
-  //   if (this.allWorkflows && this.allWorkflows.length > 0) {
-  //     return this.allWorkflows.filter(
-  //       (workflow) => workflow.currentStage === currentStage
-  //     );
-  //   }
-  // }
-
   onModalHide() {}
 
   hideModal(needRefersh?: boolean) {
     this.modalRef.hide();
     // Modal onHide subscription is not working properly. Going with this basic approach for now.
-    if (needRefersh){
-    window.location.reload(true);
+    if (needRefersh) {
+      window.location.reload(true);
     }
   }
 }

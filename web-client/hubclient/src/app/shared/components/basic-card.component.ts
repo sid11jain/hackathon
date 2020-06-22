@@ -94,9 +94,10 @@ export class BasicCardComponent implements OnInit {
     const differenceInTime = endDate.getTime() - todaysDate.getTime();
     // To calculate the no. of days between two dates
     const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
-    return differenceInDays + 1;
+    return differenceInDays >= 0 ? 'ending in: ' + differenceInDays + 1 + ' days' : 'ended';
   }
-    return 'some days';
+    return 'ended';
+    // ending in:
 }
 
 }

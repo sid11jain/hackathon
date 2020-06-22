@@ -365,15 +365,31 @@ export class LandingViewComponent implements OnInit {
     return values;
   }
 
-  // ngDateInput(event: any, toDate: boolean){
-  //   console.log('Ng Date', event);
-  //   if (toDate){
-  //     this.ideaFilterForm.patchValue({postedOnTo: event});
-  //   }else{
-  //     this.ideaFilterForm.patchValue({postedOnFrom: event});
-  //   }
+//   (select)="dateInput($event)"
+//   (dateSelect)="ngDateInput($event)"
+//   onfocus="(this.type='date')" onblur="(this.type='text')"
 
-  //   console.log('idea filter after ', this.ideaFilterForm);
-  // }
+// ngDateInput(event: any, toDate?: boolean){
+// console.log('Ng Date', event);
+// if (toDate){
+// event.day = event.day + 1;
+
+// this.ideaFilterForm.patchValue({postedOnTo: this.hubService.convertNgDateToDate(event)});
+// }else{
+// this.ideaFilterForm.patchValue({postedOnFrom: this.hubService.convertNgDateToDate(event)});
+// }
+// console.log('idea filter after ', this.ideaFilterForm);
+// }
+
+// dateInput(event: any, toDate?: boolean){
+// if (toDate){
+// // event.day = event.day + 1;
+
+// this.ideaFilterForm.patchValue({postedOnTo: new Date(event.target.value)});
+// }else{
+// this.ideaFilterForm.patchValue({postedOnFrom: new Date(event.target.value)});
+// }
+// console.log('idea filter after ', this.ideaFilterForm);
+// }
 
 }
