@@ -127,8 +127,8 @@ _allWorkflows: any[];
   submitIdea(data: any) {
     const submitUrl = this.url + 'submit-idea';
     console.log('submitted data', data);
-    return of(null);
-    // return this.http.post(submitUrl, { data: JSON.stringify(data) });
+    // return of(null);
+    return this.http.post(submitUrl, { data: JSON.stringify(data) });
   }
 
   getCampaign(campaginCriteria: any) {
