@@ -21,6 +21,7 @@ import { FormGroup, FormArray, FormControl } from '@angular/forms';
 import { user } from 'src/app/models/sample/sample-campaign';
 import { Observable, of } from 'rxjs';
 import { element } from 'protractor';
+import { CreateCampaignComponent } from 'src/app/components/create-campaign/create-campaign.component';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -36,6 +37,7 @@ export class LandingViewComponent implements OnInit {
   ideasLoaded = false;
   deckView = false;
   disableFilters = false;
+  createCampaign = false;
   ideaFilterForm: FormGroup;
   filtersForm: FormGroup;
   filterValueType: any = FILTER_TYPE;
@@ -185,6 +187,9 @@ export class LandingViewComponent implements OnInit {
     this.deckView = !this.deckView;
   }
 
+  setCreateCampaignMode() {
+    this.createCampaign = !this.createCampaign;
+  }
   searchIdeas(appendActiveClass: string) {
     console.log('filters', this.filtersForm.value);
     console.log('idea filters', this.ideaFilterForm.value);
