@@ -192,7 +192,7 @@ export class LandingViewComponent implements OnInit {
   setCreateCampaignMode() {
     this.createCampaign = !this.createCampaign;
   }
-  searchIdeas(appendActiveClass: string) {
+  searchIdeas() {
     console.log('filters', this.filtersForm.value);
     console.log('idea filters', this.ideaFilterForm.value);
 

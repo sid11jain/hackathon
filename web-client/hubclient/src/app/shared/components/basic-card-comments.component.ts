@@ -83,7 +83,6 @@ export class BasicCardCommentsComponent implements OnInit {
         )
         .subscribe();
     }
-    this.modalRef.hide();
   }
 
   closeCommentModal() {
