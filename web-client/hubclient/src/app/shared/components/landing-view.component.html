@@ -76,7 +76,7 @@
           Add</button>
       <button *ngIf="hubService.isCurrentUserAdmin" type="button" title="Export" class="btn btn-info btn-lg"
           (click)="openCampaignComponent(operation.EXPORT)" style="margin-left: 5px; margin-right:5px"> Export</button>
-      <button type="button" title="searchIdeas" class="btn btn-info btn-lg" (click)="searchIdeas()" style="margin-left: 5px;">Search</button>
+      <button type="button" title="searchIdeas" class="btn btn-info btn-lg" (click)="searchIdeas('appendActiveClass')" style="margin-left: 5px;">Search</button>
 
     </div>
   </form>

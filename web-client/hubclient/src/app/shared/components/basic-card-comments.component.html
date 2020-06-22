@@ -11,7 +11,7 @@
             <div class="column posted" *ngIf ="commentItem['commentedOn']"><h6>Posted On: {{commentItem['commentedOn'].value | date:'medium'}}</h6></div>   
         </div>
     </div>   
-       <div class="modal-footer add-new-comment">
+    <div class="modal-footer add-new-comment">
        <textarea class="form-control" onfocus="this.value=''" formControlName="commentToAdd"></textarea>
        <button type="button" title="view" class="btn btn-info mr-2" (click)="saveComment()"> Save</button>
        <button class="btn btn-danger mr-2" (click)="closeCommentModal()">Close</button>
