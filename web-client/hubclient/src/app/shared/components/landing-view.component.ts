@@ -56,6 +56,8 @@ export class LandingViewComponent implements OnInit {
 
   fieldToExcludeFromFilters = ['expanded'];
 
+  selectedSearchFilters: any[] = [];
+
   appendActiveClass = '';
 
   constructor(
@@ -201,13 +203,27 @@ export class LandingViewComponent implements OnInit {
       tabStaticFilters = this.getTrendingStaticFilters();
     }
 
-    const dynamicFilters = this.decorateFilterValues();
-    if (tabStaticFilters) {
-      tabStaticFilters.forEach((row) => dynamicFilters.push(row));
-    }
+    const ideaFilters = this.convertIdeaFormValueToFilters();
+    console.log('idea filters', ideaFilters);
+    console.log('selected filters', this.selectedSearchFilters);
+    console.log('tabStaticFilters filters', tabStaticFilters);
 
+    // Call remove null values filter
+
+    // const dynamicFilters = this.decorateFilterValues();
+    let allFilters = [];
+    allFilters.push(...ideaFilters);
+    allFilters.push(...this.selectedSearchFilters);
+    allFilters.push(...tabStaticFilters);
+    // Object.assign(ideaFilters, this.selectedSearchFilters, tabStaticFilters);
+    // if (tabStaticFilters) {
+    //   tabStaticFilters.forEach((row) => dynamicFilters.push(row));
+    // }
+
+    console.log('Searched filters', allFilters);
+    allFilters = this.removeNullFilters(allFilters);
     this.hubService
-      .searchIdeas({ filters: dynamicFilters})
+      .searchIdeas({ filters: allFilters})
       .subscribe((resp: any) => {
         if (resp && resp.data) {
           this.ideas = resp.data as [];
@@ -271,6 +287,30 @@ export class LandingViewComponent implements OnInit {
     console.log('original idea filters', IDEA_SEARCH_FILTERS);
 
     return enrichedFilters;
+  }
+
+  removeNullFilters(filters: any[]){
+    if (filters && filters.length > 0){
+      const notNullFilters = [];
+      filters.forEach((filter: any) => {
+        filter = plainToClass(Filter, filter);
+        this.fieldToExcludeFromFilters.forEach(field => delete filter[field]);
+
+        console.log('Enriched filter', filter);
+        if (
+          filter.values &&
+          Array.isArray(filter.values) &&
+          filter.values.length > 0
+        ) {
+          filter.values = filter.values.filter(Boolean);
+        }
+        if (filter.values && filter.values.length > 0 && filter.values[0]) {
+          notNullFilters.push(filter);
+        }
+      });
+      filters = notNullFilters;
+    }
+    return filters;
   }
 
   getUsers(current) {
@@ -368,6 +408,11 @@ export class LandingViewComponent implements OnInit {
 
     console.log('values', values);
     return values;
+  }
+
+  selectedFilters(event: any){
+this.selectedSearchFilters = event;
+console.log('Selected filters', this.selectedSearchFilters);
   }
 
 //   (select)="dateInput($event)"

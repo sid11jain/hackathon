@@ -35,6 +35,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { CardFooterComponent } from './shared/components/card-footer.component';
 import { UsernameToFullNamePipe } from './shared/components/username-to-fullname.pipe';
 import { CreateCampaignComponent } from './components/create-campaign/create-campaign.component';
+import { HubFilterPanelComponent } from './components/common/hub-filter-panel/hub-filter-panel.component';
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
@@ -65,7 +66,8 @@ export class XhrInterceptor implements HttpInterceptor {
     HubInputChipsComponent,
     CardFooterComponent,
     UsernameToFullNamePipe,
-    CreateCampaignComponent
+    CreateCampaignComponent,
+    HubFilterPanelComponent
   ],
   imports: [
     BrowserModule,

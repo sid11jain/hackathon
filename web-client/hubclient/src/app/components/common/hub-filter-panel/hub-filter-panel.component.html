@@ -1,0 +1,27 @@
+<form *ngIf="filtersForm" [formGroup]="filtersForm" class="filters-container">
+    <mat-accordion [multi]="true">
+      <mat-expansion-panel hideToggle style="pointer-events: none;">
+        <mat-expansion-panel-header style="background-color: #1e7e34; color: white; font-weight: 600; font-size: medium;">            
+          Filters
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngFor="let filter of allFilters; let filterPosition = index"
+        [expanded]="filter.expanded" (opened)="setStep(0)" hideToggle [disabled]="disableFilters"
+        formArrayName="filters">
+        <mat-expansion-panel-header>            
+          {{filter.filterName}}
+        </mat-expansion-panel-header>
+
+        <form formGroupName="{{filterPosition}}" class="control-group">
+          <div formArrayName="values" *ngFor="let filterValue of filter.values; let valuePosition = index "
+            class="controls span2">
+            <label class="mat-checkbox">
+              <input type="checkbox" value="{{filterValue.value}}" formControlName="{{valuePosition}}"
+                (change)="onFilterCheck(filter, filterPosition, valuePosition, filterValue.value)">
+              {{filterValue.value}}
+            </label>
+          </div>
+        </form>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </form>
