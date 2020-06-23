@@ -43,6 +43,7 @@ _allWorkflows: any[];
     bindLabel: 'name',
     bindValue: 'name',
     addTags: true,
+    addTagText: 'Add Tags'
   };
 
   public tagsSearchOptionConfig: SelectOptionConfig = {
@@ -76,6 +77,7 @@ _allWorkflows: any[];
     clearable: true,
     // bindValue: 'id',
     addTags: true,
+    addTagText: 'Add Allowed Values'
   };
 
   public typeOptionConfig: SelectOptionConfig = {
@@ -83,8 +85,7 @@ _allWorkflows: any[];
     searchable: true,
     clearable: true,
     bindValue: 'id',
-    bindLabel: 'value',
-    addTags: true,
+    bindLabel: 'value'
   };
 
   headers = new HttpHeaders({

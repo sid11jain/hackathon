@@ -1,7 +1,7 @@
 <div class="athena">
     <div class="selectOption" #selectOptionContainer>
         <ng-select class="input-lg" [addTag]="config && config.addTags? config.addTags : false"
-            [addTagText]="config && config.addTags? 'Add Tag': ''" [formControl]="callingForm" [items]="optionList"
+            [addTagText]="config && config.addTagText? config.addTagText: ''" [formControl]="callingForm" [items]="optionList"
             bindLabel="{{config && config.bindLabel? config.bindLabel : defaultBindLabel}}"
             bindValue="{{config && config.bindValue? config.bindValue : null}}" [placeholder]="defaultValueLabel"
             [multiple]="config.multipleOptions" [searchable]="config.searchable" [clearable]="config.clearable">

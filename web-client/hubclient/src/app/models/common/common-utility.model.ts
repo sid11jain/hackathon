@@ -18,6 +18,7 @@ export class SelectOptionConfig {
   bindValue?: any;
   bindLabel?: any;
   addTags?: boolean;
+  addTagText?: string;
 }
 
 
