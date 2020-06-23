@@ -1,40 +1,62 @@
 <body class="athena">
     <div class="create-campaign" style="text-align: center; margin-bottom: 50px;">
-        <form [formGroup]="createCampaignForm" (ngSubmit)="createCampaign()">
-            <div>
-                <h2 for="campaignName">Campaign Name: </h2>
-                <input type="text" class="form-control" formControlName="campaignName" id="campaignName" required style="text-align: left; width: 33%; margin-left: 33%;">
+        <form [formGroup]="createCampaignForm">
+            <div class="row-md-4">
+                <h2 for="campaignName" class="col-md-4">Campaign Name: </h2>
+                <input type="text" class="form-control col-md-4" formControlName="campaignName" id="campaignName" required style="text-align: left;">
                 
             </div>
             <div>
                 <h2 for="description" >Description: </h2>
-                <textarea type="textarea" class="form-control mb-4" formControlName="description" id="description" required style="text-align: left; width: 33%; margin-left: 33%;">
+                <textarea type="textarea" class="form-control mb-4" formControlName="description" id="description" required style="text-align: left;">
                 </textarea>
             </div>
             <div>
                 <h2 for="startDate">Start Date:</h2>
+                <div class="col-md-6">
+                    <!-- (dateSelect)="ngDateInput($event, false)" -->
+                      <i class="fa fa-calendar" aria-hidden="true" (click)="fromDate.toggle()" type="button" style="padding:7px;"></i>
+                  <input class="form-control" placeholder="Posted On From" 
+                       name="dp" formControlName="postedOnFrom" ngbDatepicker #fromDate="ngbDatepicker">   
+                  </div>
                 <h2 for="endDate">End Date:</h2>
+                <div class="col-md-6">
+                    <!-- (dateSelect)="ngDateInput($event, false)" -->
+                      <i class="fa fa-calendar" aria-hidden="true" (click)="fromDate.toggle()" type="button" style="padding:7px;"></i>
+                  <input class="form-control" placeholder="Posted On From" 
+                       name="dp" formControlName="postedOnFrom" ngbDatepicker #fromDate="ngbDatepicker">   
+                  </div>
             </div>
             <h2>Campaign Fields </h2>
-            <div formArrayName="campaignFields">
-                <div *ngFor="let field of campaignFields.controls; let i=index">
+            <div formArrayName="campaignFields" *ngFor="let field of campaignFields.controls; let fieldPosition=index">
+                <div formGroupName="{{fieldPosition}}">
                     <label style="font-weight: 600;">
                         Field Name: 
-                        <input type="text" class="form-control mb-4" [formControlName]="i">
+                        <input type="text" class="form-control mb-4" formControlName="name">
                     </label>
-                    <label style="font-weight: 600;">
-                          Allowed values: 
-                        <input type="text" class="form-control mb-4" [formControlName]="i" style="margin-left: 10px;">
+                    <label class=" mb-4" style="font-weight: 600;">
+                        Allowed values: 
+                        <!-- <input type="text" class="form-control mb-4" [formControlName]="i" style="margin-left: 10px;"> -->
+                        <h8 >
+                            <innovation-hub-select-option [fieldFormControlName]="'allowedValues'"
+                            [optionList]="[]"
+                            [selectedOptions]="[]"
+                            [config]="addFieldOptionConfig"></innovation-hub-select-option>
+                        </h8>
                     </label>
                     <label style="font-weight: 600;">
                           Value type: 
-                      <input type="text" class="form-control mb-4" [formControlName]="i" style="margin-left: 20px;">
+                          <innovation-hub-select-option [fieldFormControlName]="'type'"
+                          [optionList]="typeDisplay"
+                          [selectedOptions]="[]"
+                          [multipleOptions]="false"></innovation-hub-select-option>
+                      <!-- <input type="text" class="form-control mb-4" formControlName="type" style="margin-left: 20px;"> -->
                     </label>
                     <button (click)="removeField()" class="btn btn-danger" style="margin-left: 30px">X</button><br><br>
                 </div>
             </div>
             <button (click)="addCustomField()" class="btn btn-info">Add new field</button><br><br>
-            <button type="submit" class="btn btn-success btn-lg">Create</button>
+            <button type="submit" class="btn btn-success btn-lg" (click)="createCampaign()">Create</button>
         </form>
     </div>
 

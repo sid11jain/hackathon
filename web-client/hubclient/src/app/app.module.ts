@@ -1,11 +1,26 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, Injectable } from '@angular/core';
-import {NgbModule, NgbDatepicker} from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgModule,
+  NO_ERRORS_SCHEMA,
+  CUSTOM_ELEMENTS_SCHEMA,
+  Injectable,
+} from '@angular/core';
+import { NgbModule, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InnovationHubComponent } from './components/innovation-hub.component';
-import { HttpClientModule, HttpInterceptor, HttpRequest, HttpHandler, HTTP_INTERCEPTORS } from '@angular/common/http';
-import {FormsModule, ReactiveFormsModule, ɵNgSelectMultipleOption} from '@angular/forms';
+import {
+  HttpClientModule,
+  HttpInterceptor,
+  HttpRequest,
+  HttpHandler,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  ɵNgSelectMultipleOption,
+} from '@angular/forms';
 import { InnovationsHubService } from './services/innovations-hub.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { InnovationHubIdeaComponent } from './components/innovation-hub-idea.component';
@@ -22,7 +37,7 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { BasicCardCommentsComponent } from './shared/components/basic-card-comments.component';
 import { HubInputChipsComponent } from './components/common/hub-input-chips/hub-input-chips.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
@@ -30,19 +45,19 @@ import { NgxTagsInputModule } from 'ngx-tags-input';
 import { TagInputModule } from 'ngx-chips';
 import { NgxTypeaheadModule } from 'ngx-typeahead';
 import { BasicAuthHttpInterceptorService } from './services/basic-auth-interceptor.service';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CardFooterComponent } from './shared/components/card-footer.component';
 import { UsernameToFullNamePipe } from './shared/components/username-to-fullname.pipe';
 import { CreateCampaignComponent } from './components/create-campaign/create-campaign.component';
 import { HubFilterPanelComponent } from './components/common/hub-filter-panel/hub-filter-panel.component';
+import { DatePipe } from '@angular/common';
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
-
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const xhr = req.clone({
-      headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
+      headers: req.headers.set('X-Requested-With', 'XMLHttpRequest'),
     });
     return next.handle(xhr);
   }
@@ -67,12 +82,12 @@ export class XhrInterceptor implements HttpInterceptor {
     CardFooterComponent,
     UsernameToFullNamePipe,
     CreateCampaignComponent,
-    HubFilterPanelComponent
+    HubFilterPanelComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgxSpinnerModule ,
+    NgxSpinnerModule,
     HttpClientModule,
     ModalModule.forRoot(),
     FormsModule,
@@ -86,12 +101,21 @@ export class XhrInterceptor implements HttpInterceptor {
     TagInputModule,
     NgxTypeaheadModule,
     MatDatepickerModule,
-    MatNativeDateModule
-
-    ],
+    MatNativeDateModule,
+  ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
-  providers: [InnovationsHubService, ExportExcelService, BsModalService, BsModalRef,
-    { provide: HTTP_INTERCEPTORS, useClass: BasicAuthHttpInterceptorService, multi: true }],
-  bootstrap: [AppComponent]
+  providers: [
+    InnovationsHubService,
+    ExportExcelService,
+    BsModalService,
+    BsModalRef,
+    DatePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BasicAuthHttpInterceptorService,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

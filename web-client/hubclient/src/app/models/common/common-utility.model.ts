@@ -1,3 +1,5 @@
+import { Type } from 'class-transformer';
+
 export enum Users {
   USERNAME = 'username',
   ROLES = 'roles',
@@ -26,6 +28,7 @@ export class IdValuePair{
       this.id = id;
       this.value = value;
     }
+
 }
 
 export enum OPERATION {
@@ -39,7 +42,7 @@ export enum FILTER_TYPE {
   DATE = 'date',
 }
 
-export const DATE_FORMAT = 'dd-MM-yyyy';
+export const DATE_FORMAT = 'yyyy-MM-dd';
 
 export enum SearchType {
   EQUALS = 'equals',
@@ -96,3 +99,18 @@ export enum Types {
   DATE = 'date',
   DOCUMENT = 'doc',
 }
+
+export const TypeDisplay = [
+  {
+    id: Types.SINGLE_OPTION,
+    value: 'One'
+  },
+  {
+    id: Types.MULTI_OPTION,
+    value: 'Many'
+  }
+  // {
+  //   id: Types.TEXT,
+  //   value: 'Any'
+  // }
+];
