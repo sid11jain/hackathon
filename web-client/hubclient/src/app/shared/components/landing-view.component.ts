@@ -37,7 +37,7 @@ export class LandingViewComponent implements OnInit {
   ideasLoaded = false;
   deckView = false;
   disableFilters = false;
-  createCampaign = false;
+  createCampaign = true; // this needs to be false by default, keeping it true for testing
   ideaFilterForm: FormGroup;
   filtersForm: FormGroup;
   filterValueType: any = FILTER_TYPE;

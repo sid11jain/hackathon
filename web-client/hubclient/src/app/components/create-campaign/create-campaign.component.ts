@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
+import { InnovationsHubService } from 'src/app/services/innovations-hub.service';
+
 
 @Component({
   selector: 'app-create-campaign',
@@ -7,9 +10,42 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateCampaignComponent implements OnInit {
 
-  constructor() { }
+  createCampaignForm: FormGroup;
+  allowedValuesForm: FormGroup;
+  // valueTypeFormControl: FormControl;
+  // campaignName: FormControl;
+  // description: FormControl;
+  // campaignFields: FormArray;
+
+  constructor( public hubService: InnovationsHubService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.createCampaignForm = this.fb.group({
+      campaignName: [''],
+      description: [''],
+      campaignFields: this.fb.array([
+        this.allowedValuesForm = this.fb.group({
+          allowedValues:  this.fb.array([
+          ]),
+          valueType: this.fb.control('')
+        })
+      ])
+    });
+  }
+
+  get campaignFields() {
+    return this.createCampaignForm.get('campaignFields') as FormArray;
+  }
+
+  addCustomField() {
+    this.campaignFields.push(this.fb.control(''));
+  }
+
+  removeField() {
+
+  }
+  createCampaign() {
+    console.log(this.createCampaignForm.value);
   }
 
 }
