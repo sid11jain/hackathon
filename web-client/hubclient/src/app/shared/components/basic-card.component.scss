@@ -22,7 +22,7 @@
 }
 
 .card-body {
-    width:90%;
+    width:95%;
     font-size: medium;
     text-align: left;
     h12 {
@@ -34,6 +34,9 @@
         display:block;
         width: 200px;
         word-wrap:break-word;
+    }
+    span {
+        font-size: small;
     }
     height: 300px;
 }
@@ -50,6 +53,9 @@
         font-size: small;
         display:block;
         word-wrap:break-word;
+    }
+    span {
+        font-size: small;
     }
     height: 150px;
 }
