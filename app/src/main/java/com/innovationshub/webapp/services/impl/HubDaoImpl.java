@@ -62,7 +62,7 @@ public class HubDaoImpl implements IHubDao {
                 insertedIdea = null;
             }else{
                 Document newIdea = Document.parse(idea.toString());
-                newIdea.put(IHConstants.IDEA_FIELD_POSTED, new Date());
+                formatIdeaDates(newIdea);
                 insertedIdea = collection.insertOne(newIdea);
             }
         }
@@ -210,8 +210,6 @@ public class HubDaoImpl implements IHubDao {
         }
         try {
             if (docsToInsert.size() > 0) {
-                //Document newDocument = Document.parse(documents.toString());
-                //newDocument.put(IHConstants.FIELD_CREATED_ON, new Date());
                 collection.insertMany(docsToInsert);
                 added = docsToInsert.size();
             }
@@ -221,6 +219,11 @@ public class HubDaoImpl implements IHubDao {
         return added;
     }
 
+    /**
+     * Formats start and end dates from string to date format. Also puts createdOn date on document.
+     *
+     * @param document
+     */
     private void formatDates(Map document) {
         // Default created on date
         document.put(IHConstants.FIELD_CREATED_ON, new Date());
@@ -230,6 +233,22 @@ public class HubDaoImpl implements IHubDao {
         }
         if (null != document.get(IHConstants.END_DATE)) {
             document.put(IHConstants.END_DATE, LocalDate.parse((String) document.get(IHConstants.END_DATE)));
+        }
+    }
+
+    /**
+     * Formats campaign start and end dates from string to date format. Also puts postedOn date on idea.
+     *
+     * @param document
+     */
+    private void formatIdeaDates(Map document) {
+        document.put(IHConstants.IDEA_FIELD_POSTED, new Date());
+        // Convert the start and end dates to Date format from String
+        if (null != document.get(IHConstants.CAMPAIGN_START_DATE)) {
+            document.put(IHConstants.CAMPAIGN_START_DATE, LocalDate.parse((String) document.get(IHConstants.CAMPAIGN_START_DATE)));
+        }
+        if (null != document.get(IHConstants.CAMPAIGN_END_DATE)) {
+            document.put(IHConstants.CAMPAIGN_END_DATE, LocalDate.parse((String) document.get(IHConstants.CAMPAIGN_END_DATE)));
         }
     }
 }
