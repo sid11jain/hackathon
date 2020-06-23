@@ -174,8 +174,6 @@ excludeInactive = false;
     this.createCampaign = !this.createCampaign;
   }
   searchIdeas() {
-    console.log('filters', this.filtersForm.value);
-    console.log('idea filters', this.ideaFilterForm.value);
     this.createCampaign = false; // Setting it false when any tab is clicked.
     let tabStaticFilters: Filter[];
     if (this.isPopularTab()) {
