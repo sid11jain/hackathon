@@ -1,55 +1,66 @@
 <body class="athena">
-    <div class="create-campaign" style="text-align: center; margin-bottom: 50px;">
+    <div style="text-align: center; font-size: 2em; font-weight: 800;">
+        Create a new campaign
+    </div>
+    <div class="create-campaign" style="text-align: left; margin-left: 155px; margin-bottom: 50px; margin-top: 20px;">
         <form [formGroup]="createCampaignForm">
-            <div class="row-md-4">
-                <h2 for="campaignName" class="col-md-4">Campaign Name: </h2>
-                <input type="text" class="form-control col-md-4" formControlName="name" id="name" required style="text-align: left;">
+            <div class="row">
+                <h2 for="campaignName" class="col-md-2">Campaign Name: </h2>
+                <input type="text" class="form-control col-md-6" formControlName="name" id="name" required style="text-align: left; margin-left: 15px;">
                 
             </div>
-            <div>
-                <h2 for="description" >Description: </h2>
-                <textarea type="textarea" class="form-control mb-4" formControlName="description" id="description" required style="text-align: left;">
+            <div class="row">
+                <h2 for="description" class="col-md-2">Description: </h2>
+                <textarea type="textarea" class="form-control col-md-6" formControlName="description" id="description" 
+                    required style="text-align: left; margin-left: 15px">
                 </textarea>
             </div>
-            <div>
-                <h2 for="startDate">Start Date:</h2>
-                <div class="col-md-6">
-                    <hub-date-picker [formControlName]="createCampaignForm.controls.startDate"></hub-date-picker>
-                   </div>
-                <h2 for="endDate">End Date:</h2>
-                <div class="col-md-6">
-                    <hub-date-picker [formControlName]="createCampaignForm.controls.endDate"></hub-date-picker>
-                   </div>
+            <div class="row">
+                <h2 for="startDate" class="col-md-2">Start Date:</h2>
+                <!-- <div> -->
+                <hub-date-picker [formControlName]="createCampaignForm.controls.startDate" class="col-md-2">
+                </hub-date-picker>
+                <!-- </div> -->
             </div>
-            <h2>Campaign Fields </h2>
+            <div class="row">
+                <h2 for="endDate" class="col-md-2">End Date:</h2>
+                <!-- <div> -->
+                <hub-date-picker [formControlName]="createCampaignForm.controls.endDate" class="col-md-2">
+                </hub-date-picker>
+                <!-- </div> -->
+            </div>
+            <h2>Campaign Fields: </h2>
             <div formArrayName="campaignFields" *ngFor="let field of campaignFields.controls; let fieldPosition=index">
                 <div formGroupName="{{fieldPosition}}">
-                    <label style="font-weight: 600;">
-                        Field Name: 
-                        <input type="text" class="form-control mb-4" formControlName="name">
-                    </label>
-                    <label class=" mb-4" style="font-weight: 600;">
-                        Allowed values: 
-                        <!-- <input type="text" class="form-control mb-4" [formControlName]="i" style="margin-left: 10px;"> -->
-                        <h8 >
-                            <innovation-hub-select-option [fieldFormControlName]="'allowedValues'"
-                            [optionList]="[]"
-                            [selectedOptions]="[]"
-                            [config]="addFieldOptionConfig"></innovation-hub-select-option>
-                        </h8>
-                    </label>
-                    <label style="font-weight: 600;">
-                          Value type: 
-                          <innovation-hub-select-option [fieldFormControlName]="'type'"
-                          [optionList]="typeDisplay"
-                          [selectedOptions]="[]" [config]="typeOptionConfig"></innovation-hub-select-option>
-                      <!-- <input type="text" class="form-control mb-4" formControlName="type" style="margin-left: 20px;"> -->
-                    </label>
-                    <button (click)="removeField(fieldPosition)" class="btn btn-danger" style="margin-left: 30px">X</button><br><br>
+                    <div class="row" style="margin-left: 17%;">
+                        <label style="font-weight: 600;">
+                            Field Name: 
+                            <input type="text" class="form-control col-md-11" formControlName="name">
+                        </label>
+                        <label class=" mb-4" style="font-weight: 600;">
+                            Allowed values: 
+                            <h8 class="col-md-10" style="margin-right: 2%">
+                                <innovation-hub-select-option [fieldFormControlName]="'allowedValues'"
+                                [optionList]="[]"
+                                [selectedOptions]="[]"
+                                [config]="addFieldOptionConfig"></innovation-hub-select-option>
+                            </h8>
+                        </label>
+                        <label class="mb-4" style="font-weight: 600; margin-left: 2%">
+                            Value type: 
+                            <innovation-hub-select-option [fieldFormControlName]="'type'"
+                            [optionList]="typeDisplay"
+                            [selectedOptions]="[]" [config]="typeOptionConfig" class="col-md-10" >
+                        </innovation-hub-select-option>
+                        </label>
+                        <span><button (click)="removeField(fieldPosition)" class="btn btn-danger mb-1" style="margin-left: 30px; margin-top: 23px">X</button></span>
+                    </div>
                 </div>
             </div>
-            <button (click)="addCustomField()" class="btn btn-info">Add new field</button><br><br>
-            <button type="submit" class="btn btn-success btn-lg" (click)="createCampaign()">Create</button>
+            <button (click)="addCustomField()" class="btn btn-info btn-lg">
+                <i class="fa fa-plus fa-lg" aria-hidden="true" style="color: rgb(17, 17, 17);"></i> 
+            </button><br>
+            <span style="margin-left: 33%;"><button type="submit" class="btn btn-success btn-lg" (click)="createCampaign()">Create</button></span>
         </form>
     </div>
 
