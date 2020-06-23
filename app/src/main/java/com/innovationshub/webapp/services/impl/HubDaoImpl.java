@@ -88,7 +88,6 @@ public class HubDaoImpl implements IHubDao {
         Document idea = ideas.first();
         if (idea != null) {
             //Campaign name field is not present in Idea, so using name of existing campaign
-//            Object campaign = retrieveCampaignByName(idea.get(IHConstants.CAMPAIGN_NAME_FIELD).toString());
             Object campaign = retrieveCampaignByName(idea.getString(IHConstants.CAMPAIGN_NAME));
             if (null != campaign) {
                 idea.append(IHConstants.CAMPAIGN_FIELD, campaign);
@@ -118,10 +117,6 @@ public class HubDaoImpl implements IHubDao {
         if(null != filters){
             whereQuery = BasicDBObject.parse(DBUtility.buildQuery((Map) filters));
         }
-        /*if(StringUtils.equals(IHConstants.USERS_COLLECTION, collectionName)){
-            whereQuery.append(IHConstants.USERS_FIELD_USERNAME,1);
-            whereQuery.append(IHConstants.USERS_FIELD_FULLNAME,1);
-        }*/
 
         // find with whereQuery
         FindIterable<Document> documents = collection.find(whereQuery);
@@ -140,47 +135,21 @@ public class HubDaoImpl implements IHubDao {
     public List getAllIdeasForCampaignName(String campaignName) {
         MongoCollection<Document> collection = db.getCollection(IHConstants.IDEA_COLLECTION);
         BasicDBObject whereQuery = new BasicDBObject();
-        // This if clause is to retrieve all ideas irrespective of campaign - for landing screen.
-        // This shall be modified later.
-        /*HashMap<String, Object> campaignsMap = new HashMap<>();
-        ArrayList<Object> ideasArr = new ArrayList<>();
-        Map ideaAsMap;
-        Object campaign = null;*/
+
         if(StringUtils.isNotBlank(campaignName)) {
             whereQuery.put(IHConstants.CAMPAIGN_NAME_FIELD, campaignName);
         }
         FindIterable<Document> ideas = collection.find(whereQuery);
 
-        /*for (Document idea : ideas) {
-            if (idea != null) {
-                campaign = null;
-                String ideaCampaignName = idea.getString(IHConstants.CAMPAIGN_NAME);
-                if(null == campaignsMap.get(ideaCampaignName)){
-                    Object ideaCampaign = retrieveCampaignByName(ideaCampaignName);
-                    campaignsMap.put(ideaCampaignName, ideaCampaign);
-                    campaign = ideaCampaign;
-                } else{
-                    campaign = campaignsMap.get(ideaCampaignName);
-                }
-
-                if (null != campaign) {
-                    idea.append(IHConstants.CAMPAIGN_FIELD, campaign);
-                    // Adding idea only when campaign is present
-                    ideasArr.add(idea);
-                }
-            }
-        }*/
         return getCampaignOnIdeas(ideas);
     }
 
     private List getCampaignOnIdeas(FindIterable<Document> ideas){
         HashMap<String, Object> campaignsMap = new HashMap<>();
         ArrayList<Object> ideasArr = new ArrayList<>();
-        Map ideaAsMap;
         Object campaign = null;
         for (Document idea : ideas) {
             if (idea != null) {
-                campaign = null;
                 String ideaCampaignName = idea.getString(IHConstants.CAMPAIGN_NAME);
                 if(null == campaignsMap.get(ideaCampaignName)){
                     Object ideaCampaign = retrieveCampaignByName(ideaCampaignName);
