@@ -98,9 +98,14 @@
   </nav>
   <div class="filter-and-cards-container">
     <div class="filter-and-cards-section">
-      
+      <div class="fiter-and-exclude-section">
+        <div class="col md-12 exclude-inactive">
+          <input type ="checkbox" title= "Exclude Inactive Campaigns" ng-model="excludeInactive" (click)="excludeInactiveCampaigns(excludeInactive)" />
+          Exclude Inactive  
+        </div>
+   
       <hub-filter-panel [filtersForm]="filtersForm" [allFilters]="allFilters" [fieldToExcludeFromFilters]="fieldToExcludeFromFilters" (selectedFilters)="selectedFilters($event)"></hub-filter-panel>
-
+    </div>
       <div class="cards-container">
         <basic-card *ngIf="ideasLoaded && !createCampaign" [heading]="'Idea Name'" [datatypeToDisplay]="ideas" [deckView]="deckView"
           [description]="'this will be description and should not exceed indidvdual div width. must overlap to next line'">

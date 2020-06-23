@@ -60,7 +60,8 @@ public class IHConstants {
     public static final String CAMPAIGN_START_DATE = "campaignStartDate";
     public static final String CAMPAIGN_END_DATE = "campaignEndDate";
 
-    public static final String IDEA_FIELD_POSTED = "postedOn";
+    public static final String IDEA_FIELD_POSTED_ON = "postedOn";
+    public static final String IDEA_FIELD_CAMPAIGN_END_DATE = "campaignEndDate";
     public static final String USERS_FIELD_USERNAME = "username";
     public static final String USERS_FIELD_FULLNAME = "fullName";
 

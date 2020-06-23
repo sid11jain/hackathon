@@ -8,6 +8,7 @@ import {
   COLUMN_NAME_LIKES_COUNT,
   COLUMN_NAME_FAVOURITES_COUNT,
   COLUMN_NAME_FAVOURITES,
+  CAMPAIGN_END_DATE_COLUMN,
 } from 'src/app/models/innovation-hub.model';
 import { HubCampaignCardComponent } from 'src/app/components/common/innovation-hub-card/hub-campaign-card.component';
 import {
@@ -32,6 +33,11 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./landing-view.component.scss'],
 })
 export class LandingViewComponent implements OnInit {
+
+  constructor(
+    private modalService: BsModalService,
+    public hubService: InnovationsHubService
+  ) {}
   bsModalRef: BsModalRef;
   operation: any = OPERATION;
   ideas: any[] = [];
@@ -62,10 +68,34 @@ export class LandingViewComponent implements OnInit {
 
   appendActiveClass = '';
 
-  constructor(
-    private modalService: BsModalService,
-    public hubService: InnovationsHubService
-  ) {}
+//   (select)="dateInput($event)"
+//   (dateSelect)="ngDateInput($event)"
+//   onfocus="(this.type='date')" onblur="(this.type='text')"
+
+// ngDateInput(event: any, toDate?: boolean){
+// console.log('Ng Date', event);
+// if (toDate){
+// event.day = event.day + 1;
+
+// this.ideaFilterForm.patchValue({postedOnTo: this.hubService.convertNgDateToDate(event)});
+// }else{
+// this.ideaFilterForm.patchValue({postedOnFrom: this.hubService.convertNgDateToDate(event)});
+// }
+// console.log('idea filter after ', this.ideaFilterForm);
+// }
+
+// dateInput(event: any, toDate?: boolean){
+// if (toDate){
+// // event.day = event.day + 1;
+
+// this.ideaFilterForm.patchValue({postedOnTo: new Date(event.target.value)});
+// }else{
+// this.ideaFilterForm.patchValue({postedOnFrom: new Date(event.target.value)});
+// }
+// console.log('idea filter after ', this.ideaFilterForm);
+// }
+
+excludeInactive = false;
 
   ngOnInit(): void {
     this.setInitialData();
@@ -100,21 +130,22 @@ export class LandingViewComponent implements OnInit {
 
   routeToScreen(tabRequestType: string) {
     this.appendActiveClass = tabRequestType;
-    if (this.isPopularTab()) {
-      this.searchIdeasForTabs(this.getPopularStaticFilters());
-    } else if (this.isTrendingTab()) {
-      this.searchIdeasForTabs(this.getTrendingStaticFilters());
-    } else if (this.isMyFavouritesTab()) {
-      this.searchIdeasForTabs(this.getMyFavouritesStaticFilters());
-    } else {
-      this.hubService.getAllIdeas().subscribe((resp: any) => {
-        if (resp && resp.data) {
-          this.ideas = resp.data as [];
-        }
-        this.ideasLoaded = true;
-        console.log('All IDeas', this.ideas);
-      });
-    }
+    // if (this.isPopularTab()) {
+    //   this.searchIdeasForTabs(this.getPopularStaticFilters());
+    // } else if (this.isTrendingTab()) {
+    //   this.searchIdeasForTabs(this.getTrendingStaticFilters());
+    // } else if (this.isMyFavouritesTab()) {
+    //   this.searchIdeasForTabs(this.getMyFavouritesStaticFilters());
+    // } else {
+    //   this.hubService.getAllIdeas().subscribe((resp: any) => {
+    //     if (resp && resp.data) {
+    //       this.ideas = resp.data as [];
+    //     }
+    //     this.ideasLoaded = true;
+    //     console.log('All IDeas', this.ideas);
+    //   });
+    // }
+    this.searchIdeas();
   }
 
   isPopularTab() {
@@ -133,17 +164,20 @@ export class LandingViewComponent implements OnInit {
     const commentCountFilter = this.createFiltersForLandingPage(
       COLUMN_NAME_COMMENTS_COUNT,
       ComparisonOperators.OP_GTE,
-      ['1']
+      ['1'],
+      'numeric'
     );
     const likesCountFilter = this.createFiltersForLandingPage(
       COLUMN_NAME_LIKES_COUNT,
       ComparisonOperators.OP_GTE,
-      ['2']
+      ['2'],
+      'numeric'
     );
     const favouritesCountFilter = this.createFiltersForLandingPage(
       COLUMN_NAME_FAVOURITES_COUNT,
       ComparisonOperators.OP_GTE,
-      ['1']
+      ['1'],
+      'numeric'
     );
 
     return [commentCountFilter, likesCountFilter, favouritesCountFilter];
@@ -153,12 +187,14 @@ export class LandingViewComponent implements OnInit {
     const commentCountFilter = this.createFiltersForLandingPage(
       COLUMN_NAME_COMMENTS_COUNT,
       ComparisonOperators.OP_GTE,
-      ['1']
+      ['3'],
+      'numeric'
     );
     const likesCountFilter = this.createFiltersForLandingPage(
       COLUMN_NAME_LIKES_COUNT,
       ComparisonOperators.OP_GTE,
-      ['1']
+      ['2'],
+      'numeric'
     );
     return [commentCountFilter, likesCountFilter];
   }
@@ -167,33 +203,33 @@ export class LandingViewComponent implements OnInit {
     const favourtiesFilter = this.createFiltersForLandingPage(
       COLUMN_NAME_FAVOURITES,
       ComparisonOperators.OP_IN,
-      [this.hubService.currentUser]
+      [this.hubService.currentUser],
+      'string'
     );
-    favourtiesFilter.valueType = 'string';
     return [favourtiesFilter];
   }
 
-  createFiltersForLandingPage(filterName, comparisonOp, values) {
+  createFiltersForLandingPage(filterName, comparisonOp, values, valueType) {
     const filter = new Filter();
     filter.filterName = filterName;
     filter.comparisonOp = comparisonOp;
     filter.values = values;
     filter.nestedOn = false;
-    filter.valueType = 'numeric';
+    filter.valueType = valueType;
     return filter;
   }
 
-  searchIdeasForTabs(searchFilters: any[]) {
-    const filters = { filters: searchFilters };
+  // searchIdeasForTabs(searchFilters: any[]) {
+  //   const filters = { filters: searchFilters };
 
-    this.hubService.searchIdeas(filters).subscribe((resp: any) => {
-      if (resp && resp.data) {
-        this.ideas = resp.data as [];
-      }
-      this.ideasLoaded = true;
-      console.log('Trendig Ideas', this.ideas);
-    });
-  }
+  //   this.hubService.searchIdeas(filters).subscribe((resp: any) => {
+  //     if (resp && resp.data) {
+  //       this.ideas = resp.data as [];
+  //     }
+  //     this.ideasLoaded = true;
+  //     console.log('Trendig Ideas', this.ideas);
+  //   });
+  // }
 
   openCampaignComponent(operationInput: OPERATION) {
     const initialState = { operation: operationInput };
@@ -222,6 +258,18 @@ export class LandingViewComponent implements OnInit {
     } else if (this.isMyFavouritesTab()) {
       tabStaticFilters = this.getMyFavouritesStaticFilters();
     }
+    if (this.excludeInactive) {
+      tabStaticFilters = tabStaticFilters ? tabStaticFilters : [];
+      tabStaticFilters.push(
+        this.createFiltersForLandingPage(
+          CAMPAIGN_END_DATE_COLUMN,
+          ComparisonOperators.OP_GTE,
+          [new Date()],
+          'date'
+        )
+      );
+    }
+
     const ideaFilters = this.convertIdeaFormValueToFilters();
     let allFilters = [];
     if (ideaFilters){
@@ -372,31 +420,8 @@ this.selectedSearchFilters = event;
 console.log('Selected filters', this.selectedSearchFilters);
   }
 
-//   (select)="dateInput($event)"
-//   (dateSelect)="ngDateInput($event)"
-//   onfocus="(this.type='date')" onblur="(this.type='text')"
-
-// ngDateInput(event: any, toDate?: boolean){
-// console.log('Ng Date', event);
-// if (toDate){
-// event.day = event.day + 1;
-
-// this.ideaFilterForm.patchValue({postedOnTo: this.hubService.convertNgDateToDate(event)});
-// }else{
-// this.ideaFilterForm.patchValue({postedOnFrom: this.hubService.convertNgDateToDate(event)});
-// }
-// console.log('idea filter after ', this.ideaFilterForm);
-// }
-
-// dateInput(event: any, toDate?: boolean){
-// if (toDate){
-// // event.day = event.day + 1;
-
-// this.ideaFilterForm.patchValue({postedOnTo: new Date(event.target.value)});
-// }else{
-// this.ideaFilterForm.patchValue({postedOnFrom: new Date(event.target.value)});
-// }
-// console.log('idea filter after ', this.ideaFilterForm);
-// }
+excludeInactiveCampaigns(excludeInactive: boolean){
+  this.excludeInactive = !excludeInactive;
+}
 
 }

@@ -44,6 +44,7 @@ export const USERNAME_COLUMN_ID = 'username';
 export const COMMENTED_ON_COLUMN_ID = 'commentedOn';
 export const COMMENTED_BY_COLUMN_ID = 'commentedBy';
 export const COMMENT_DATE_COLUMN_ID = 'commentDate';
+export const CAMPAIGN_END_DATE_COLUMN = 'campaignEndDate';
 
 export class Campaign {
   name: string;

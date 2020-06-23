@@ -68,6 +68,7 @@ public class HubDaoImpl implements IHubDao {
                 insertedIdea = null;
             }else{
                 Document newIdea = Document.parse(idea.toString());
+                newIdea.put(IHConstants.IDEA_FIELD_POSTED_ON, new Date());
                 formatIdeaDates(newIdea);
                 insertedIdea = collection.insertOne(newIdea);
             }
@@ -118,7 +119,6 @@ public class HubDaoImpl implements IHubDao {
     public List findAllDocuments(String collectionName, Object filters) throws Exception {
         ArrayList<Object> allCollectionDoc = new ArrayList<>();
         BasicDBObject whereQuery = new BasicDBObject();
-        BasicDBObject selectFields = new BasicDBObject();
         MongoCollection<Document> collection = db.getCollection(collectionName);
         if(null != filters){
             whereQuery = BasicDBObject.parse(DBUtility.buildQuery((Map) filters));
@@ -126,7 +126,11 @@ public class HubDaoImpl implements IHubDao {
 
         // find with whereQuery
         FindIterable<Document> documents = collection.find(whereQuery);
+
         if(StringUtils.equals(IHConstants.IDEA_COLLECTION, collectionName)){
+            BasicDBObject sortOrder = new BasicDBObject(IHConstants.IDEA_FIELD_POSTED_ON, -1);
+            sortOrder.append(IHConstants.IDEA_FIELD_CAMPAIGN_END_DATE, 1);
+            documents.sort(sortOrder).limit(200);
             allCollectionDoc.addAll(getCampaignOnIdeas(documents));
         } else{
             for(Document doc: documents){
