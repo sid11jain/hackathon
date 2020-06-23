@@ -147,7 +147,7 @@ _allWorkflows: any[];
   submitIdea(data: any) {
     const submitUrl = this.url + 'submit-idea';
     console.log('submitted data', data);
-    // return of(null);
+     // return of(null);
     return this.http.post(submitUrl, { data: JSON.stringify(data) });
   }
 
@@ -286,7 +286,7 @@ _allWorkflows: any[];
     const addUpdateFiltersUrl = this.url + 'add-update-filters';
     return this.http.post(addUpdateFiltersUrl, {
       data: filters,
-    }).subscribe(x => x);
+    });
   }
 
   resolveWorkflow(currentStage: any) {

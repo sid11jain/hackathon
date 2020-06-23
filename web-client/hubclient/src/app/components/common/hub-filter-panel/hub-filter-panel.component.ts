@@ -40,7 +40,7 @@ export class HubFilterPanelComponent implements OnInit {
     valuePosition?: any,
     value?: any
   ) {
-    console.log('values ', this.filtersForm);
+    console.log('filter panel values ', this.filtersForm);
     const filterFormValue = this.filtersForm.value as any;
     filter as Filter;
     console.log('check ', filter.values[valuePosition]);

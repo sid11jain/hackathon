@@ -45,7 +45,7 @@ export class LandingViewComponent implements OnInit {
   ideasLoaded = false;
   deckView = false;
   disableFilters = false;
-  createCampaign = true; // this needs to be false by default, keeping it true for testing
+  createCampaign = false; // this needs to be false by default, keeping it true for testing
   ideaFilterForm: FormGroup;
   filtersForm: FormGroup;
   filterValueType: any = FILTER_TYPE;
@@ -68,56 +68,10 @@ export class LandingViewComponent implements OnInit {
 
   appendActiveClass = '';
 
-//   (select)="dateInput($event)"
-//   (dateSelect)="ngDateInput($event)"
-//   onfocus="(this.type='date')" onblur="(this.type='text')"
-
-// ngDateInput(event: any, toDate?: boolean){
-// console.log('Ng Date', event);
-// if (toDate){
-// event.day = event.day + 1;
-
-// this.ideaFilterForm.patchValue({postedOnTo: this.hubService.convertNgDateToDate(event)});
-// }else{
-// this.ideaFilterForm.patchValue({postedOnFrom: this.hubService.convertNgDateToDate(event)});
-// }
-// console.log('idea filter after ', this.ideaFilterForm);
-// }
-
-// dateInput(event: any, toDate?: boolean){
-// if (toDate){
-// // event.day = event.day + 1;
-
-// this.ideaFilterForm.patchValue({postedOnTo: new Date(event.target.value)});
-// }else{
-// this.ideaFilterForm.patchValue({postedOnFrom: new Date(event.target.value)});
-// }
-// console.log('idea filter after ', this.ideaFilterForm);
-// }
-
 excludeInactive = false;
 
   ngOnInit(): void {
     this.setInitialData();
-
-    this.allFilters = plainToClass(
-      Filter,
-      this.hubService.createFilterIdValue()
-    );
-    this.filtersForm = new FormGroup({
-      filters: new FormArray(
-        this.allFilters.map(
-          filter =>
-            new FormGroup({
-              filterName: new FormControl(filter.filterName),
-              valueType: new FormControl(this.filterValueType.STRING),
-              values: new FormArray(
-                filter.values.map(value => new FormControl())
-              )
-            })
-        )
-      )
-    });
 
     this.ideaFilterForm = new FormGroup({});
 
@@ -130,21 +84,6 @@ excludeInactive = false;
 
   routeToScreen(tabRequestType: string) {
     this.appendActiveClass = tabRequestType;
-    // if (this.isPopularTab()) {
-    //   this.searchIdeasForTabs(this.getPopularStaticFilters());
-    // } else if (this.isTrendingTab()) {
-    //   this.searchIdeasForTabs(this.getTrendingStaticFilters());
-    // } else if (this.isMyFavouritesTab()) {
-    //   this.searchIdeasForTabs(this.getMyFavouritesStaticFilters());
-    // } else {
-    //   this.hubService.getAllIdeas().subscribe((resp: any) => {
-    //     if (resp && resp.data) {
-    //       this.ideas = resp.data as [];
-    //     }
-    //     this.ideasLoaded = true;
-    //     console.log('All IDeas', this.ideas);
-    //   });
-    // }
     this.searchIdeas();
   }
 
@@ -219,18 +158,6 @@ excludeInactive = false;
     return filter;
   }
 
-  // searchIdeasForTabs(searchFilters: any[]) {
-  //   const filters = { filters: searchFilters };
-
-  //   this.hubService.searchIdeas(filters).subscribe((resp: any) => {
-  //     if (resp && resp.data) {
-  //       this.ideas = resp.data as [];
-  //     }
-  //     this.ideasLoaded = true;
-  //     console.log('Trendig Ideas', this.ideas);
-  //   });
-  // }
-
   openCampaignComponent(operationInput: OPERATION) {
     const initialState = { operation: operationInput };
     this.modalService.show(
@@ -249,7 +176,7 @@ excludeInactive = false;
   searchIdeas() {
     console.log('filters', this.filtersForm.value);
     console.log('idea filters', this.ideaFilterForm.value);
-
+    this.createCampaign = false; // Setting it false when any tab is clicked.
     let tabStaticFilters: Filter[];
     if (this.isPopularTab()) {
       tabStaticFilters = this.getPopularStaticFilters();
@@ -364,6 +291,17 @@ excludeInactive = false;
           console.log('all tags', this.allWorkflows);
         }
       });
+    this.hubService
+      .getCollection(Collection.FILTERS)
+      .subscribe((resp: any) => {
+        if (resp && resp.data) {
+          const filters: any[] = resp.data;
+          this.allFilters = plainToClass(
+            Filter, filters);
+          console.log('all filters', this.allFilters);
+          this.initializeFilterForm();
+        }
+      });
   }
 
   convertIdeaFormValueToFilters() {
@@ -422,6 +360,24 @@ console.log('Selected filters', this.selectedSearchFilters);
 
 excludeInactiveCampaigns(excludeInactive: boolean){
   this.excludeInactive = !excludeInactive;
+}
+
+initializeFilterForm(){
+  this.filtersForm = new FormGroup({
+    filters: new FormArray(
+      this.allFilters.map(
+        filter =>
+          new FormGroup({
+            filterName: new FormControl(filter.filterName),
+            valueType: new FormControl(this.filterValueType.STRING),
+            values: new FormArray(
+              filter.values.map(value => new FormControl())
+            )
+          })
+      )
+    )
+  });
+
 }
 
 }

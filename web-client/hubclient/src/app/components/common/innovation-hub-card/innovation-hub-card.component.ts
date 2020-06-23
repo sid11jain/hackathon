@@ -23,7 +23,7 @@ import {
 } from 'src/app/models/common/common-utility.model';
 import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { formatDate } from '@angular/common';
+import { formatDate, DatePipe } from '@angular/common';
 import { plainToClass } from 'class-transformer';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Route } from '@angular/compiler/src/core';
@@ -39,7 +39,8 @@ export class InnovationHubCardComponent implements OnInit {
     protected modalRef: BsModalRef,
     protected modalService: BsModalService,
     protected hubService: InnovationsHubService,
-    protected router: Router
+    protected router: Router,
+    protected datePipe: DatePipe
   ) {}
 
   @Input()
@@ -180,8 +181,8 @@ export class InnovationHubCardComponent implements OnInit {
   addEntity() {
     if (this.ideaForm.value.name) {
       this.ideaForm.value.campaignName = this.campaign.name;
-      this.ideaForm.value.campaignStartDate = this.campaign.startDate;
-      this.ideaForm.value.campaignEndDate = this.campaign.endDate;
+      this.ideaForm.value.campaignStartDate = this.datePipe.transform(this.campaign.startDate, DATE_FORMAT);
+      this.ideaForm.value.campaignEndDate = this.datePipe.transform(this.campaign.endDate, DATE_FORMAT);
       this.hubService.submitIdea(this.ideaForm.value).subscribe((resp: any) => {
         if (resp && resp.error) {
           alert(

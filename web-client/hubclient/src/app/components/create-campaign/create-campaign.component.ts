@@ -57,36 +57,39 @@ export class CreateCampaignComponent implements OnInit {
     );
   }
   createCampaign() {
-    if (this.createCampaignForm.value.name){
-    const campaignFields = this.createCampaignForm.value.campaignFields as [];
-    campaignFields.forEach((campaignField: any) => {
-      if (campaignField.allowedValues) {
-        const allowedValuesIdValue = [];
-        campaignField.allowedValues.forEach((allowedValue) => {
-          console.log('Allowed value', allowedValue);
-          if (allowedValue && allowedValue.value) {
-            allowedValuesIdValue.push(
-              new IdValuePair(allowedValue.value, allowedValue.value)
-            );
+    if (this.createCampaignForm.value.name) {
+      const campaignFields = this.createCampaignForm.value.campaignFields as [];
+      campaignFields.forEach((campaignField: any) => {
+        if (campaignField.allowedValues) {
+          const allowedValuesIdValue = [];
+          campaignField.allowedValues.forEach((allowedValue) => {
+            console.log('Allowed value', allowedValue);
+            if (allowedValue && allowedValue.value) {
+              allowedValuesIdValue.push(
+                new IdValuePair(allowedValue.value, allowedValue.value)
+              );
+            }
+          });
+          campaignField.allowedValues = allowedValuesIdValue;
+          console.log('allowed value', campaignField.allowedValues);
+        }
+      });
+
+      console.log(this.createCampaignForm.value);
+
+      this.hubService
+        .addDocuments(Collection.CAMPAIGN, this.createCampaignForm.value)
+        .subscribe((x) => {
+          const filtersToAdd = this.createFiltersFromCampaignField();
+          if (filtersToAdd && filtersToAdd.length > 0) {
+            console.log('filters to add', filtersToAdd);
+            this.hubService.addUpdateFilters(filtersToAdd).subscribe((x) => {
+              window.location.reload(true);
+            });
           }
         });
-        campaignField.allowedValues = allowedValuesIdValue;
-        console.log('allowed value', campaignField.allowedValues);
-      }
-    });
-
-    console.log(this.createCampaignForm.value);
-
-    this.hubService.addDocuments(Collection.CAMPAIGN, this.createCampaignForm.value).subscribe(x => x);
-    const filtersToAdd = this.createFiltersFromCampaignField();
-    if (filtersToAdd && filtersToAdd.length > 0){
-      console.log('filters to add', filtersToAdd);
-      this.hubService.addUpdateFilters( filtersToAdd);
-    }
-
-
     } else {
-     alert('Please fill details properly');
+      alert('Please fill details properly');
     }
   }
 
@@ -98,14 +101,14 @@ export class CreateCampaignComponent implements OnInit {
     });
   }
 
-  createFiltersFromCampaignField(){
+  createFiltersFromCampaignField() {
     const newFilters = [];
-    if (this.createCampaignForm.value.campaignFields){
+    if (this.createCampaignForm.value.campaignFields) {
       this.createCampaignForm.value.campaignFields.forEach((field: any) => {
         newFilters.push({
           filterName: field.name,
-        valueType: FILTER_TYPE.STRING,
-        values:  field.allowedValues
+          valueType: FILTER_TYPE.STRING,
+          values: field.allowedValues,
         });
       });
     }
