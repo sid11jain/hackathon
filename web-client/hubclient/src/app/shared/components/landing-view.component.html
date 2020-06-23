@@ -54,18 +54,18 @@
               <input class="form-control" placeholder="To Date"
               name="dp" formControlName="postedOnTo" ngbDatepicker #toDate="ngbDatepicker">
           </div>
-          <div style="margin-top: 20px; margin-left: 20px;">
-          <button type="button" title="Add Idea" class="btn btn-info btn-lg" (click)="openCampaignComponent(operation.ADD)" style="margin-left: 10px; margin-right:5px">
+          <div class="agg-icon-buttons col-md-3">
+          <button type="button" title="Add Idea" class="btn btn-info btn-lg" (click)="openCampaignComponent(operation.ADD)">
             <i class="fa fa-plus fa-2x" aria-hidden="true" style="color: rgb(17, 17, 17);"></i>      
           </button>
-          <button type="button" title="Search Ideas" class="btn btn-info btn-lg" (click)="searchIdeas()" style="margin-left: 5px; margin-right:5px">
+          <button type="button" title="Search Ideas" class="btn btn-info btn-lg" (click)="searchIdeas()">
             <i class="fa fa-search-plus fa-2x" aria-hidden="true" style="color: rgb(17, 17, 17);"></i> 
           </button>
           <button *ngIf="hubService.isCurrentUserAdmin" type="button" title="Export" class="btn btn-info btn-lg"
-              (click)="openCampaignComponent(operation.EXPORT)" style="margin-left: 5px; margin-right:5px">
+              (click)="openCampaignComponent(operation.EXPORT)">
               <i class="fa fa-download fa-2x" aria-hidden="true" style="color: rgb(17, 17, 17);"></i>  
           </button>
-          <button *ngIf="hubService.isCurrentUserAdmin" type="button" title="Create Campaign" class="btn btn-info btn-lg" (click)="setCreateCampaignMode()" style="margin-left: 5px;">
+          <button *ngIf="hubService.isCurrentUserAdmin" type="button" title="Create Campaign" class="btn btn-info btn-lg" (click)="setCreateCampaignMode()">
             <i *ngIf="createCampaign" class="fa fa fa-toggle-on fa-2x" aria-hidden="true" style="color: rgb(0, 0, 0);"></i>
             <i *ngIf="!createCampaign" class="fa fa fa-toggle-off fa-2x" aria-hidden="true" style="color: rgb(0, 0, 0);"></i>
           </button>
