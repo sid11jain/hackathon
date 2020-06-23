@@ -68,7 +68,7 @@ export class LandingViewComponent implements OnInit {
 
   appendActiveClass = '';
 
-excludeInactive = false;
+  excludeInactive = false;
 
   ngOnInit(): void {
     this.setInitialData();
