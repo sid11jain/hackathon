@@ -23,6 +23,7 @@ import { user } from 'src/app/models/sample/sample-campaign';
 import { Observable, of } from 'rxjs';
 import { element } from 'protractor';
 import { CreateCampaignComponent } from 'src/app/components/create-campaign/create-campaign.component';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -350,9 +351,12 @@ export class LandingViewComponent implements OnInit {
     }
     if (filter.valueType && filter.valueType === this.filterValueType.DATE) {
       console.log('DAte value before enrich', values);
+      if (filter.filterName.endsWith('To') && values && values.length > 0 && values[0]){
+        const ngDate: any = values[0];
+        values[0] = new NgbDate(ngDate.year, ngDate.month, ngDate.day + 1);
+      }
       values = this.hubService.convertNgDateToDate(
-        values as [],
-        filter.filterName.endsWith('To')
+        values as []
       );
       filter.filterName = filter.filterName.endsWith('To')
         ? filter.filterName.slice(0, -2)

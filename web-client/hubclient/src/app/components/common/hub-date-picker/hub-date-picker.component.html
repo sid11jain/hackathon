@@ -1,0 +1,3 @@
+<i class="fa fa-calendar" aria-hidden="true" (click)="datePicker.toggle()" type="button" style="padding:7px;"></i>
+<input class="form-control" [value]="selectedDate" (dateSelect)="ngDateInput($event)" placeholder="{{placeHolder}}" name="datePicker"
+    [formControl]="formControlName" ngbDatepicker #datePicker="ngbDatepicker">

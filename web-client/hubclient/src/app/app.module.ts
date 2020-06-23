@@ -52,6 +52,7 @@ import { UsernameToFullNamePipe } from './shared/components/username-to-fullname
 import { CreateCampaignComponent } from './components/create-campaign/create-campaign.component';
 import { HubFilterPanelComponent } from './components/common/hub-filter-panel/hub-filter-panel.component';
 import { DatePipe } from '@angular/common';
+import { HubDatePickerComponent } from './components/common/hub-date-picker/hub-date-picker.component';
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
@@ -83,6 +84,7 @@ export class XhrInterceptor implements HttpInterceptor {
     UsernameToFullNamePipe,
     CreateCampaignComponent,
     HubFilterPanelComponent,
+    HubDatePickerComponent,
   ],
   imports: [
     BrowserModule,

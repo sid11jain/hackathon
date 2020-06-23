@@ -3,7 +3,7 @@
         <form [formGroup]="createCampaignForm">
             <div class="row-md-4">
                 <h2 for="campaignName" class="col-md-4">Campaign Name: </h2>
-                <input type="text" class="form-control col-md-4" formControlName="campaignName" id="campaignName" required style="text-align: left;">
+                <input type="text" class="form-control col-md-4" formControlName="name" id="name" required style="text-align: left;">
                 
             </div>
             <div>
@@ -14,18 +14,12 @@
             <div>
                 <h2 for="startDate">Start Date:</h2>
                 <div class="col-md-6">
-                    <!-- (dateSelect)="ngDateInput($event, false)" -->
-                      <i class="fa fa-calendar" aria-hidden="true" (click)="fromDate.toggle()" type="button" style="padding:7px;"></i>
-                  <input class="form-control" placeholder="Posted On From" 
-                       name="dp" formControlName="postedOnFrom" ngbDatepicker #fromDate="ngbDatepicker">   
-                  </div>
+                    <hub-date-picker [formControlName]="createCampaignForm.controls.startDate"></hub-date-picker>
+                   </div>
                 <h2 for="endDate">End Date:</h2>
                 <div class="col-md-6">
-                    <!-- (dateSelect)="ngDateInput($event, false)" -->
-                      <i class="fa fa-calendar" aria-hidden="true" (click)="fromDate.toggle()" type="button" style="padding:7px;"></i>
-                  <input class="form-control" placeholder="Posted On From" 
-                       name="dp" formControlName="postedOnFrom" ngbDatepicker #fromDate="ngbDatepicker">   
-                  </div>
+                    <hub-date-picker [formControlName]="createCampaignForm.controls.endDate"></hub-date-picker>
+                   </div>
             </div>
             <h2>Campaign Fields </h2>
             <div formArrayName="campaignFields" *ngFor="let field of campaignFields.controls; let fieldPosition=index">
@@ -48,11 +42,10 @@
                           Value type: 
                           <innovation-hub-select-option [fieldFormControlName]="'type'"
                           [optionList]="typeDisplay"
-                          [selectedOptions]="[]"
-                          [multipleOptions]="false"></innovation-hub-select-option>
+                          [selectedOptions]="[]" [config]="typeOptionConfig"></innovation-hub-select-option>
                       <!-- <input type="text" class="form-control mb-4" formControlName="type" style="margin-left: 20px;"> -->
                     </label>
-                    <button (click)="removeField()" class="btn btn-danger" style="margin-left: 30px">X</button><br><br>
+                    <button (click)="removeField(fieldPosition)" class="btn btn-danger" style="margin-left: 30px">X</button><br><br>
                 </div>
             </div>
             <button (click)="addCustomField()" class="btn btn-info">Add new field</button><br><br>

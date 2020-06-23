@@ -14,9 +14,11 @@ import {
 
   Users,
   Roles,
+  DATE_FORMAT,
 } from '../models/common/common-utility.model';
 import { map } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -68,6 +70,23 @@ _allWorkflows: any[];
     bindValue: 'currentStage',
   };
 
+  public addFieldOptionConfig: SelectOptionConfig = {
+    multipleOptions: true,
+    searchable: true,
+    clearable: true,
+    // bindValue: 'id',
+    addTags: true,
+  };
+
+  public typeOptionConfig: SelectOptionConfig = {
+    multipleOptions: false,
+    searchable: true,
+    clearable: true,
+    bindValue: 'id',
+    bindLabel: 'value',
+    addTags: true,
+  };
+
   headers = new HttpHeaders({
     'Content-Type': 'application/json',
   });
@@ -77,7 +96,7 @@ _allWorkflows: any[];
   private url = 'http://localhost:8080/';
   getExportUrl = this.url + 'export-campaign-ideas';
 
-  constructor(private http: HttpClient, private ees: ExportExcelService) {
+  constructor(private http: HttpClient, private ees: ExportExcelService, private datepipe: DatePipe) {
     this.getCollection(Collection.TAGS).subscribe((resp: any) => {
       if (resp && resp.data) {
         this._allTags = resp.data;
@@ -302,14 +321,16 @@ _allWorkflows: any[];
   }
 
 
-  convertNgDateToDate(date: any[], toDate: boolean) {
-    if (date && date.length > 0 && date[0]) {
-      const ngDate = date[0];
+  convertNgDateToDate(date: any) {
+    if (date && (!Array.isArray(date) || date.length > 0 && date[0])) {
+      const ngDate = Array.isArray(date) ? date[0] : date;
       console.log('date : ', date, 'nDate : ', ngDate);
-      ngDate.day = toDate ? ngDate.day + 1 : ngDate.day;
+      // ngDate.day = toDate ? ngDate.day + 1 : ngDate.day;
       console.log('nDate : ', ngDate);
-      // Issue with ng Month, it was providing +1 and day - providing - 1 .
-      return [new Date(ngDate.year, ngDate.month - 1, ngDate.day + 1)];
+      // Issue with ng Month, it was providing +1
+      const convertedDate =  [new Date(ngDate.year, ngDate.month - 1, ngDate.day)];
+      return this.datepipe.transform(convertedDate, DATE_FORMAT);
+
     }
     return date;
   }
