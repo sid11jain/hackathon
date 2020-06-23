@@ -125,4 +125,9 @@ public class HubServiceImpl implements IHubService {
         return iHubDao.addDocument(collectionName, documents);
     }
 
+    @Override
+    public void addUpdateFilters(Object filters) throws Exception{
+        iHubDao.addUpdateFilters(filters);
+}
+
 }

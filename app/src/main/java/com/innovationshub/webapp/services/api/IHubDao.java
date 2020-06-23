@@ -54,6 +54,9 @@ public interface IHubDao {
      */
     Object updateCollectionDocument(Object datatypeToUpdate, List<String> attribute, String collectionName) throws Exception;
 
+    Object updateCollectionDocument(Object datatypeToUpdate, List<String> attribute, String collectionName, String collectionFieldToSearchExistingDoc) throws Exception;
+
+
     /** This is an unchecked method which will insert the document irrespective of fact whether the document already exists in the collection or not.
      * Please use it carefully.
      *
@@ -63,6 +66,8 @@ public interface IHubDao {
      * @throws Exception
      */
     int addDocument(String collectionName, Object documents) throws Exception;
+
+    void addUpdateFilters(Object filters) throws Exception;
 
 
 }

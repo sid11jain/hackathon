@@ -90,6 +90,7 @@ export enum Collection {
   USERS = 'users',
   WORKFLOW = 'workflow',
   TAGS = 'tags',
+  FILTERS = 'filters'
 }
 export enum Types {
   TEXT = 'text',

@@ -281,6 +281,13 @@ _allWorkflows: any[];
     });
   }
 
+  addUpdateFilters(filters: any) {
+    const addUpdateFiltersUrl = this.url + 'add-update-filters';
+    return this.http.post(addUpdateFiltersUrl, {
+      data: filters,
+    }).subscribe(x => x);
+  }
+
   resolveWorkflow(currentStage: any) {
     if (currentStage && this._allWorkflows && this._allWorkflows.length > 0) {
       return this._allWorkflows.filter(

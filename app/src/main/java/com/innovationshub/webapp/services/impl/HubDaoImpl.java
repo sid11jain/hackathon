@@ -2,10 +2,15 @@ package com.innovationshub.webapp.services.impl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
@@ -14,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.innovationshub.webapp.common.IHConstants;
+import com.innovationshub.webapp.models.Filters;
 import com.innovationshub.webapp.services.api.IHubDao;
 import com.innovationshub.webapp.util.DBUtility;
 import com.mongodb.BasicDBObject;
@@ -171,11 +177,15 @@ public class HubDaoImpl implements IHubDao {
 
     @Override
     public Object updateCollectionDocument(Object datatypeToUpdate, List<String> attributes, String collectionName) throws Exception{
+        return updateCollectionDocument(datatypeToUpdate, attributes, collectionName, IHConstants.NAME_FIELD);
+    }
+
+    public Object updateCollectionDocument(Object datatypeToUpdate, List<String> attributes, String collectionName, String collectionFieldToSearchExistingDoc) throws Exception{
         MongoCollection<Document> collection = db.getCollection(collectionName);
         BasicDBObject filterQuery = new BasicDBObject();
         BasicDBObject setValues = new BasicDBObject();
         Map ideaAsMap = (!Map.class.isAssignableFrom(datatypeToUpdate.getClass())?(new ObjectMapper()).readValue((String) datatypeToUpdate, Map.class): (Map) datatypeToUpdate);
-        filterQuery.put(IHConstants.NAME_FIELD, ideaAsMap.get(IHConstants.NAME_FIELD));
+        filterQuery.put(collectionFieldToSearchExistingDoc, ideaAsMap.get(collectionFieldToSearchExistingDoc));
 
         BasicDBObject updateValues = new BasicDBObject();
 
@@ -185,7 +195,66 @@ public class HubDaoImpl implements IHubDao {
         setValues.put("$set", updateValues);
         collection.updateOne(filterQuery, setValues);
         return datatypeToUpdate;
+    }
 
+    @Override
+    public void addUpdateFilters(Object filters) throws Exception{
+        MongoCollection<Document> collection = db.getCollection(IHConstants.FILTERS_COLLECTION);
+        List<Document> docsToInsert = new ArrayList<>();
+        if (null != filters) {
+            if (List.class.isAssignableFrom(filters.getClass())) {
+                List insertDocumets = (List) filters;
+                if (null != insertDocumets && insertDocumets.size() > 0) {
+                    for (Map document : (List<Map>) filters) {
+                        Document existingFilter = getFilterIfExist(collection, (String) document.get(IHConstants.FILTER_NAME));
+                        if (null != existingFilter) {
+                            //List filterValues = (List)existingFilter.get(IHConstants.VALUES);
+                            List existingFilterValues = DBUtility.getTransformedFilterValues((List) existingFilter.get(IHConstants.VALUES));
+                            List newFilterValues = DBUtility.getTransformedFilterValues((List) document.get(IHConstants.VALUES));
+                            Set<Filters> combinedFilterValues = new LinkedHashSet<>(existingFilterValues);
+                            combinedFilterValues.addAll(newFilterValues);
+                            List combinedFilterValuesList = DBUtility.transformedFilterValuesToMap(new ArrayList<>(combinedFilterValues));
+                            //existingFilter.put(IHConstants.VALUES, combinedFilterValuesList);
+                            updateCollectionDocument(new LinkedHashMap<String, Object>() {{
+                                put(IHConstants.FILTER_NAME, (String) document.get(IHConstants.FILTER_NAME));
+                                put(IHConstants.VALUES, combinedFilterValuesList);
+                            }}, Arrays.asList(IHConstants.VALUES), IHConstants.FILTERS_COLLECTION, IHConstants.FILTER_NAME);
+                        } else {
+                            collection.insertOne(new Document(document));
+                        }
+                    }
+                }
+            } else {
+                Map incomingFilters = ((Map) filters);
+                Document existingFilter = getFilterIfExist(collection, (String)incomingFilters.get(IHConstants.FILTER_NAME));
+                if(null != existingFilter){
+                    mergeAndUpdateWithExistingFilterValues(existingFilter, incomingFilters);
+                    // update with predicate on merging filter - comparing on value.
+                }else{
+                    collection.insertOne(new Document(incomingFilters));
+                }
+            }
+        }
+    }
+
+    private Document getFilterIfExist(MongoCollection<Document> collection , String filterName){
+        Document filter = null;
+        BasicDBObject exists = new BasicDBObject();
+        exists.put(IHConstants.FILTER_NAME , filterName);
+        FindIterable<Document> found = collection.find(exists).limit(1);
+        filter = found.first();
+        return filter;
+    }
+
+    private void mergeAndUpdateWithExistingFilterValues(Document existingFilter, Map newFilters) throws  Exception{
+        if(null != existingFilter){
+            List existingFilterValues = DBUtility.getTransformedFilterValues((List)existingFilter.get(IHConstants.VALUES));
+            List newFilterValues = DBUtility.getTransformedFilterValues((List)newFilters.get(IHConstants.VALUES));
+            Set<Filters> combinedFilterValues = new LinkedHashSet<>(existingFilterValues);
+            combinedFilterValues.addAll(newFilterValues);
+            List<Filters> combinedFilterValuesList = new ArrayList<>(combinedFilterValues);
+            updateCollectionDocument(combinedFilterValuesList, Arrays.asList(IHConstants.VALUES), IHConstants.FILTERS_COLLECTION, IHConstants.FILTER_NAME);
+        }
     }
 
     @Override

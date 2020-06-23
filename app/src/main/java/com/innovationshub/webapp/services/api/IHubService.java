@@ -69,4 +69,6 @@ public interface IHubService {
      * @throws Exception
      */
     int addDocument(String collectionName, Object documents) throws Exception;
+
+    void addUpdateFilters(Object filters) throws Exception;
 }

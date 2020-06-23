@@ -40,6 +40,8 @@ public class LandingController {
     private static final String SEARCH_IDEAS = "/search-ideas";
     private static final String UPDATE_DOCUMENT_ATTRIBUTE="/update-document-attribute";
     private static final String ADD_DOCUMENT="/add-document";
+    private static final String ADD_UPDATE_FILTERS="/add-update-filters";
+
 
 
     @Autowired
@@ -133,5 +135,14 @@ public class LandingController {
                 new HubResponseWrapper(addedDocument) :
                 new HubResponseWrapper(addedDocument, new HubError(IHConstants.ERROR_CREATING_ENTITY, IHConstants.ERROR_CREATING_ENTITY_MESSAGE, null)),
                 HttpStatus.OK);
+    }
+
+    @RequestMapping(value = ADD_UPDATE_FILTERS, produces = APPLICATION_JSON, method =  RequestMethod.POST)
+    public ResponseEntity<Object> addUpdateFilters(@RequestBody HubRequestWrapper request) throws Exception{
+        if(request!=null && List.class.isAssignableFrom(request.getData().getClass())){
+            //Map dataAsMap=(Map)data.getData();
+            hubService.addUpdateFilters(request.getData());
+        }
+        return new ResponseEntity<>(new HubResponseWrapper(null), HttpStatus.OK);
     }
 }

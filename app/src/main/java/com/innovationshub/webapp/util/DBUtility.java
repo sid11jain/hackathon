@@ -1,12 +1,16 @@
 package com.innovationshub.webapp.util;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.innovationshub.webapp.common.IHConstants;
+import com.innovationshub.webapp.models.Filters;
 
 /**
  * Utility class for database related operations.
@@ -156,5 +160,26 @@ public class DBUtility {
                 && filter.get(IHConstants.SEARCH_TYPE) != null
                 && filter.get(IHConstants.COMPARISON_OP) != null
                 && (!(Boolean) filter.get(IHConstants.NESTED_ON) || filter.get(IHConstants.NESTED_FIELD) != null);
+    }
+
+    public static List getTransformedFilterValues(List filterValues){
+        List existingFilters = null;
+        if(null != filterValues && filterValues.size() > 0){
+            List<Map> filterValueAsMap = filterValues;
+            existingFilters = filterValueAsMap.stream().map(filterValue -> new Filters(filterValue)).collect(Collectors.toList());
+        }
+        return existingFilters;
+    }
+
+    public static List transformedFilterValuesToMap(List filterValues) {
+        List existingFilters = null;
+        if (null != filterValues && filterValues.size() > 0) {
+            List<Filters> filterValueAsFilterList = filterValues;
+            existingFilters = filterValueAsFilterList.stream().map(filterValue -> new LinkedHashMap<String, Object>() {{
+                put(IHConstants.KEY_ID, filterValue.getId());
+                put(IHConstants.KEY_VALUE, filterValue.getValue());
+            }}).collect(Collectors.toList());
+        }
+        return existingFilters;
     }
 }

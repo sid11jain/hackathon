@@ -12,6 +12,7 @@ import {
   IdValuePair,
   TypeDisplay,
   Collection,
+  FILTER_TYPE,
 } from 'src/app/models/common/common-utility.model';
 
 @Component({
@@ -56,20 +57,18 @@ export class CreateCampaignComponent implements OnInit {
     );
   }
   createCampaign() {
-     // if (this.createCampaignForm.valid){
+    if (this.createCampaignForm.value.name){
     const campaignFields = this.createCampaignForm.value.campaignFields as [];
     campaignFields.forEach((campaignField: any) => {
       if (campaignField.allowedValues) {
         const allowedValuesIdValue = [];
         campaignField.allowedValues.forEach((allowedValue) => {
           console.log('Allowed value', allowedValue);
-          allowedValuesIdValue.push(
-            // new IdValuePair(allowedValue, allowedValue)
-            {
-              id: allowedValue,
-              value: allowedValue
-            }
-          );
+          if (allowedValue && allowedValue.value) {
+            allowedValuesIdValue.push(
+              new IdValuePair(allowedValue.value, allowedValue.value)
+            );
+          }
         });
         campaignField.allowedValues = allowedValuesIdValue;
         console.log('allowed value', campaignField.allowedValues);
@@ -78,11 +77,17 @@ export class CreateCampaignComponent implements OnInit {
 
     console.log(this.createCampaignForm.value);
 
-    // this.hubService.addDocuments(Collection.CAMPAIGN, this.createCampaignForm.value).subscribe(x => x);
-    // } else {
-    //  alert('Please fill details properly');
-    // }
+    this.hubService.addDocuments(Collection.CAMPAIGN, this.createCampaignForm.value).subscribe(x => x);
+    const filtersToAdd = this.createFiltersFromCampaignField();
+    if (filtersToAdd && filtersToAdd.length > 0){
+      console.log('filters to add', filtersToAdd);
+      this.hubService.addUpdateFilters( filtersToAdd);
+    }
 
+
+    } else {
+     alert('Please fill details properly');
+    }
   }
 
   newCampaignFieldForm() {
@@ -91,5 +96,19 @@ export class CreateCampaignComponent implements OnInit {
       type: new FormControl('', Validators.required),
       allowedValues: new FormControl('', Validators.required),
     });
+  }
+
+  createFiltersFromCampaignField(){
+    const newFilters = [];
+    if (this.createCampaignForm.value.campaignFields){
+      this.createCampaignForm.value.campaignFields.forEach((field: any) => {
+        newFilters.push({
+          filterName: field.name,
+        valueType: FILTER_TYPE.STRING,
+        values:  field.allowedValues
+        });
+      });
+    }
+    return newFilters;
   }
 }

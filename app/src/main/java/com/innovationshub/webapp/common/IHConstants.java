@@ -32,6 +32,7 @@ public class IHConstants {
     public static final String USERS_COLLECTION = "users";
     public static final String WORKFLOW_COLLECTION = "workflow";
     public static final String TAGS_COLLECTION = "tags";
+    public static final String FILTERS_COLLECTION = "filters";
 
     public static final String CAMPAIGN_NAME = "campaignName";
 
@@ -94,6 +95,8 @@ public class IHConstants {
        put(OP_NEQ, "$neq");
     }};
 
+    public static final String KEY_ID = "id";
+    public static final String KEY_VALUE = "value";
 
     public static final String FILTER_NAME = "filterName";
     public static final String VALUE_TYPE = "valueType";
