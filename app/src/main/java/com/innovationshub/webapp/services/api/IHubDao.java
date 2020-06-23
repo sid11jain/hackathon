@@ -16,8 +16,6 @@ public interface IHubDao {
      */
     public Object addIdea(Object idea);
 
-    public void printAll();
-
     /**
      * Retrieves an idea based on idea name
      *
@@ -45,13 +43,22 @@ public interface IHubDao {
      */
     public long deleteAllIdeasForName(String ideaName);
 
-    Object updateIdeaDocument(Object datatypeToUpdate, List<String> attribute, String collectionName) throws Exception;
+    /**
+     * Updates the document for passed in collection.
+     *
+     * @param datatypeToUpdate
+     * @param attribute
+     * @param collectionName
+     * @return
+     * @throws Exception
+     */
+    Object updateCollectionDocument(Object datatypeToUpdate, List<String> attribute, String collectionName) throws Exception;
 
     /** This is an unchecked method which will insert the document irrespective of fact whether the document already exists in the collection or not.
      * Please use it carefully.
      *
      * @param collectionName
-     * @param document
+     * @param documents
      * @return
      * @throws Exception
      */

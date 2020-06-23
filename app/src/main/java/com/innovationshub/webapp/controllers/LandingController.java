@@ -114,7 +114,7 @@ public class LandingController {
             Map dataAsMap=(Map)data.getData();
             List<String> attributeNames = (List<String>)dataAsMap.get("attributeNames");
             String collectionName = (String)dataAsMap.get("collectionName");
-            updatedIdea = hubService.updateIdeaDocument(dataAsMap.get("data"), attributeNames, collectionName);
+            updatedIdea = hubService.updateCollectionDocument(dataAsMap.get("data"), attributeNames, collectionName);
         } 
         return new ResponseEntity<>(new HubResponseWrapper(updatedIdea), HttpStatus.OK);
     }

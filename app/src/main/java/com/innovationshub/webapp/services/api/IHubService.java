@@ -23,13 +23,50 @@ public interface IHubService {
      */
     Object getIdea(Idea ideaSearchCriteria);
 
+    /**
+     * Rereives a campaign based on campaign name.
+     *
+     * @param campaignSearchCriteria
+     * @return
+     */
     Object getCampaign(Campaign campaignSearchCriteria);
 
+    /**
+     * Seaches documents based on search criteria passed in filters.
+     *
+     * @param collectionName
+     * @param filters
+     * @return
+     * @throws Exception
+     */
     Object findAllDocuments(String collectionName, Object filters) throws  Exception;
 
+    /**
+     * Exports all ideas for a campaign.
+     *
+     * @param campaignName
+     * @return
+     */
     List exportAllIdeasForCampaign(String campaignName);
 
-    Object updateIdeaDocument(Object datatypeToUpdate, List<String> attributes, String collectionName) throws Exception;
+    /**
+     * Updates document in the given collection.
+     *
+     * @param datatypeToUpdate
+     * @param attributes
+     * @param collectionName
+     * @return
+     * @throws Exception
+     */
+    Object updateCollectionDocument(Object datatypeToUpdate, List<String> attributes, String collectionName) throws Exception;
 
+    /**
+     * Adds document in the given collection.
+     *
+     * @param collectionName
+     * @param documents
+     * @return
+     * @throws Exception
+     */
     int addDocument(String collectionName, Object documents) throws Exception;
 }
