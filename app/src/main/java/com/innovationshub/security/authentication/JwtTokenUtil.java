@@ -23,8 +23,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtTokenUtil implements Serializable {
 
-    // Token validity in milliseconds - 1hr
-    public static final long JWT_TOKEN_VALIDITY = 1*60*60*1000;
+    // Token validity in milliseconds - 24hr
+    public static final long JWT_TOKEN_VALIDITY = 24*60*60*1000;
 
     @Value("${jwt.secret}")
     private String secret;
