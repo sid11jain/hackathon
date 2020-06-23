@@ -378,8 +378,8 @@ excludeInactive = false;
         valueType: filter.valueType
           ? filter.valueType
           : this.filterValueType.STRING,
-        nestedOn: false,
-        nestedField: '',
+        nestedOn: filter.nestedOn ? filter.nestedOn : false,
+        nestedField: filter.nestedField ? filter.nestedField : '',
         searchType: filter.searchType ? filter.searchType : SearchType.EQUALS,
         comparisonOp: filter.comparisonOp ? filter.comparisonOp : ComparisonOperators.OP_EQ
       });

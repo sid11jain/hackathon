@@ -9,6 +9,10 @@ export const IDEA_SEARCH_FILTERS = [
       searchType: SearchType.LIKE
     },
     {
+      filterName: 'campaignName',
+      searchType: SearchType.LIKE
+    },
+    {
       filterName: 'tags',
       searchType: SearchType.LIKE
     },

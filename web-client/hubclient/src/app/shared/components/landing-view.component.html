@@ -13,52 +13,68 @@
     <form [formGroup]="ideaFilterForm">
     <div class="idea-filter-container">   
       <div class="row" >
-        <div class="col-md-3">
-          <label for="ideaName" class="athena">Idea Name</label>
-          <input type="text" class="form-control" formControlName="name">
-        </div>
-        <div class="col-md-3 ">
-          <label for="tags">Tags</label>
-          <innovation-hub-select-option [fieldFormControlName]="'tags'"
-          [optionList]="allTags"
-          [multipleOptions]="true" [config]="tagsSearchOptionConfig"></innovation-hub-select-option>
-        </div>
-        <div class="col-md-3">
-            <label for="contributors">Submitted By</label>
-            <innovation-hub-select-option [fieldFormControlName]="'submittedBy'" [optionList]="allUsers" [config]="userOptionConfig"
-            ></innovation-hub-select-option>
-        </div>       
-        <div class="col-md-3">
-            <label for="currentStage">Current Stage</label>
-            <innovation-hub-select-option [fieldFormControlName]="'currentStage'"
-            [optionList]="allWorkflows"
-            [config]="workflowSearchOptionConfig"></innovation-hub-select-option>
-        </div>
-      </div>
-      <span></span>
+          <div class="col-md-3">
+            <label for="ideaName" class="athena">Idea Name</label>
+            <input type="text" class="form-control" formControlName="name">
+          </div>
+          <div class="col-md-3">
+            <label for="campaignName" class="athena">Campaign Name</label>
+            <input type="text" class="form-control" formControlName="campaignName">
+          </div>
+          <div class="col-md-3">
+            <label for="tags">Tags</label>
+            <innovation-hub-select-option [fieldFormControlName]="'tags'"
+            [optionList]="allTags"
+            [multipleOptions]="true" [config]="tagsSearchOptionConfig"></innovation-hub-select-option>
+          </div>
+          <div class="col-md-3">
+              <label for="contributors">Submitted By</label>
+              <innovation-hub-select-option [fieldFormControlName]="'submittedBy'" [optionList]="allUsers" [config]="userOptionConfig"
+              ></innovation-hub-select-option>
+          </div>       
+          <div class="col-md-3">
+              <label for="currentStage">Current Stage</label>
+              <innovation-hub-select-option [fieldFormControlName]="'currentStage'"
+              [optionList]="allWorkflows"
+              [config]="workflowSearchOptionConfig"></innovation-hub-select-option>
+          </div>
+          <!-- </div> -->
+          <!-- <span></span> -->
 
-      <div class="row" style="padding-left:16px;">
-          
-        <div class="col-md-6">
-          <!-- (dateSelect)="ngDateInput($event, false)" -->
+          <!-- <div class="row" style="padding-left:16px;"> -->
+            
+          <div class="col-md-3">
+            <!-- (dateSelect)="ngDateInput($event, false)" -->
             <i class="fa fa-calendar" aria-hidden="true" (click)="fromDate.toggle()" type="button" style="padding:7px;"></i>
-        <input class="form-control" placeholder="Posted On From" 
-             name="dp" formControlName="postedOnFrom" ngbDatepicker #fromDate="ngbDatepicker">
-             
-                         
+            <input class="form-control" placeholder="From Date" 
+              name="dp" formControlName="postedOnFrom" ngbDatepicker #fromDate="ngbDatepicker">              
+          </div>
+          <div class="col-md-3">
+            <i class="fa fa-calendar" aria-hidden="true" (click)="toDate.toggle()" type="button" style="padding:7px;"></i>
+              <input class="form-control" placeholder="To Date"
+              name="dp" formControlName="postedOnTo" ngbDatepicker #toDate="ngbDatepicker">
+          </div>
+          <div style="margin-top: 20px; margin-left: 20px;">
+          <button type="button" title="Add Idea" class="btn btn-info btn-lg" (click)="openCampaignComponent(operation.ADD)" style="margin-left: 10px; margin-right:5px">
+            <i class="fa fa-plus fa-2x" aria-hidden="true" style="color: rgb(17, 17, 17);"></i>      
+          </button>
+          <button type="button" title="Search Ideas" class="btn btn-info btn-lg" (click)="searchIdeas()" style="margin-left: 5px; margin-right:5px">
+            <i class="fa fa-search-plus fa-2x" aria-hidden="true" style="color: rgb(17, 17, 17);"></i> 
+          </button>
+          <button *ngIf="hubService.isCurrentUserAdmin" type="button" title="Export" class="btn btn-info btn-lg"
+              (click)="openCampaignComponent(operation.EXPORT)" style="margin-left: 5px; margin-right:5px">
+              <i class="fa fa-download fa-2x" aria-hidden="true" style="color: rgb(17, 17, 17);"></i>  
+          </button>
+          <button *ngIf="hubService.isCurrentUserAdmin" type="button" title="Create Campaign" class="btn btn-info btn-lg" (click)="setCreateCampaignMode()" style="margin-left: 5px;">
+            <i *ngIf="createCampaign" class="fa fa fa-toggle-on fa-2x" aria-hidden="true" style="color: rgb(0, 0, 0);"></i>
+            <i *ngIf="!createCampaign" class="fa fa fa-toggle-off fa-2x" aria-hidden="true" style="color: rgb(0, 0, 0);"></i>
+          </button>
         </div>
-
-        <div class="col-md-6">
-          <i class="fa fa-calendar" aria-hidden="true" (click)="toDate.toggle()" type="button" style="padding:7px;"></i>
-            <input class="form-control" placeholder="Posted On To"
-            name="dp" formControlName="postedOnTo" ngbDatepicker #toDate="ngbDatepicker">
-          
-       </div>              
         </div>
     </div>
-    <div style="padding-bottom: 5px; padding-left: 15px;">
+    <div style="padding-bottom: 5px; padding-left: 15px; padding-right: 15px;">
 
-      <div class="btn-group btn-group-toggle" data-toggle="buttons" style="text-align: left; width: 75%;">
+      <div class="btn-group btn-group-toggle" data-toggle="buttons" style="text-align: left; width: 100%;">
         <label class="btn btn-success btn-lg" (click)="routeToScreen('')" [ngClass]="appendActiveClass===''?'active':''">
           <i class="fa fa-shopping-cart fa-lg" aria-hidden="true" style="padding-right: 5px;"></i>
           <input type="radio" name="ideas" id="allIdeas" autocomplete="off" checked>All Ideas
@@ -77,21 +93,7 @@
     </label>
       </div>
 
-      <button type="button" title="Add Idea" class="btn btn-info btn-lg" (click)="openCampaignComponent(operation.ADD)" style="margin-left: 10px; margin-right:5px">
-        <i class="fa fa-plus fa-lg" aria-hidden="true" style="color: rgb(17, 17, 17);"></i>      
-      </button>
-      <button type="button" title="Search Ideas" class="btn btn-info btn-lg" (click)="searchIdeas()" style="margin-left: 5px; margin-right:5px">
-        <i class="fa fa-search-plus fa-lg" aria-hidden="true" style="color: rgb(17, 17, 17);"></i> 
-      </button>
-      <button *ngIf="hubService.isCurrentUserAdmin" type="button" title="Export" class="btn btn-info btn-lg"
-          (click)="openCampaignComponent(operation.EXPORT)" style="margin-left: 5px; margin-right:5px">
-          <i class="fa fa-download fa-lg" aria-hidden="true" style="color: rgb(17, 17, 17);"></i>  
-      </button>
-      <button *ngIf="hubService.isCurrentUserAdmin" type="button" title="Create Campaign" class="btn btn-info btn-lg" (click)="setCreateCampaignMode()" style="margin-left: 5px;">
-        <i *ngIf="createCampaign" class="fa fa fa-toggle-on fa-lg" aria-hidden="true" style="color: rgb(0, 0, 0);"></i>
-        <i *ngIf="!createCampaign" class="fa fa fa-toggle-off fa-lg" aria-hidden="true" style="color: rgb(0, 0, 0);"></i>
-      </button>
-
+      
     </div>
   </form>
 </div>

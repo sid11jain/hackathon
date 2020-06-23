@@ -59,30 +59,30 @@ export enum ComparisonOperators {
   OP_NIN = 'NIN',
 }
 
-// Add valueType for date
-export const IDEA_SEARCH_FILTERS = [
-  {
-    filterName: 'name',
-    searchType: SearchType.LIKE,
-  },
-  {
-    filterName: 'tags',
-    searchType: SearchType.LIKE,
-  },
-  // { filterName: 'contributors' },
-  { filterName: 'submittedBy' },
-  { filterName: 'currentStage' },
-  {
-    filterName: 'postedOnFrom',
-    valueType: FILTER_TYPE.DATE,
-    comparisonOp: ComparisonOperators.OP_GTE,
-  },
-  {
-    filterName: 'postedOnTo',
-    valueType: FILTER_TYPE.DATE,
-    comparisonOp: ComparisonOperators.OP_LTE,
-  },
-];
+// // Add valueType for date
+// export const IDEA_SEARCH_FILTERS = [
+//   {
+//     filterName: 'name',
+//     searchType: SearchType.LIKE,
+//   },
+//   {
+//     filterName: 'tags',
+//     searchType: SearchType.LIKE,
+//   },
+//   // { filterName: 'contributors' },
+//   { filterName: 'submittedBy' },
+//   { filterName: 'currentStage' },
+//   {
+//     filterName: 'postedOnFrom',
+//     valueType: FILTER_TYPE.DATE,
+//     comparisonOp: ComparisonOperators.OP_GTE,
+//   },
+//   {
+//     filterName: 'postedOnTo',
+//     valueType: FILTER_TYPE.DATE,
+//     comparisonOp: ComparisonOperators.OP_LTE,
+//   },
+// ];
 
 export enum Collection {
   CAMPAIGN = 'campaign',
