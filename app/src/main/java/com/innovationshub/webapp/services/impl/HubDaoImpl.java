@@ -1,5 +1,6 @@
 package com.innovationshub.webapp.services.impl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -264,12 +265,14 @@ public class HubDaoImpl implements IHubDao {
                 List insertDocumets = (List) documents;
                 if (null != insertDocumets && insertDocumets.size() > 0) {
                     for (Map document : (List<Map>) documents) {
-                        document.put(IHConstants.FIELD_CREATED_ON, new Date());
+                        formatDates(document);
                         docsToInsert.add( new Document(document));
                     }
                 }
             } else {
-                docsToInsert.add( new Document((Map) documents));
+                Document document = new Document((Map) documents);
+                formatDates(document);
+                docsToInsert.add(document);
             }
         }
         try {
@@ -283,5 +286,17 @@ public class HubDaoImpl implements IHubDao {
             // swallowing the exception for now
         }
         return added;
+    }
+
+    private void formatDates(Map document) {
+        // Default created on date
+        document.put(IHConstants.FIELD_CREATED_ON, new Date());
+        // Convert the start and end dates to Date format from String
+        if (null != document.get(IHConstants.START_DATE)) {
+            document.put(IHConstants.START_DATE, LocalDate.parse((String) document.get(IHConstants.START_DATE)));
+        }
+        if (null != document.get(IHConstants.END_DATE)) {
+            document.put(IHConstants.END_DATE, LocalDate.parse((String) document.get(IHConstants.END_DATE)));
+        }
     }
 }
