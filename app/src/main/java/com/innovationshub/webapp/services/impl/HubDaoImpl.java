@@ -315,7 +315,7 @@ public class HubDaoImpl implements IHubDao {
      * @param document
      */
     private void formatIdeaDates(Map document) {
-        document.put(IHConstants.IDEA_FIELD_POSTED, new Date());
+        document.put(IHConstants.IDEA_FIELD_POSTED_ON, new Date());
         // Convert the start and end dates to Date format from String
         if (null != document.get(IHConstants.CAMPAIGN_START_DATE)) {
             document.put(IHConstants.CAMPAIGN_START_DATE, LocalDate.parse((String) document.get(IHConstants.CAMPAIGN_START_DATE)));
