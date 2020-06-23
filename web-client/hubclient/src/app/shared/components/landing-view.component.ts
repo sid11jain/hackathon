@@ -7,6 +7,7 @@ import {
   COLUMN_NAME_COMMENTS_COUNT,
   COLUMN_NAME_LIKES_COUNT,
   COLUMN_NAME_FAVOURITES_COUNT,
+  COLUMN_NAME_FAVOURITES,
 } from 'src/app/models/innovation-hub.model';
 import { HubCampaignCardComponent } from 'src/app/components/common/innovation-hub-card/hub-campaign-card.component';
 import {
@@ -102,6 +103,8 @@ export class LandingViewComponent implements OnInit {
       this.searchIdeasForTabs(this.getPopularStaticFilters());
     } else if (this.isTrendingTab()) {
       this.searchIdeasForTabs(this.getTrendingStaticFilters());
+    } else if (this.isMyFavouritesTab()) {
+      this.searchIdeasForTabs(this.getMyFavouritesStaticFilters());
     } else {
       this.hubService.getAllIdeas().subscribe((resp: any) => {
         if (resp && resp.data) {
@@ -119,6 +122,10 @@ export class LandingViewComponent implements OnInit {
 
   isTrendingTab() {
     return this.appendActiveClass === 'trending';
+  }
+
+  isMyFavouritesTab() {
+    return this.appendActiveClass === 'myFavourites';
   }
 
   getPopularStaticFilters() {
@@ -153,6 +160,16 @@ export class LandingViewComponent implements OnInit {
       ['1']
     );
     return [commentCountFilter, likesCountFilter];
+  }
+
+  getMyFavouritesStaticFilters() {
+    const favourtiesFilter = this.createFiltersForLandingPage(
+      COLUMN_NAME_FAVOURITES,
+      ComparisonOperators.OP_IN,
+      [this.hubService.currentUser]
+    );
+    favourtiesFilter.valueType = 'string';
+    return [favourtiesFilter];
   }
 
   createFiltersForLandingPage(filterName, comparisonOp, values) {
@@ -201,8 +218,9 @@ export class LandingViewComponent implements OnInit {
       tabStaticFilters = this.getPopularStaticFilters();
     } else if (this.isTrendingTab()) {
       tabStaticFilters = this.getTrendingStaticFilters();
+    } else if (this.isMyFavouritesTab()) {
+      tabStaticFilters = this.getMyFavouritesStaticFilters();
     }
-
     const ideaFilters = this.convertIdeaFormValueToFilters();
     let allFilters = [];
     if (ideaFilters){

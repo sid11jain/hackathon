@@ -57,7 +57,7 @@ export class CardFooterComponent implements OnInit {
             providedIdea.likesCount = 0;
           }
           providedIdea.likesCount = providedIdea.likesCount + 1;
-          providedIdea.likes = [];
+          providedIdea.likes = providedIdea.likes ? providedIdea.likes : [];
           providedIdea.likes.push(userSessionName);
         }
         this.hubService
@@ -93,7 +93,7 @@ export class CardFooterComponent implements OnInit {
             providedIdea.favouritesCount = 0;
           }
           providedIdea.favouritesCount = providedIdea.favouritesCount + 1;
-          providedIdea.favourites = [];
+          providedIdea.favourites = providedIdea.favourites  ? providedIdea.favourites : [];
           providedIdea.favourites.push(userSessionName);
         }
         this.hubService

@@ -71,6 +71,10 @@
           <i class="fa fa-line-chart fa-lg" aria-hidden="true" style="padding-right: 5px;"></i>
           <input type="radio" name="ideas" id="popularIdeas" autocomplete="off">Popular Ideas
       </label>
+      <label class="btn btn-success btn-lg" (click)="routeToScreen('myFavourites')" [ngClass]="appendActiveClass==='myFavourites'?'active':''">
+        <i class="fa fa-heart fa-lg" aria-hidden="true" style="padding-right: 5px;"></i>
+        <input type="radio" name="ideas" id="favouriteIdeas" autocomplete="off">Favourites
+    </label>
       </div>
 
       <button type="button" title="Add" class="btn btn-info btn-lg" (click)="openCampaignComponent(operation.ADD)" style="margin-left: 10px; margin-right:5px">

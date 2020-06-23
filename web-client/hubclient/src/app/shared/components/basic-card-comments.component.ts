@@ -48,7 +48,7 @@ export class BasicCardCommentsComponent implements OnInit {
   }
 
   saveComment() {
-    if (this.defaultText !== this.ideaCommentsForm.value.commentToAdd) {
+    if (this.ideaCommentsForm.value.commentToAdd !== '' && this.defaultText !== this.ideaCommentsForm.value.commentToAdd) {
       const userSessionName = this.hubService.currentUser;
       const commentedByPair = new IdValuePair(
         USERNAME_COLUMN_ID,
