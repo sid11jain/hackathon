@@ -4,6 +4,7 @@ export enum Users {
   USERNAME = 'username',
   ROLES = 'roles',
   TOKEN = 'token',
+  FULLNAME = 'fullName'
 }
 
 export enum Roles{

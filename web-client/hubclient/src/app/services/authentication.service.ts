@@ -23,8 +23,7 @@ export class AuthenticationService {
             sessionStorage.setItem(Users.USERNAME, username);
             sessionStorage.setItem(Users.TOKEN, userData.token);
             sessionStorage.setItem(Users.ROLES, userData.roles);
-            // Roles can be accessed by iterating roles array
-            const role = userData.roles[0];
+            sessionStorage.setItem(Users.FULLNAME, userData.fullName);
             return userData;
           }
         })
@@ -41,5 +40,6 @@ export class AuthenticationService {
     sessionStorage.removeItem(Users.USERNAME);
     sessionStorage.removeItem(Users.TOKEN);
     sessionStorage.removeItem(Users.ROLES);
+    sessionStorage.removeItem(Users.FULLNAME);
   }
 }

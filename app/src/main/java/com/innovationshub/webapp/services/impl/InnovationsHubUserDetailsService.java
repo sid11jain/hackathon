@@ -55,6 +55,16 @@ public class InnovationsHubUserDetailsService implements UserDetailsService {
         }
     }
 
+    /**
+     * Returns {@link User} object based on username.
+     *
+     * @param username
+     * @return
+     */
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     private List<GrantedAuthority> getUserAuthority(Set<Role> userRoles) {
         Set<GrantedAuthority> roles = new HashSet<>();
         userRoles.forEach((role) -> {

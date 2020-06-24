@@ -17,4 +17,5 @@ public class JwtResponse implements Serializable {
     private final Set<String> roles;
     private final boolean loginSuccessful;
     private final String message;
+    private final String fullName;
 }

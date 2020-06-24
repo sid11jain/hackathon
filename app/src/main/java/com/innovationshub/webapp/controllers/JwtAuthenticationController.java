@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.innovationshub.security.authentication.JwtTokenUtil;
 import com.innovationshub.webapp.models.JwtRequest;
 import com.innovationshub.webapp.models.JwtResponse;
+import com.innovationshub.webapp.models.User;
 import com.innovationshub.webapp.services.impl.InnovationsHubUserDetailsService;
 
 /**
@@ -55,10 +56,14 @@ public class JwtAuthenticationController {
         Set<String> roles = new HashSet<>();
         userDetails.getAuthorities().forEach(authority -> roles.add(authority.getAuthority()));
 
+        // For now pass username in response to use at client side, this would avoid reloading all users and finding
+        // out fullName from them
+        User user = userDetailsService.getUserByUsername(authenticationRequest.getUsername());
+
         // and pass the roles in response along with token
         // these roles will be used to grant read only or write access to user
         // we are going with this approach for now - later on will grant access based on request URL
-        return ResponseEntity.ok(new JwtResponse(token, roles, true, "Success"));
+        return ResponseEntity.ok(new JwtResponse(token, roles, true, "Success", user.getFullName()));
     }
 
     private void authenticate(String username, String password) throws Exception {

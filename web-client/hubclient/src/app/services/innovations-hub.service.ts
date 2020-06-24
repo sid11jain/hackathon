@@ -124,6 +124,9 @@ _allWorkflows: any[];
     return sessionStorage.getItem(Users.USERNAME);
   }
 
+  get currentUserFullName() {
+    return sessionStorage.getItem(Users.FULLNAME);
+  }
   get currentUserRoles(){
     return sessionStorage.getItem(Users.ROLES);
   }
