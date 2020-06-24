@@ -3,9 +3,10 @@ import { InnovationsHubService } from 'src/app/services/innovations-hub.service'
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Campaign, Filter, END_DATE_COLUMN } from 'src/app/models/innovation-hub.model';
-import { SelectOptionConfig, OPERATION, Collection, ComparisonOperators, FILTER_TYPE } from 'src/app/models/common/common-utility.model';
+import { SelectOptionConfig, OPERATION, Collection, ComparisonOperators, FILTER_TYPE, DATE_FORMAT } from 'src/app/models/common/common-utility.model';
 import { InnovationHubCardComponent } from './innovation-hub-card.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-hub-campaign-card',
@@ -17,7 +18,8 @@ export class HubCampaignCardComponent implements OnInit {
     protected modalRef: BsModalRef,
     protected hubService: InnovationsHubService,
     protected spinner: NgxSpinnerService,
-    protected modalService: BsModalService
+    protected modalService: BsModalService,
+    protected datePipe: DatePipe
   ) {}
 
   @Input()
@@ -97,7 +99,7 @@ export class HubCampaignCardComponent implements OnInit {
     const filter = new Filter();
     filter.filterName = END_DATE_COLUMN;
     filter.comparisonOp = ComparisonOperators.OP_GTE;
-    filter.values =  [new Date()];
+    filter.values =  [this.datePipe.transform(new Date(), DATE_FORMAT)];
     filter.nestedOn = false;
     filter.valueType = FILTER_TYPE.DATE;
     return filter;

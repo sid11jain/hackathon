@@ -17,6 +17,7 @@ import {
   Collection,
   SearchType,
   ComparisonOperators,
+  DATE_FORMAT,
 } from 'src/app/models/common/common-utility.model';
 import { plainToClass } from 'class-transformer';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
@@ -25,6 +26,7 @@ import { Observable, of } from 'rxjs';
 import { element } from 'protractor';
 import { CreateCampaignComponent } from 'src/app/components/create-campaign/create-campaign.component';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -36,7 +38,8 @@ export class LandingViewComponent implements OnInit {
 
   constructor(
     private modalService: BsModalService,
-    public hubService: InnovationsHubService
+    public hubService: InnovationsHubService,
+    public datePipe: DatePipe
   ) {}
   bsModalRef: BsModalRef;
   operation: any = OPERATION;
@@ -188,7 +191,7 @@ export class LandingViewComponent implements OnInit {
         this.createFiltersForLandingPage(
           CAMPAIGN_END_DATE_COLUMN,
           ComparisonOperators.OP_GTE,
-          [new Date()],
+          [this.datePipe.transform(new Date(), DATE_FORMAT)],
           'date'
         )
       );
