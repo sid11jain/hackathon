@@ -17,7 +17,6 @@ import {
 } from 'src/app/models/common/common-utility.model';
 import { isNumber } from 'util';
 
-
 @Component({
   selector: 'app-create-campaign',
   templateUrl: './create-campaign.component.html',
@@ -86,10 +85,9 @@ export class CreateCampaignComponent implements OnInit {
           const filtersToAdd = this.createFiltersFromCampaignField();
           if (filtersToAdd && filtersToAdd.length > 0) {
             console.log('filters to add', filtersToAdd);
-            this.hubService.addUpdateFilters(filtersToAdd).subscribe((x) => {
-              window.location.reload(true);
-            });
+            this.hubService.addUpdateFilters(filtersToAdd).subscribe((x) => {});
           }
+          window.location.reload(true);
         });
     } else {
       alert('Please fill details properly');
@@ -109,23 +107,33 @@ export class CreateCampaignComponent implements OnInit {
     if (this.createCampaignForm.value.campaignFields) {
       this.createCampaignForm.value.campaignFields.forEach((field: any) => {
         if (field && field.type !== Types.TEXT) {
-        newFilters.push({
-          filterName: field.name,
-          valueType: FILTER_TYPE.STRING,
-          values: field.allowedValues,
-        });
+          newFilters.push({
+            filterName: field.name,
+            valueType: FILTER_TYPE.STRING,
+            values: field.allowedValues,
+          });
         }
       });
     }
     return newFilters;
   }
 
-  isTypeText(fieldPosition: any){
+  isTypeText(fieldPosition: any) {
     console.log('fieldPosition', fieldPosition);
 
-    if (!isNaN(fieldPosition) && this.createCampaignForm && this.createCampaignForm.value.campaignFields[fieldPosition]){
-      return (this.createCampaignForm.value.campaignFields[fieldPosition].type === Types.TEXT);
-      console.log('campaign field if', this.createCampaignForm.value.campaignFields);
+    if (
+      !isNaN(fieldPosition) &&
+      this.createCampaignForm &&
+      this.createCampaignForm.value.campaignFields[fieldPosition]
+    ) {
+      return (
+        this.createCampaignForm.value.campaignFields[fieldPosition].type ===
+        Types.TEXT
+      );
+      console.log(
+        'campaign field if',
+        this.createCampaignForm.value.campaignFields
+      );
     }
     console.log('campaign field', this.createCampaignForm.value.campaignFields);
     return false;

@@ -340,7 +340,8 @@ _allWorkflows: any[];
       return this.datepipe.transform(convertedDate, DATE_FORMAT);
 
     }
-    return date;
+    return null; // returning null because of filter array conversion issue at idea search param.
+    // return date;
   }
 
 

@@ -189,6 +189,7 @@ export class InnovationHubCardComponent implements OnInit {
             this.ideaForm.value.name + '' + resp.error.errorMessage + ' name'
           );
         } else {
+          this.addTagsIfNeeded();
           this.hideModal(true);
         }
       });
@@ -242,25 +243,25 @@ export class InnovationHubCardComponent implements OnInit {
       return;
     }
     if (this.ideaForm.value.name) {
-      const addedTags = [];
-      if (this.ideaForm.value.tags) {
-        const selectedTags = this.ideaForm.value.tags as [];
-        selectedTags.filter((tag: any) => {
-          if (
-            this.allTags.filter((existingTag) => existingTag.name === tag)
-              .length === 0
-          ) {
-            addedTags.push(new Tags(tag));
-            return true;
-          }
-        });
-        // addedTags = plainToClass(Tags, addedTags as []);
-        if (addedTags.length > 0) {
-          this.hubService
-            .addDocuments(Collection.TAGS, addedTags)
-            .subscribe((x) => x);
-        }
-      }
+      // const addedTags = [];
+      // if (this.ideaForm.value.tags) {
+      //   const selectedTags = this.ideaForm.value.tags as [];
+      //   selectedTags.filter((tag: any) => {
+      //     if (
+      //       this.allTags.filter((existingTag) => existingTag.name === tag)
+      //         .length === 0
+      //     ) {
+      //       addedTags.push(new Tags(tag));
+      //       return true;
+      //     }
+      //   });
+      //   // addedTags = plainToClass(Tags, addedTags as []);
+      //   if (addedTags.length > 0) {
+      //     this.hubService
+      //       .addDocuments(Collection.TAGS, addedTags)
+      //       .subscribe((x) => x);
+      //   }
+      // }
 
       this.hubService
         .updateCollectionDocument(
@@ -273,6 +274,7 @@ export class InnovationHubCardComponent implements OnInit {
           Collection.IDEA
         )
         .subscribe((x) => {
+          this.addTagsIfNeeded();
           this.hideModal(true);
         });
     }
@@ -304,5 +306,28 @@ export class InnovationHubCardComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  // Add new added tags to TAGS collection
+  addTagsIfNeeded(){
+    const addedTags = [];
+    if (this.ideaForm.value.tags && this.ideaForm.value.tags.length > 0) {
+      const selectedTags = this.ideaForm.value.tags as [];
+      selectedTags.filter((tag: any) => {
+        if (
+          this.allTags.filter((existingTag) => existingTag.name === tag)
+            .length === 0
+        ) {
+          addedTags.push(new Tags(tag));
+          return true;
+        }
+      });
+      // addedTags = plainToClass(Tags, addedTags as []);
+      if (addedTags.length > 0) {
+        this.hubService
+          .addDocuments(Collection.TAGS, addedTags)
+          .subscribe((x) => x);
+      }
+    }
   }
 }
