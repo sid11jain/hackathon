@@ -6,7 +6,7 @@
         </a>
         <h4 class="headerBanner" style="font-family: elianto; font-size: 25px;">Innovation   </h4>
         <h2 class="headerBanner" style="font-family: brocha; margin-top: 0em;margin-left: 0em;">HUB</h2>
-        <div class="logoutSection">
+        <div class="logoutSection row">
             <span *ngIf="hubService.currentUserFullName" class="userDetails">{{hubService.currentUserFullName}}</span>
 
             <button class="btn btn-danger" *ngIf="loginService.isUserLoggedIn()" routerLink="/logout">Logout</button>
