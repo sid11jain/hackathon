@@ -36,14 +36,16 @@ export class BasicCardCommentsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    if (!this.allUsers ){
     this.hubService.getCollection(Collection.USERS).subscribe((resp: any) => {
       if (resp && resp.data) {
         this.allUsers = resp.data;
       }
     });
+  }
 
     this.ideaCommentsForm = new FormGroup({
-      commentToAdd: new FormControl('Write a comment...'),
+      commentToAdd: new FormControl(this.defaultText),
     });
   }
 
@@ -74,7 +76,6 @@ export class BasicCardCommentsComponent implements OnInit {
       this.idea.commentsCount = this.idea.commentsCount
         ? this.idea.commentsCount + 1
         : 0 + 1;
-
       this.hubService
         .updateCollectionDocument(
           this.idea,
@@ -83,6 +84,7 @@ export class BasicCardCommentsComponent implements OnInit {
         )
         .subscribe();
     }
+    this.ngOnInit();
   }
 
   closeCommentModal() {
