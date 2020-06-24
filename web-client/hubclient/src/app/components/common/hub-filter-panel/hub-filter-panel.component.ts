@@ -40,10 +40,8 @@ export class HubFilterPanelComponent implements OnInit {
     valuePosition?: any,
     value?: any
   ) {
-    console.log('filter panel values ', this.filtersForm);
     const filterFormValue = this.filtersForm.value as any;
     filter as Filter;
-    console.log('check ', filter.values[valuePosition]);
     const filterValueSelected =
       filterFormValue.filters[filterPosition].values[valuePosition];
     if (filterValueSelected) {
@@ -53,7 +51,6 @@ export class HubFilterPanelComponent implements OnInit {
       filterFormValue.filters[filterPosition].values[valuePosition] = null;
     }
     this.filtersForm.patchValue(filterFormValue);
-    console.log('patched filters', this.filtersForm.value);
     this.decorateFilterValuesAndEmit();
   }
 
@@ -64,13 +61,11 @@ export class HubFilterPanelComponent implements OnInit {
     // Merging ideaFilters with Campaign filters
     // const ideaFilters = this.convertIdeaFormValueToFilters();
     // ideaFilters.forEach(ideaFilter => filters.push(ideaFilter));
-    console.log('DEcorat dilter start', filters);
     const removeFilters = new Set();
     filters.forEach((filter: any) => {
       filter = plainToClass(Filter, filter);
       this.fieldToExcludeFromFilters.forEach(field => delete filter[field]);
 
-      console.log('Enriched filter', filter);
       if (
         filter.values &&
         Array.isArray(filter.values) &&
@@ -82,9 +77,6 @@ export class HubFilterPanelComponent implements OnInit {
         enrichedFilters.push(filter);
       }
     });
-
-    console.log('Decorated filters', enrichedFilters);
-    // console.log('original idea filters', IDEA_SEARCH_FILTERS);
 
     this.selectedFilters.emit(enrichedFilters);
   }

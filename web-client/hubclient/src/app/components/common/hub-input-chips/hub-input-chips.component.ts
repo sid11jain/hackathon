@@ -114,7 +114,6 @@ this.localFormGroup = new FormGroup({
             : event.target.value
         );
         this.clearTextBox();
-        console.log('Tags', this.selectedChips);
       }
     }
   }

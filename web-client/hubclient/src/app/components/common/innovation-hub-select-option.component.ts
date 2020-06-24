@@ -83,9 +83,6 @@ export class InnovationHubSelectOptionComponent
   };
 
   ngOnInit() {
-    console.log('selector field', this.fieldFormControlName);
-    console.log('field list', this.optionList);
-    console.log('selected options', this.selectedOptions);
     this.callingFormGroup = this.controlContainer.control as FormGroup;
     this.callingForm = this.callingFormGroup.get(
       this.fieldFormControlName

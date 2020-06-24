@@ -37,7 +37,6 @@ export class BasicCardComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    console.log('In basic card', this.datatypeToDisplay);
     if (this.datatypeToDisplay) {
       this.datatypeToDisplay.forEach((idea) => {
         if (idea && idea.campaign) {
@@ -53,12 +52,10 @@ export class BasicCardComponent implements OnInit {
           );
         }
       });
-      console.log('provided idea', this.providedIdeaCampaignValues);
     }
   }
 
   onCardClick(providedIdea: any) {
-    console.log('Card clicked');
 
     const initialState = {
       campaign: providedIdea.campaign,
@@ -72,8 +69,6 @@ export class BasicCardComponent implements OnInit {
   }
 
   switchView(deckView: boolean) {
-    console.log(deckView);
-
     if (this.deckView) {
       if (!deckView) {
         this.deckView = false;

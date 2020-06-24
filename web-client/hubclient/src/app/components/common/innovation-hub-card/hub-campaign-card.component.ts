@@ -51,7 +51,6 @@ export class HubCampaignCardComponent implements OnInit {
         .subscribe((resp: any) => {
           if (resp && resp.data) {
             this.allCampaigns = resp.data;
-            console.log('all camp', this.allCampaigns);
           }
         });
     }
@@ -62,7 +61,6 @@ export class HubCampaignCardComponent implements OnInit {
   }
 
   addIdea() {
-    console.log('Add', this.campaignForm.value.selectedCampaign);
     if (this.campaignForm.value.selectedCampaign) {
       this.campaign = this.campaignForm.value.selectedCampaign;
       this.spinner.show();
@@ -77,8 +75,6 @@ export class HubCampaignCardComponent implements OnInit {
         this.spinner.hide();
       }, 500);
 
-
-      console.log('add camp', this.campaign);
     }
   }
 

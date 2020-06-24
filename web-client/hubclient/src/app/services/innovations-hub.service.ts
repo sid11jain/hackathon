@@ -101,7 +101,6 @@ _allWorkflows: any[];
     this.getCollection(Collection.TAGS).subscribe((resp: any) => {
       if (resp && resp.data) {
         this._allTags = resp.data;
-        // console.log('all tags', this.allTags);
       }
     });
 
@@ -115,7 +114,6 @@ _allWorkflows: any[];
     this.getCollection(Collection.USERS).subscribe((resp: any) => {
         if (resp && resp.data) {
           this._allUsers = resp.data;
-         // console.log('all users', this.allUsers);
         }
       });
   }
@@ -149,13 +147,11 @@ _allWorkflows: any[];
 
   submitIdea(data: any) {
     const submitUrl = this.url + 'submit-idea';
-    console.log('submitted data', data);
      // return of(null);
     return this.http.post(submitUrl, { data: JSON.stringify(data) });
   }
 
   getCampaign(campaginCriteria: any) {
-    console.log('searched campaogn', campaginCriteria);
 
     const getCampaignUrl = this.url + 'get-campaign';
 
@@ -213,15 +209,12 @@ _allWorkflows: any[];
           idea[field] = fieldValue.value;
         } else if (Array.isArray(fieldValue)) {
           // For now only iterating one level, later this can be recursive with concating the values.
-          console.log('Array field', field, ': value : ', fieldValue);
           const fieldValueOnly = [];
           fieldValue.forEach((attribute) => {
-            console.log('Array value', attribute);
             if (attribute && attribute.id && attribute.value) {
               fieldValueOnly.push(attribute.value);
             }
           });
-          console.log('Array value only', fieldValueOnly);
           if (fieldValueOnly && fieldValueOnly.length > 0) {
             idea[field] = fieldValueOnly;
           }
@@ -233,18 +226,15 @@ _allWorkflows: any[];
   }
 
   searchIdeas(filters: any) {
-    console.log('Searched param', filters);
     // return of(null);
     return this.http.post(this.url + 'search-ideas', { data: filters });
   }
 
   getCollection(collectionName: any) {
-    console.log('Get all for ', collectionName);
     return this.http.post(this.url + 'get-collection', collectionName);
   }
 
   getFilteredCollection(collectionName: any, filters: any) {
-    console.log('Get all for ', collectionName, filters);
     return this.http.post(this.url + 'get-filtered-collection', {data: {collectionName, filters}});
   }
 
@@ -253,7 +243,6 @@ _allWorkflows: any[];
     campaignFields: CampaignField[]
   ) {
     let providedIdeaCampaignValues = [];
-    // console.log('mapCampInput', providedIdea, campaignFields);
     if (providedIdea) {
       const keyValue = [];
       providedIdea.campaignValues.map((ideaCampaignValue) => {
@@ -264,14 +253,12 @@ _allWorkflows: any[];
         });
       });
       providedIdeaCampaignValues = Object.assign({}, ...keyValue);
-      // console.log('LAst11', providedIdeaCampaignValues);
     }
     return providedIdeaCampaignValues;
   }
 
   // This shall also take collection name
   updateCollectionDocument(data: any, attributeNames: string[], collectionName: string) {
-    console.log(' idea to update', data);
     // Subscribing it here .. so that caller need not bother about same
 
    // return of(null);
@@ -282,8 +269,6 @@ _allWorkflows: any[];
 
   addDocuments(collectionName: string, documents: any) {
     const addDocumentUrl = this.url + 'add-document';
-    console.log('Added collection', collectionName);
-    console.log('Added documents : ', documents);
     // return of(null);
     return this.http.post(addDocumentUrl, {
       data: { collection: collectionName, documents },
@@ -340,9 +325,6 @@ _allWorkflows: any[];
   convertNgDateToDate(date: any) {
     if (date && (!Array.isArray(date) || date.length > 0 && date[0])) {
       const ngDate = Array.isArray(date) ? date[0] : date;
-      console.log('date : ', date, 'nDate : ', ngDate);
-      // ngDate.day = toDate ? ngDate.day + 1 : ngDate.day;
-      console.log('nDate : ', ngDate);
       // Issue with ng Month, it was providing +1
       const convertedDate =  [new Date(ngDate.year, ngDate.month - 1, ngDate.day)];
       return this.datepipe.transform(convertedDate, DATE_FORMAT);

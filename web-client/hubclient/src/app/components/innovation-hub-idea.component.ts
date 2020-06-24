@@ -32,15 +32,10 @@ export class InnovationHubIdeaComponent implements OnInit{
   providedIdeaCampaignValues: any = {};
 
   ngOnInit(): void {
-    console.log('campaign', this.campaign);
-    console.log('idea input', this.providedIdea);
-    // console.log('idea input', this.providedIdea.campaignValues['Department']);
-
     this.campaignFields = this.campaign.campaignFields;
     if (this.providedIdea) {
             this.mapIdeaCampaignValueAsKeyValue(this.providedIdea);
     }
-    console.log('campaing fields', this.campaignFields);
     this.ideaForm = new FormGroup({
       name: new FormControl(this.providedIdea ? this.providedIdea.name : undefined ),
       campaignName: new FormControl(this.providedIdea ? this.providedIdea.campaignName : undefined),
@@ -63,11 +58,9 @@ export class InnovationHubIdeaComponent implements OnInit{
         )
       ),
     });
-    console.log('idea form', this.ideaForm);
   }
 
   submitIdea() {
-    console.log('submitted form', this.ideaForm);
     this.ideaForm.value.campaignName = this.campaign.name;
     this.hubService.submitIdea(this.ideaForm.value);
   }
@@ -89,7 +82,6 @@ export class InnovationHubIdeaComponent implements OnInit{
         });
       });
       this.providedIdeaCampaignValues = Object.assign({}, ...keyValue);
-      console.log('LAst11', this.providedIdeaCampaignValues);
     }
   }
   exportToExcel() {

@@ -65,7 +65,6 @@ export class CreateCampaignComponent implements OnInit {
         if (campaignField.allowedValues) {
           const allowedValuesIdValue = [];
           campaignField.allowedValues.forEach((allowedValue) => {
-            console.log('Allowed value', allowedValue);
             if (allowedValue && allowedValue.value) {
               allowedValuesIdValue.push(
                 new IdValuePair(allowedValue.value, allowedValue.value)
@@ -73,18 +72,16 @@ export class CreateCampaignComponent implements OnInit {
             }
           });
           campaignField.allowedValues = allowedValuesIdValue;
-          console.log('allowed value', campaignField.allowedValues);
         }
       });
 
-      console.log(this.createCampaignForm.value);
 
       this.hubService
         .addDocuments(Collection.CAMPAIGN, this.createCampaignForm.value)
         .subscribe((x) => {
           const filtersToAdd = this.createFiltersFromCampaignField();
           if (filtersToAdd && filtersToAdd.length > 0) {
-            console.log('filters to add', filtersToAdd);
+
             this.hubService.addUpdateFilters(filtersToAdd).subscribe((x) => {});
           }
           window.location.reload(true);
@@ -119,7 +116,6 @@ export class CreateCampaignComponent implements OnInit {
   }
 
   isTypeText(fieldPosition: any) {
-    console.log('fieldPosition', fieldPosition);
 
     if (
       !isNaN(fieldPosition) &&
@@ -130,12 +126,7 @@ export class CreateCampaignComponent implements OnInit {
         this.createCampaignForm.value.campaignFields[fieldPosition].type ===
         Types.TEXT
       );
-      console.log(
-        'campaign field if',
-        this.createCampaignForm.value.campaignFields
-      );
     }
-    console.log('campaign field', this.createCampaignForm.value.campaignFields);
     return false;
   }
 }

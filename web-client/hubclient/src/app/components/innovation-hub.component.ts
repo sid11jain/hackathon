@@ -57,12 +57,5 @@ export class InnovationHubComponent implements OnInit {
           }
         });
     }
-
-    console.log('Idea at hub', this.idea);
   }
-
-  // submit() {
-  //   console.log('test fired');
-  //   this.hubService.submitIdea(this.parentForm.value.freeText);
-  // }
 }

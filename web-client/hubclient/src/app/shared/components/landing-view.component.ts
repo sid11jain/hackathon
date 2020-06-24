@@ -78,7 +78,6 @@ export class LandingViewComponent implements OnInit {
     IDEA_SEARCH_FILTERS.forEach((filter: any) => {
       this.ideaFilterForm.addControl(filter.filterName, new FormControl());
     });
-    console.log('filter form ', this.filtersForm);
     this.routeToScreen('');
   }
 
@@ -215,7 +214,6 @@ export class LandingViewComponent implements OnInit {
           this.ideas = resp.data as [];
         }
         this.ideasLoaded = true;
-        console.log('All IDeas', this.ideas);
       });
   }
 
@@ -226,7 +224,6 @@ export class LandingViewComponent implements OnInit {
         filter = plainToClass(Filter, filter);
         this.fieldToExcludeFromFilters.forEach(field => delete filter[field]);
 
-        console.log('Enriched filter', filter);
         if (
           filter.values &&
           Array.isArray(filter.values) &&
@@ -244,7 +241,6 @@ export class LandingViewComponent implements OnInit {
   }
 
   getUsers(current) {
-    console.log('users', user);
     const userCopy = user.slice(0);
     if (current) {
       userCopy.unshift(current);
@@ -262,7 +258,6 @@ export class LandingViewComponent implements OnInit {
     }
     this.ideaFilterForm.value.tags = null;
     this.ideaFilterForm.patchValue(this.ideaFilterForm.value);
-    console.log('Tags', this.tags);
   }
 
   setInitialData() {
@@ -271,14 +266,11 @@ export class LandingViewComponent implements OnInit {
       if (resp && resp.data) {
         this.allUsers = resp.data;
       }
-      console.log('All users', usersList);
       this.allUsers$ = of(usersList);
-      console.log('observable users', this.allUsers$);
     });
     this.hubService.getCollection(Collection.TAGS).subscribe((resp: any) => {
       if (resp && resp.data) {
         this.allTags = resp.data;
-        console.log('all tags', this.allTags);
       }
     });
     this.hubService
@@ -286,7 +278,6 @@ export class LandingViewComponent implements OnInit {
       .subscribe((resp: any) => {
         if (resp && resp.data) {
           this.allWorkflows = resp.data;
-          console.log('all tags', this.allWorkflows);
         }
       });
     this.hubService
@@ -296,14 +287,12 @@ export class LandingViewComponent implements OnInit {
           const filters: any[] = resp.data;
           this.allFilters = plainToClass(
             Filter, filters);
-          console.log('all filters', this.allFilters);
           this.initializeFilterForm();
         }
       });
   }
 
   convertIdeaFormValueToFilters() {
-    console.log('idea form values ', this.ideaFilterForm.value);
     const ideaFilters: any[] = [];
     IDEA_SEARCH_FILTERS.forEach((orgFilter: any) => {
       // Direct object reference was changing original filters filterName. Shallow cloning here.
@@ -320,7 +309,6 @@ export class LandingViewComponent implements OnInit {
         comparisonOp: filter.comparisonOp ? filter.comparisonOp : ComparisonOperators.OP_EQ
       });
     });
-    console.log('converted idea', ideaFilters);
 
     return ideaFilters;
   }
@@ -334,7 +322,6 @@ export class LandingViewComponent implements OnInit {
       values = this.ideaFilterForm.value[filter.filterName];
     }
     if (filter.valueType && filter.valueType === this.filterValueType.DATE) {
-      console.log('DAte value before enrich', values);
       if (filter.filterName.endsWith('To') && values && values.length > 0 && values[0]){
         const ngDate: any = values[0];
         values[0] = new NgbDate(ngDate.year, ngDate.month, ngDate.day + 1);
@@ -348,13 +335,11 @@ export class LandingViewComponent implements OnInit {
         : (filter.filterName.endsWith('From') ? filter.filterName.slice(0, -4) : filter.filterName);
     }
 
-    console.log('values', values);
     return values;
   }
 
   selectedFilters(event: any){
 this.selectedSearchFilters = event;
-console.log('Selected filters', this.selectedSearchFilters);
   }
 
 excludeInactiveCampaigns(excludeInactive: boolean){

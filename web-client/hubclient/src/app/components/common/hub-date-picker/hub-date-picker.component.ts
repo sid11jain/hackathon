@@ -20,13 +20,10 @@ export class HubDatePickerComponent implements OnInit {
   constructor(private hubService: InnovationsHubService) {}
 
   ngOnInit(): void {
-    console.log('Date com');
   }
 
   ngDateInput(event: any) {
-    console.log('Converting date', event);
     this.formControlName.setValue(this.hubService.convertNgDateToDate(event));
-    console.log('Converted date', this.formControlName);
     this.selectedDate = this.formControlName.value;
   }
 }

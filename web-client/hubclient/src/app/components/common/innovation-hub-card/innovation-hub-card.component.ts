@@ -80,9 +80,6 @@ export class InnovationHubCardComponent implements OnInit {
   // modalSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
-    console.log('New idea', this.newIdea);
-    console.log('In idea card', this.campaign);
-    console.log('In idea card', this.providedIdea);
 
     this.setInitialData();
     // this.setCampaign();

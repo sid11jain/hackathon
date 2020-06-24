@@ -1,7 +1,6 @@
 import { PipeTransform, Pipe } from '@angular/core';
 import { plainToClass } from 'class-transformer';
 import { User } from 'src/app/models/innovation-hub.model';
-import { Console } from 'console';
 import { user } from 'src/app/models/sample/sample-campaign';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 
@@ -12,7 +11,6 @@ export class UsernameToFullNamePipe implements PipeTransform {
     let userObjects = new User();
     let valueToReturn: any;
     let valueFound = false;
-    console.log('trasnforming');
     if (args && args.length > 0) {
       args.forEach((x) => {
         users = x;
