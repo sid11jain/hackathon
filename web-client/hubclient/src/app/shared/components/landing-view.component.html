@@ -46,12 +46,12 @@
           <div class="col-md-3">
             <!-- (dateSelect)="ngDateInput($event, false)" -->
             <i class="fa fa-calendar" aria-hidden="true" (click)="fromDate.toggle()" type="button" style="padding:7px;"></i>
-            <input class="form-control" placeholder="From Date" 
+            <input class="form-control" placeholder="Posted On From" 
               name="dp" formControlName="postedOnFrom" ngbDatepicker #fromDate="ngbDatepicker">              
           </div>
           <div class="col-md-3">
             <i class="fa fa-calendar" aria-hidden="true" (click)="toDate.toggle()" type="button" style="padding:7px;"></i>
-              <input class="form-control" placeholder="To Date"
+              <input class="form-control" placeholder="Posted On To"
               name="dp" formControlName="postedOnTo" ngbDatepicker #toDate="ngbDatepicker">
           </div>
           <div class="agg-icon-buttons col-md-3">
