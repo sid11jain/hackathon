@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { InnovationsHubService } from 'src/app/services/innovations-hub.service';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Campaign } from 'src/app/models/innovation-hub.model';
-import { SelectOptionConfig, OPERATION, Collection } from 'src/app/models/common/common-utility.model';
+import { Campaign, Filter, END_DATE_COLUMN } from 'src/app/models/innovation-hub.model';
+import { SelectOptionConfig, OPERATION, Collection, ComparisonOperators, FILTER_TYPE } from 'src/app/models/common/common-utility.model';
 import { InnovationHubCardComponent } from './innovation-hub-card.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -47,7 +47,7 @@ export class HubCampaignCardComponent implements OnInit {
   setCampaign() {
     if (!this.campaign) {
       this.hubService
-        .getCollection(Collection.CAMPAIGN)
+        .getFilteredCollection(Collection.CAMPAIGN, [this.createActiveCampaignFilter()])
         .subscribe((resp: any) => {
           if (resp && resp.data) {
             this.allCampaigns = resp.data;
@@ -95,5 +95,15 @@ export class HubCampaignCardComponent implements OnInit {
     //   InnovationHubCardComponent,
     //  Object.assign({}, {initialState}));
     // newModalRef.campaign = this.campaign;
+  }
+
+  createActiveCampaignFilter(){
+    const filter = new Filter();
+    filter.filterName = END_DATE_COLUMN;
+    filter.comparisonOp = ComparisonOperators.OP_GTE;
+    filter.values =  [new Date()];
+    filter.nestedOn = false;
+    filter.valueType = FILTER_TYPE.DATE;
+    return filter;
   }
 }

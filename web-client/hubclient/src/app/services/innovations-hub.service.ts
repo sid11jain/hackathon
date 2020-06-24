@@ -240,6 +240,11 @@ _allWorkflows: any[];
     return this.http.post(this.url + 'get-collection', collectionName);
   }
 
+  getFilteredCollection(collectionName: any, filters: any) {
+    console.log('Get all for ', collectionName, filters);
+    return this.http.post(this.url + 'get-filtered-collection', {data: {collectionName, filters}});
+  }
+
   mapIdeaCampaignValueAsKeyValue(
     providedIdea: Idea,
     campaignFields: CampaignField[]

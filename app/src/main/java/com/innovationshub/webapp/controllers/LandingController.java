@@ -36,6 +36,7 @@ public class LandingController {
     private static final String GET_IDEA = "/get-idea";
     private static final String GET_CAMPAIGN = "/get-campaign";
     private static final String GET_COLLECTION= "/get-collection";
+    private static final String GET_FILTERED_COLLECTION= "/get-filtered-collection";
     private static final String EXPORT_CAMPAIGN_IDEAS = "/export-campaign-ideas";
     private static final String SEARCH_IDEAS = "/search-ideas";
     private static final String UPDATE_DOCUMENT_ATTRIBUTE="/update-document-attribute";
@@ -99,6 +100,17 @@ public class LandingController {
         return new ResponseEntity(new HubResponseWrapper(objs), HttpStatus.OK);
     }
 
+    @RequestMapping(value=GET_FILTERED_COLLECTION, produces = APPLICATION_JSON, method =  RequestMethod.POST)
+    public ResponseEntity<Object> findFilteredDocuments(@RequestBody HubRequestWrapper data) throws Exception{
+        Object filteredDocuments = null;
+        if(data!=null && Map.class.isAssignableFrom(data.getData().getClass())){
+            Map dataAsMap=(Map)data.getData();
+            String collectionName = (String)dataAsMap.get(IHConstants.COLLECTION_NAME);
+            filteredDocuments =hubService.findAllDocuments(collectionName, dataAsMap);        }
+
+        return new ResponseEntity(new HubResponseWrapper(filteredDocuments), HttpStatus.OK);
+    }
+
     @RequestMapping(value=SEARCH_IDEAS, produces=APPLICATION_JSON)
     public ResponseEntity<Object> searchIdeas(@RequestBody HubRequestWrapper ideaSearchCriteria) throws  Exception{
         Object ideas = null;
@@ -115,7 +127,7 @@ public class LandingController {
         if(data!=null && Map.class.isAssignableFrom(data.getData().getClass())){
             Map dataAsMap=(Map)data.getData();
             List<String> attributeNames = (List<String>)dataAsMap.get("attributeNames");
-            String collectionName = (String)dataAsMap.get("collectionName");
+            String collectionName = (String)dataAsMap.get(IHConstants.COLLECTION_NAME);
             updatedIdea = hubService.updateCollectionDocument(dataAsMap.get("data"), attributeNames, collectionName);
         } 
         return new ResponseEntity<>(new HubResponseWrapper(updatedIdea), HttpStatus.OK);
