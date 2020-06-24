@@ -110,9 +110,9 @@ export const TypeDisplay = [
   {
     id: Types.MULTI_OPTION,
     value: 'Many'
+  },
+  {
+    id: Types.TEXT,
+    value: 'Any'
   }
-  // {
-  //   id: Types.TEXT,
-  //   value: 'Any'
-  // }
 ];
