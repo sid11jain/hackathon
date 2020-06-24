@@ -45,12 +45,12 @@
             
           <div class="col-md-3">
             <!-- (dateSelect)="ngDateInput($event, false)" -->
-            <i class="fa fa-calendar" aria-hidden="true" (click)="fromDate.toggle()" type="button" style="padding:7px;"></i>
+            <i class="fa fa-calendar" aria-hidden="true" (click)="fromDate.toggle()" type="button" style="padding-left:4px;"></i>
             <input class="form-control" placeholder="Posted On From" 
               name="dp" formControlName="postedOnFrom" ngbDatepicker #fromDate="ngbDatepicker">              
           </div>
           <div class="col-md-3">
-            <i class="fa fa-calendar" aria-hidden="true" (click)="toDate.toggle()" type="button" style="padding:7px;"></i>
+            <i class="fa fa-calendar" aria-hidden="true" (click)="toDate.toggle()" type="button" style="padding-left:4px;"></i>
               <input class="form-control" placeholder="Posted On To"
               name="dp" formControlName="postedOnTo" ngbDatepicker #toDate="ngbDatepicker">
           </div>
@@ -75,19 +75,19 @@
     <div style="padding-bottom: 5px; padding-left: 15px; padding-right: 15px;">
 
       <div class="btn-group btn-group-toggle" data-toggle="buttons" style="text-align: left; width: 100%;">
-        <label class="btn btn-success btn-lg" (click)="routeToScreen('')" [ngClass]="appendActiveClass===''?'active':''">
+        <label class="btn btn-success" (click)="routeToScreen('')" [ngClass]="appendActiveClass===''?'active':''">
           <i class="fa fa-shopping-cart fa-lg" aria-hidden="true" style="padding-right: 5px;"></i>
           <input type="radio" name="ideas" id="allIdeas" autocomplete="off" checked>All Ideas
         </label>
-        <label class="btn btn-success btn-lg" (click)="routeToScreen('trending')" [ngClass]="appendActiveClass==='trending'?'active':''">
+        <label class="btn btn-success" (click)="routeToScreen('trending')" [ngClass]="appendActiveClass==='trending'?'active':''">
           <i class="fa fa-bar-chart fa-lg" aria-hidden="true" style="padding-right: 5px;"></i>
           <input type="radio" name="ideas" id="trendingIdeas" autocomplete="off">Trending Ideas
         </label>
-        <label class="btn btn-success btn-lg" (click)="routeToScreen('popular')" [ngClass]="appendActiveClass==='popular'?'active':''">
+        <label class="btn btn-success" (click)="routeToScreen('popular')" [ngClass]="appendActiveClass==='popular'?'active':''">
           <i class="fa fa-line-chart fa-lg" aria-hidden="true" style="padding-right: 5px;"></i>
           <input type="radio" name="ideas" id="popularIdeas" autocomplete="off">Popular Ideas
       </label>
-      <label class="btn btn-success btn-lg" (click)="routeToScreen('myFavourites')" [ngClass]="appendActiveClass==='myFavourites'?'active':''">
+      <label class="btn btn-success" (click)="routeToScreen('myFavourites')" [ngClass]="appendActiveClass==='myFavourites'?'active':''">
         <i class="fa fa-heart fa-lg" aria-hidden="true" style="padding-right: 5px;"></i>
         <input type="radio" name="ideas" id="favouriteIdeas" autocomplete="off">Favourites
     </label>

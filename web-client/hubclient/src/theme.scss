@@ -175,42 +175,65 @@ $athena-theme: (
     background-color: $warn;
     color: $light-primary-text;
   }
+
   .menu-container {
     border-bottom: 2px solid black;
-    padding-top: 74px;
-  }
-  .filters-container {
-    width:200px;
-    padding-left:10px;
-    padding-right:10px;
-    padding-top: 10px;
-    overflow-y: auto;
-    height: 100vh;
-    // background-color: $background;
-    div{
-        width:100%;
-    }
-    // border-right: 10px solid black;
-  }
-  .idea-filter-container{
-    display: flex;
-    padding-bottom: 10px;
-    font-weight: 600;
-    padding-left: 5px;
-    margin-left: 12px;
-    margin-right: 28px;
-    .agg-icon-buttons{
-      margin-top: 20px;
-      display:flex;
-      button{
-          margin-left: 4px; 
-          margin-right:4px;
-          font-size: 0.90rem;
+    padding-top: 62px;
+    ul{
+      display: flex;
+      width:100%;
+      height: 50px;
+      li {
+        width:inherit;
+        padding: 10px;
+        height: 50px;
+        border: 1px solid black;
+        list-style-type: none;
+        cursor: pointer;
+        // border-right: 1px solid black;
+        text-align: center;
+        vertical-align: middle;
+        background-color: #fff1e7;
+        font-weight: 600;
+        font-size: 2em;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
       }
-  }  
+    }
+    .idea-filter-container{
+      display: flex;
+      padding-bottom: 6px;
+      font-weight: 600;
+      padding-left: 5px;
+      margin-left: 12px;
+      margin-right: 28px;
+      .agg-icon-buttons{
+        margin-top: 5px;
+        display:flex;
+        button{
+            margin-left: 4px; 
+            margin-right:4px;
+            font-size: 0.90rem;
+        }
+      }
+      label{
+        margin-bottom:3px;
+        font-size:13px;
+      }  
+      .ng-select-container{
+        min-height: 25px !important;
+        max-height: 30px !important;
+        font-size: 10px !important;
+        font-weight: 700 !important;;
+      }
+      .form-control{
+        font-size: 10px !important;
+        font-weight: 700 !important;;
+      }
+    }
   }
+
   .filter-and-cards-container{
-    padding:2px;
+   // padding:2px;
     .filter-and-cards-section{
         display: flex;
       .fiter-and-exclude-section{
@@ -223,8 +246,20 @@ $athena-theme: (
         input[type=checkbox]{
           margin:5px;
         }
-
-      }     
+      }    
+      .filters-container {
+        width:200px;
+        padding-left:10px;
+        padding-right:10px;
+        padding-top: 10px;
+        overflow-y: auto;
+        height: 100vh;
+        // background-color: $background;
+        div{
+            width:100%;
+        }
+        // border-right: 10px solid black;
+      } 
     }
 
   .cards-container{
@@ -323,28 +358,5 @@ $ajay-theme: mat-dark-theme(
     @extend .mat-primary;
     @include mat-elevation(2);
   }
-  .menu-container {
-    border-bottom: 2px solid black;
-    padding-top: 80px;
-    ul{
-      display: flex;
-      width:100%;
-      height: 50px;
-      li {
-        width:inherit;
-        padding: 10px;
-        height: 50px;
-        border: 1px solid black;
-        list-style-type: none;
-        cursor: pointer;
-        // border-right: 1px solid black;
-        text-align: center;
-        vertical-align: middle;
-        background-color: #fff1e7;
-        font-weight: 600;
-        font-size: 2em;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-      }
-    }
-  }
+  
 }
