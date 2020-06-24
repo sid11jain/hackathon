@@ -2,7 +2,7 @@
     <div style="text-align: center; font-size: 2em; font-weight: 800;">
         Create a new campaign
     </div>
-    <div class="create-campaign" style="text-align: left; margin-left: 120px; margin-bottom: 50px; margin-top: 20px;">
+    <div class="create-campaign" style="text-align: left; margin-left: 80px; margin-bottom: 50px; margin-top: 20px;">
         <form [formGroup]="createCampaignForm">
             <div class="row">
                 <div class="col-md-6">
@@ -46,13 +46,8 @@
                 <!-- </div> -->
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <h2>Campaign Fields </h2>
-                </div>
-                <div class="col-md-6">
-                    <button (click)="addCustomField()" title="Customize Campaign" class="btn btn-info btn-lg add-button">
-                        <i class="fa fa-plus fa-lg" aria-hidden="true" style="color: rgb(17, 17, 17);"></i>
-                    </button>
                 </div>
             </div>
             <div formArrayName="campaignFields" *ngFor="let field of campaignFields.controls; let fieldPosition=index">
@@ -81,6 +76,11 @@
                     </div>
                 </div>
             </div>
+           <!-- <div class="col-md-6">-->
+                <button (click)="addCustomField()" title="Add fields" class="btn btn-info btn-lg add-button">
+                    <i class="fa fa-plus fa-lg" aria-hidden="true" style="color: rgb(17, 17, 17);"></i>
+                </button>
+         <!--    </div>-->
             <br>
             <span style="margin-left: 33%;"><button type="submit" class="btn btn-success btn-lg"
                     (click)="createCampaign()">Create</button></span>
