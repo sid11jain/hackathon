@@ -10,18 +10,9 @@ import { InnovationsHubService } from 'src/app/services/innovations-hub.service'
 })
 export class HeaderComponent implements OnInit {
 
-  allUsers: any[];
-  currentUser: any;
-
   constructor(public loginService: AuthenticationService, public hubService: InnovationsHubService) { }
 
   ngOnInit(): void {
-    this.currentUser = this.hubService.currentUser;
-    this.hubService.getCollection(Collection.USERS).subscribe((resp: any) => {
-      if (resp && resp.data) {
-        this.allUsers = resp.data;
-      }
-    });
   }
 
 }
