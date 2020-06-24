@@ -41,7 +41,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { BasicCardCommentsComponent } from './shared/components/basic-card-comments.component';
 import { HubInputChipsComponent } from './components/common/hub-input-chips/hub-input-chips.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { NgxTagsInputModule } from 'ngx-tags-input';
 import { TagInputModule } from 'ngx-chips';
 import { NgxTypeaheadModule } from 'ngx-typeahead';
 import { BasicAuthHttpInterceptorService } from './services/basic-auth-interceptor.service';
@@ -99,7 +98,6 @@ export class XhrInterceptor implements HttpInterceptor {
     BrowserAnimationsModule,
     MatExpansionModule,
     Ng2SearchPipeModule,
-    NgxTagsInputModule,
     TagInputModule,
     NgxTypeaheadModule,
     MatDatepickerModule,

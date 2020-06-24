@@ -17,7 +17,7 @@ import {
   DATE_FORMAT,
 } from '../models/common/common-utility.model';
 import { map } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, timer } from 'rxjs';
 import { DatePipe } from '@angular/common';
 
 @Injectable({
@@ -98,24 +98,9 @@ _allWorkflows: any[];
   getExportUrl = this.url + 'export-campaign-ideas';
 
   constructor(private http: HttpClient, private ees: ExportExcelService, private datepipe: DatePipe) {
-    this.getCollection(Collection.TAGS).subscribe((resp: any) => {
-      if (resp && resp.data) {
-        this._allTags = resp.data;
-      }
-    });
-
-    this.getCollection(Collection.WORKFLOW)
-      .subscribe((resp: any) => {
-        if (resp && resp.data) {
-          this._allWorkflows = resp.data;
-        }
-      });
-
-    this.getCollection(Collection.USERS).subscribe((resp: any) => {
-        if (resp && resp.data) {
-          this._allUsers = resp.data;
-        }
-      });
+    this.getAllWorkflows();
+    this.getAllUsers();
+    this.getAllTags();
   }
 
   get currentUser() {
@@ -133,12 +118,49 @@ _allWorkflows: any[];
     return sessionStorage.getItem(Users.ROLES) === Roles.ADMIN;
   }
 
+  getAllTags(){
+    this.getCollection(Collection.TAGS).subscribe((resp: any) => {
+      if (resp && resp.data) {
+        this._allTags = resp.data;
+      }
+    });
+  }
+
+  set allTags(allTags){
+    this._allTags = allTags;
+  }
+
   get allTags(){
     return this._allTags;
   }
 
+  getAllUsers(){
+    this.getCollection(Collection.USERS).subscribe((resp: any) => {
+      if (resp && resp.data) {
+        this._allUsers = resp.data;
+      }
+    });
+  }
+
+ set allUsers(allUsers){
+this._allUsers = allUsers;
+ }
+
   get allUsers(){
     return this._allUsers;
+  }
+
+  getAllWorkflows(){
+    this.getCollection(Collection.WORKFLOW)
+      .subscribe((resp: any) => {
+        if (resp && resp.data) {
+          this._allWorkflows = resp.data;
+        }
+      });
+  }
+
+  set allWorkflows(allWorkflows){
+    this._allWorkflows = allWorkflows;
   }
 
   get allWorkflows(){

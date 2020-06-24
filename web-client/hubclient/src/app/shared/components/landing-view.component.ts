@@ -265,12 +265,14 @@ export class LandingViewComponent implements OnInit {
       const usersList = [];
       if (resp && resp.data) {
         this.allUsers = resp.data;
+        this.hubService.allUsers = resp.data;
       }
       this.allUsers$ = of(usersList);
     });
     this.hubService.getCollection(Collection.TAGS).subscribe((resp: any) => {
       if (resp && resp.data) {
         this.allTags = resp.data;
+        this.hubService.allTags = resp.data;
       }
     });
     this.hubService
@@ -278,6 +280,7 @@ export class LandingViewComponent implements OnInit {
       .subscribe((resp: any) => {
         if (resp && resp.data) {
           this.allWorkflows = resp.data;
+          this.hubService.allWorkflows = resp.data;
         }
       });
     this.hubService
