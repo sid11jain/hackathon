@@ -339,9 +339,10 @@ export class LandingViewComponent implements OnInit {
         const ngDate: any = values[0];
         values[0] = new NgbDate(ngDate.year, ngDate.month, ngDate.day + 1);
       }
-      values = this.hubService.convertNgDateToDate(
+      // Converting it to array as array is expected for filter values
+      values = [this.hubService.convertNgDateToDate(
         values as []
-      );
+      )];
       filter.filterName = filter.filterName.endsWith('To')
         ? filter.filterName.slice(0, -2)
         : (filter.filterName.endsWith('From') ? filter.filterName.slice(0, -4) : filter.filterName);
