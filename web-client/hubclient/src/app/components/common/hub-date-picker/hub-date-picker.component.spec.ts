@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HubDatePickerComponent } from './hub-date-picker.component';
+import { DatePipe } from '@angular/common';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NgbModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 describe('HubDatePickerComponent', () => {
   let component: HubDatePickerComponent;
@@ -8,7 +11,9 @@ describe('HubDatePickerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HubDatePickerComponent ]
+      declarations: [ HubDatePickerComponent ],
+      imports: [ HttpClientTestingModule, NgbModule, NgbDatepickerModule  ],
+      providers: [DatePipe]
     })
     .compileComponents();
   }));

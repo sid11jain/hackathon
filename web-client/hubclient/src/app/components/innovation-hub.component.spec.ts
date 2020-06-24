@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InnovationHubComponent } from './innovation-hub.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { DatePipe } from '@angular/common';
 
 describe('InnovationHubComponent', () => {
   let component: InnovationHubComponent;
@@ -8,7 +11,9 @@ describe('InnovationHubComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InnovationHubComponent ]
+      declarations: [ InnovationHubComponent ],
+      imports: [ HttpClientTestingModule,  RouterTestingModule],
+      providers: [DatePipe]
     })
     .compileComponents();
   }));
