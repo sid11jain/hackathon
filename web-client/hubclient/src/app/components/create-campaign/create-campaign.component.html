@@ -2,65 +2,88 @@
     <div style="text-align: center; font-size: 2em; font-weight: 800;">
         Create a new campaign
     </div>
-    <div class="create-campaign" style="text-align: left; margin-left: 155px; margin-bottom: 50px; margin-top: 20px;">
+    <div class="create-campaign" style="text-align: left; margin-left: 120px; margin-bottom: 50px; margin-top: 20px;">
         <form [formGroup]="createCampaignForm">
             <div class="row">
-                <h2 for="campaignName" class="col-md-2">Campaign Name: </h2>
-                <input type="text" class="form-control col-md-6" formControlName="name" id="name" required style="text-align: left; margin-left: 15px;">
-                
+                <div class="col-md-6">
+                    <h2 for="campaignName">Campaign Name</h2>
+                </div>
+                <div class="col-md-6">
+
+                    <input type="text" class="form-control" formControlName="name" id="name" required
+                        style="text-align: left; margin-left: 15px;">
+                </div>
             </div>
             <div class="row">
-                <h2 for="description" class="col-md-2">Description: </h2>
-                <textarea type="textarea" class="form-control col-md-6" formControlName="description" id="description" 
-                    required style="text-align: left; margin-left: 15px">
+                <div class="col-md-6">
+                    <h2 for="description" class="">Description</h2>
+                </div>
+                <div class="col-md-6">
+                    <textarea type="textarea" class="form-control" formControlName="description" id="description"
+                        required style="text-align: left; margin-left: 15px">
+
                 </textarea>
+                </div>
             </div>
-            <div class="row">
-                <h2 for="startDate" class="col-md-2">Start Date:</h2>
+            <div class="row start-end-dates">
+                <div class="col-md-6">
+                    <h2 for="startDate">Start Date</h2>
+                </div>
                 <!-- <div> -->
-                <hub-date-picker [formControlName]="createCampaignForm.controls.startDate" class="col-md-2">
-                </hub-date-picker>
+                <div class="col-md-6" style="padding-left:30px;">
+                    <hub-date-picker [formControlName]="createCampaignForm.controls.startDate">
+                    </hub-date-picker>
+                </div>
+                <!-- </div> -->
+                <div class="col-md-6">
+                    <h2 for="endDate">End Date</h2>
+                    <!-- <div> -->
+                </div>
+                <div class="col-md-6" style="padding-left:30px;">
+                    <hub-date-picker [formControlName]="createCampaignForm.controls.endDate">
+                    </hub-date-picker>
+                </div>
                 <!-- </div> -->
             </div>
             <div class="row">
-                <h2 for="endDate" class="col-md-2">End Date:</h2>
-                <!-- <div> -->
-                <hub-date-picker [formControlName]="createCampaignForm.controls.endDate" class="col-md-2">
-                </hub-date-picker>
-                <!-- </div> -->
+                <div class="col-md-6">
+                    <h2>Campaign Fields </h2>
+                </div>
+                <div class="col-md-6">
+                    <button (click)="addCustomField()" title="Customize Campaign" class="btn btn-info btn-lg add-button">
+                        <i class="fa fa-plus fa-lg" aria-hidden="true" style="color: rgb(17, 17, 17);"></i>
+                    </button>
+                </div>
             </div>
-            <h2>Campaign Fields: </h2>
             <div formArrayName="campaignFields" *ngFor="let field of campaignFields.controls; let fieldPosition=index">
                 <div formGroupName="{{fieldPosition}}">
                     <div class="row" style="margin-left: 17%;">
                         <label style="font-weight: 600;">
-                            Field Name: 
+                            Field Name:
                             <input type="text" class="form-control col-md-11" formControlName="name">
                         </label>
                         <label class=" mb-4" style="font-weight: 600;">
-                            Allowed values: 
+                            Allowed values:
                             <h8 class="col-md-10" style="margin-right: 2%">
-                                <innovation-hub-select-option [fieldFormControlName]="'allowedValues'"
-                                [optionList]="[]"
-                                [selectedOptions]="[]"
-                                [config]="addFieldOptionConfig"></innovation-hub-select-option>
+                                <innovation-hub-select-option [fieldFormControlName]="'allowedValues'" [optionList]="[]"
+                                    [selectedOptions]="[]" [config]="addFieldOptionConfig">
+                                </innovation-hub-select-option>
                             </h8>
                         </label>
                         <label class="mb-4" style="font-weight: 600; margin-left: 2%">
-                            Value type: 
-                            <innovation-hub-select-option [fieldFormControlName]="'type'"
-                            [optionList]="typeDisplay"
-                            [selectedOptions]="[]" [config]="typeOptionConfig" class="col-md-10" >
-                        </innovation-hub-select-option>
+                            Value type:
+                            <innovation-hub-select-option [fieldFormControlName]="'type'" [optionList]="typeDisplay"
+                                [selectedOptions]="[]" [config]="typeOptionConfig" class="col-md-10">
+                            </innovation-hub-select-option>
                         </label>
-                        <span><button (click)="removeField(fieldPosition)" class="btn btn-danger mb-1" style="margin-left: 30px; margin-top: 23px">X</button></span>
+                        <span><button (click)="removeField(fieldPosition)" class="btn btn-danger mb-1"
+                                style="margin-left: 30px; margin-top: 23px">X</button></span>
                     </div>
                 </div>
             </div>
-            <button (click)="addCustomField()" class="btn btn-info btn-lg">
-                <i class="fa fa-plus fa-lg" aria-hidden="true" style="color: rgb(17, 17, 17);"></i> 
-            </button><br>
-            <span style="margin-left: 33%;"><button type="submit" class="btn btn-success btn-lg" (click)="createCampaign()">Create</button></span>
+            <br>
+            <span style="margin-left: 33%;"><button type="submit" class="btn btn-success btn-lg"
+                    (click)="createCampaign()">Create</button></span>
         </form>
     </div>
 
